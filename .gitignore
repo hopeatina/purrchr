@@ -1,8 +1,8 @@
-node_modules
-public
-.tmp
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+tmp
+.DS_Store
 .idea
-client/bower_components
-dist
-/server/config/local.env.js
-npm-debug.log
+app/jspm_packages

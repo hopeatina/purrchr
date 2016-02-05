@@ -1,0 +1,65 @@
+<div layout="column">
+    <div layout="column" id="homie" layout-align="center center" >
+        <h1 class="titletext">BREADTH</h1>
+        <h1 class="titletext">The best books suggested by successful experts.</h1>
+
+        <!-- Begin MailChimp Signup Form -->
+        <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <div id="mc_embed_signup">
+            <form action="//once.us12.list-manage.com/subscribe/post?u=710d933e87b09d9b5330fab4c&amp;id=fe54d826b9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div layout="row" id="mc_embed_signup_scroll">
+                    <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email Address" required>
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_710d933e87b09d9b5330fab4c_fe54d826b9" tabindex="-1" value=""></div>
+                    <div class="clear"><input  type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                </div>
+            </form>
+        </div>
+        <!--<div flex layout="row" layout-align="space-around center">-->
+            <!--<md-list class="FamousList" layout="row">-->
+                <!--<md-list-item class="famousItem" ng-repeat="person in ul.selected.suggested">-->
+                    <!--<md-tooltip>{{person}}</md-tooltip>-->
+                    <!--<img class="famousPerson" src="./assets/jpg/famous/{{person}}.jpg">-->
+                <!--</md-list-item>-->
+            <!--</md-list>-->
+        <!--</div>-->
+        <!--End mc_embed_signup-->
+    </div>
+    <div layout="row" layout-align="center center"><h1> Topics</h1></div>
+    <div style="padding-bottom: 50px" ng-controller="HomeController as HC" ng-cloak class="md-padding">
+        <div flex-offset-gt-sm="10" flex-gt-sm="80">
+        <md-grid-list md-cols-xs="2" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="8" md-row-height="1:1" md-gutter-gt-md="20px" md-gutter-gt-sm="4px" >
+            <md-grid-tile ng-repeat="tile in HC.streams"
+                          md-rowspan="2"
+                          md-colspan="2"
+                          md-colspan-sm="1"
+                          ng-class="tile.color">
+                <md-button ng-href="/#/{{tile.href}}" aria-label="startups button link" >
+                <md-icon class="icon" md-svg-icon="{{tile.icon}}"></md-icon>
+                </md-button>
+                <md-grid-tile-footer><h3 class="icontext">{{tile.title}}</h3></md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
+        </div>
+    </div>
+    <div layout="column" layout-align="center center" class="container" style="padding: 60px" >
+        <div class="col-lg-8 col-lg-offset-2"  layout-align="center center">
+            <h1>About</h1>
+            <p>Breadth is for people like me. I aspire to be the very best but know the reality of probabilities.</p>
+            <p>However, I believe by being given access to the best information and learning from the same primary resources as the greatest we can become our best selves.</p>
+            <p>Check out the books suggested by individuals ranging from Marc Andreessen to Danielle Morrill.</p>
+            <div layout="column" layout-align="center center">
+                <md-button  ng-href="/#/startups" class="md-raised md-primary" md-no-ink  aria-label="Go Check it out" >
+            <md-tooltip>You know you want to</md-tooltip>
+            <!--<md-icon md-svg-icon="share"></md-icon>-->
+            <span layout="column" class="titletext" layout-align="center center">Go</span>
+
+            </md-button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
