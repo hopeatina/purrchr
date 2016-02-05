@@ -1,110 +1,79 @@
-'use strict';
-
-var path = require('path');
-var conf = require('./gulp/conf');
-
-var _ = require('lodash');
-var wiredep = require('wiredep');
-
-var pathSrcHtml = [
-  path.join(conf.paths.src, '/**/*.html')
-];
-
-function listFiles() {
-  var wiredepOptions = _.extend({}, conf.wiredep, {
-    dependencies: true,
-    devDependencies: true
-  });
-
-  var patterns = wiredep(wiredepOptions).js
-    .concat([
-      path.join(conf.paths.src, '/app/**/*.module.js'),
-      path.join(conf.paths.src, '/app/**/*.js'),
-      path.join(conf.paths.src, '/**/*.spec.js'),
-      path.join(conf.paths.src, '/**/*.mock.js'),
-    ])
-    .concat(pathSrcHtml);
-
-  var files = patterns.map(function(pattern) {
-    return {
-      pattern: pattern
-    };
-  });
-  files.push({
-    pattern: path.join(conf.paths.src, '/assets/**/*'),
-    included: false,
-    served: true,
-    watched: false
-  });
-  return files;
-}
+// Karma configuration
+// http://karma-runner.github.io/0.10/config/configuration-file.html
 
 module.exports = function(config) {
+  config.set({
+    // base path, that will be used to resolve files and exclude
+    basePath: '',
 
-  var configuration = {
-    files: listFiles(),
+    // testing framework to use (jasmine/mocha/qunit/...)
+    frameworks: ['jasmine'],
 
-    singleRun: true,
-
-    autoWatch: false,
-
-    ngHtml2JsPreprocessor: {
-      stripPrefix: conf.paths.src + '/',
-      moduleName: 'gitHub'
-    },
-
-    logLevel: 'WARN',
-
-    frameworks: ['jasmine', 'angular-filesort'],
-
-    angularFilesort: {
-      whitelist: [path.join(conf.paths.src, '/**/!(*.html|*.spec|*.mock).js')]
-    },
-
-    browsers : ['PhantomJS'],
-
-    plugins : [
-      'karma-phantomjs-launcher',
-      'karma-angular-filesort',
-      'karma-coverage',
-      'karma-jasmine',
-      'karma-ng-html2js-preprocessor'
+    // list of files / patterns to load in the browser
+    files: [
+      // bower:js
+      // endbower
+      'node_modules/socket.io-client/socket.io.js',
+      'client/app/app.js',
+      'client/app/**/*.js',
+      'client/components/**/*.js',
+      'client/app/**/*.jade',
+      'client/components/**/*.jade',
+      'client/app/**/*.html',
+      'client/components/**/*.html'
     ],
 
-    coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
+    preprocessors: {
+      '**/*.jade': 'ng-jade2js',
+      '**/*.html': 'html2js',
     },
 
-    reporters: ['progress'],
+    ngHtml2JsPreprocessor: {
+      stripPrefix: 'client/'
+    },
 
-    proxies: {
-      '/assets/': path.join('/base/', conf.paths.src, '/assets/')
-    }
-  };
+    ngJade2JsPreprocessor: {
+      stripPrefix: 'client/'
+    },
 
-  // This is the default preprocessors configuration for a usage with Karma cli
-  // The coverage preprocessor is added in gulp/unit-test.js only for single tests
-  // It was not possible to do it there because karma doesn't let us now if we are
-  // running a single test or not
-  configuration.preprocessors = {};
-  pathSrcHtml.forEach(function(path) {
-    configuration.preprocessors[path] = ['ng-html2js'];
+    
+
+    // list of files / patterns to exclude
+    exclude: [],
+
+    // web server port
+    port: 8080,
+
+    // level of logging
+    // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
+    logLevel: config.LOG_INFO,
+
+    // reporter types:
+    // - dots
+    // - progress (default)
+    // - spec (karma-spec-reporter)
+    // - junit
+    // - growl
+    // - coverage
+    reporters: ['spec'],
+
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: false,
+
+
+    // Start these browsers, currently available:
+    // - Chrome
+    // - ChromeCanary
+    // - Firefox
+    // - Opera
+    // - Safari (only Mac)
+    // - PhantomJS
+    // - IE (only Windows)
+    browsers: ['PhantomJS'],
+
+
+    // Continuous Integration mode
+    // if true, it capture browsers, run tests and exit
+    singleRun: false
   });
-
-  // This block is needed to execute Chrome on Travis
-  // If you ever plan to use Chrome and Travis, you can keep it
-  // If not, you can safely remove it
-  // https://github.com/karma-runner/karma/issues/1144#issuecomment-53633076
-  if(configuration.browsers[0] === 'Chrome' && process.env.TRAVIS) {
-    configuration.customLaunchers = {
-      'chrome-travis-ci': {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    };
-    configuration.browsers = ['chrome-travis-ci'];
-  }
-
-  config.set(configuration);
 };
