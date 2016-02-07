@@ -1,18 +1,22 @@
 {
-  "name": "angular-material-starter",
-  "description": "A starter project for AngularJS Material",
-  "version": "0.0.2",
-  "homepage": "https://github.com/angular/material-start",
+  "name": "purrchr",
+  "description": " Never miss a tweet",
+  "homepage": "http://meanjs.org/",
   "license": "MIT",
-  "private": true,
   "dependencies": {
-    "angular": "^1.4.6",
-    "angular-animate": "^1.4.6",
-    "angular-aria": "^1.4.6",
-    "angular-material": "^0.11.2",
-    "angular-route": "~1.4.7"
+    "bootstrap": "~3",
+    "angular": "~1.3",
+    "angular-resource": "~1.3",
+    "angular-animate": "~1.3",
+    "angular-mocks": "~1.3",
+    "angular-bootstrap": "~0.13",
+    "angular-ui-utils": "bower",
+    "angular-ui-router": "~0.2",
+    "angular-file-upload": "1.1.5",
+    "angular-messages": "~1.3.17",
+    "owasp-password-strength-test": "~1.3.0"
   },
-  "devDependencies": {
-    "angular-material": "https://github.com/angular/bower-material.git#master"
+  "resolutions": {
+    "angular": "~1.3"
   }
 }
