@@ -1,0 +1,9 @@
+<div class="container" ng-controller="MainFeedController">
+    {{mainFeed}}
+    {{tweets}}
+    <button ng-click="go('api/feed/hometimeline')">Refresh Feed</button>
+    <div ng-repeat="person in recentPeeps | orderBy : '-tweets.length'" ng-if="recentPeeps">
+        <div><div>{{person.user.name}}, @{{person.user.screen_name}}</div><img src="{{person.user.profile_image_url}}">{{person.tweets.length}} Tweets</div>
+    </div>
+    <!--<div ng-repeat="tweet in stream"><img src="{{tweet.user.profile_image_url}}">{{tweet.user.name}}, @{{tweet.user.screen_name}},{{tweet.created_at}} : {{tweet.text}}</div>-->
+</div>
