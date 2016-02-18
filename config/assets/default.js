@@ -5,7 +5,9 @@ module.exports = {
     lib: {
       css: [
         'public/lib/bootstrap/dist/css/bootstrap.css',
-        'public/lib/bootstrap/dist/css/bootstrap-theme.css'
+        'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+        'https://cdn.knightlab.com/libs/timeline/latest/css/timeline.css',
+        'public/lib/angular-material/angular-material.css'
       ],
       js: [
         'public/lib/angular/angular.js',
@@ -16,7 +18,14 @@ module.exports = {
         'public/lib/angular-ui-utils/ui-utils.js',
         'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
         'public/lib/angular-file-upload/angular-file-upload.js',
-        'public/lib/owasp-password-strength-test/owasp-password-strength-test.js'
+        'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
+        'public/lib/timeknots/src/d3.v2.min.js',
+        'public/lib/timeknots/src/timeknots.js',
+        'public/lib/angular-aria/angular-aria.min.js',
+        'public/lib/angular-material/angular-material.min.js',
+        'public/lib/moment/moment.js',
+        'public/lib/angular-moment/angular-moment.min.js'
+
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },

@@ -29,6 +29,7 @@ module.exports = {
   sessionCollection: 'sessions',
   logo: 'modules/core/client/img/brand/logo.png',
   favicon: 'modules/core/client/img/brand/favicon.ico',
+  //favicon: 'https://vectr.com/theonlyhope/designs/untitled-vABP5wFll',
   uploads: {
     profileUpload: {
       dest: './modules/users/client/img/profile/uploads/', // Profile upload destination path

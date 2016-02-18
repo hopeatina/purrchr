@@ -13,6 +13,7 @@ module.exports = function (app) {
     app.route('/api/auth/twiiter/recent/callback').get(feed.getTweetsCallback);
 
     app.route('/api/feed/hometimeline').get(feed.getHomeTweetByCount);
+    app.route('/currentUserTimeline').get(feed.getHomeTweetByCount);
 
     app.param('count', feed.countToRequest);
 };

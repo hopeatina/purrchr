@@ -1,4 +1,9 @@
 .content {
+  /*margin-top: 150px;*/
+  background: inherit;
+}
+.body{
+  background: linear-gradient(88deg,lavender,mediumspringgreen);
   margin-top: 50px;
 }
 .undecorated-link:hover {
@@ -10,6 +15,7 @@
 .ng-cloak,
 .x-ng-cloak {
   display: none !important;
+  background: linear-gradient(88deg,lavender,mediumspringgreen);
 }
 .header-profile-image {
   opacity: 0.8;
@@ -35,3 +41,11 @@ a:hover .header-profile-image {
 .has-error .help-inline.error-text {
   display: inline;
 }
+
+.behind {
+  z-index: 1;
+  position: relative;
+  overflow: visible;
+}
+
+

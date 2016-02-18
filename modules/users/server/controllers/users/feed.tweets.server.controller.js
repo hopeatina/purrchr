@@ -10,23 +10,18 @@ var Twitter = require('twitter'),
   OAuth= require('oauth'),
   config = require(path.resolve('./config/config'));
 
+var R = require("request");
+
+
+
 var OAuth2 = OAuth.OAuth2;
 
 var oauth2 = new OAuth2(process.env.TWITTER_PURRCH_KEY,
     process.env.TWITTER_SECRET,
     'https://api.twitter.com/',
-    null,
+    'oauth/authorize',
     'oauth2/token',
-    null);
-
-var client = new Twitter( {
-    consumer_key: process.env.TWITTER_PURRCH_KEY,
-    consumer_secret: process.env.TWITTER_SECRET,
-    //bearer_token: '281729725-Mzbh27YOq3pjatPwNH2NcifZngJd7LdWTgewMbMF'
-    //Base64.encode(process.env.TWITTER_CONSUMER_KEY+":"+process.env.TWITTER_CONSUMER_SECRET)
-    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-} );
+    {'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'});
 
 exports.getTweets = function(req,res){
     //console.log(process.env.TWITTER_PURRCH_KEY,process.env.TWITTER_SECRET,
@@ -60,13 +55,8 @@ exports.getTweets = function(req,res){
             //console.log('bearer: ', access_token, refresh_token, results);
             //var bearer = access_token;
 
+            //console.log(e,access_token);
 
-            client.get('/statuses/user_timeline.json', {count: "2",user_id: "281729725"}, function(error, tweet, response){
-                if(error) console.log(error);
-                res.json(tweet);
-                //console.log("TWEET: " , tweet);  // Tweet body.
-                //console.log("RESPONSE: ", response);  // Raw response object.
-            });
         });
 
 };
@@ -75,16 +65,31 @@ exports.getTweetsCallback = function() {
 
 };
 
-function getHomies(url, options, res) {
-    //console.log(url, options, client, res);
+function getHomies(url, options, res,client) {
+    // APP ONLY AUTHENTICATION WORKS!!!!
+    //R({ url: 'https://api.twitter.com/1.1' + url ,
+    //    method:'GET',
+    //    headers: {
+    //        "Authorization": "Bearer " + process.env.TWITTER_BEARER_TOKEN
+    //    }
+    //}, function(error, tweet, response) {
+    //    if(error) {console.log(error);}
+    //        else{
+    //            console.log(typeof(tweet.body), tweet.body);
+    //            var parsedTweets = checkTweets(JSON.parse(tweet.body));
+    //            res.json({ stream: tweet, overview: parsedTweets});
+    //            console.log("TWEET: " , parsedTweets.length, tweet.length);  // Tweet body.
+    //            //console.log("RESPONSE: ", response);  // Raw response object.
+    //        }
+    //
+    //});
 
     client.get(url, options, function(error, tweet, response){
         if(error) {console.log(error);}
         else{
-
             var parsedTweets = checkTweets(tweet);
             res.json({ stream: tweet, overview: parsedTweets});
-            console.log("TWEET: " , parsedTweets.length);  // Tweet body.
+            console.log("TWEET: " , parsedTweets.length, tweet.length);  // Tweet body.
             //console.log("RESPONSE: ", response);  // Raw response object.
         }
     });
@@ -97,18 +102,40 @@ function checkTweets(tweets){
         for (var i =0; i < Userray.length; i ++){
             if (tweet.user.id === Userray[i].user.id || Userray === [] ) {
                 inArray = true;
-                Userray[i].tweets.push(tweet);
+                Userray[i].tweets.push({name: tweet.text, date: tweet.created_at});
             }
         }
         if(!inArray) {
-            Userray.push({user: tweet.user, tweets: [tweet]});
+            Userray.push({user: tweet.user, tweets: [{name: tweet.text, date: tweet.created_at}]});
+            //console.log(tweet);
         }
+
     });
     return Userray;
 }
+
 exports.getHomeTweetByCount = function(req,res){
-    var options = {count: "500"};
-    getHomies('/statuses/home_timeline.json',options,res);
+
+    var options = {count: "200"};
+    console.log(req.user);
+    if (req.user != ''){
+        if (req.user.providerData !== undefined && req.user.providerData.provider == 'twitter')
+        {var usermodel = req.user.providerData;}
+        else if (req.user.additionalProvidersData.twitter) {
+            var usermodel = req.user.additionalProvidersData.twitter;
+        }
+
+        var client = new Twitter( {
+            consumer_key: process.env.TWITTER_PURRCH_KEY, // should be url encoded. skipping for now
+            consumer_secret: process.env.TWITTER_SECRET,
+            access_token_key:usermodel.token,
+            access_token_secret: usermodel.tokenSecret
+        } );
+
+    }
+
+
+    getHomies('/statuses/home_timeline.json',options,res,client);
 
 };
 

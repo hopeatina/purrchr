@@ -18,10 +18,11 @@ module.exports = function (config) {
   },
   function (req, token, tokenSecret, profile, done) {
     // Set the provider data and include tokens
+
     var providerData = profile._json;
     providerData.token = token;
     providerData.tokenSecret = tokenSecret;
-
+    console.log(providerData);
     // Create the user OAuth profile
     var displayName = profile.displayName.trim();
     var iSpace = displayName.indexOf(' '); // index of the whitespace following the firstName
