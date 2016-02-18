@@ -121,8 +121,10 @@ exports.getHomeTweetByCount = function(req,res){
     if (req.user != ''){
         if (req.user.providerData !== undefined && req.user.providerData.provider == 'twitter')
         {var usermodel = req.user.providerData;}
-        else if (req.user.additionalProvidersData.twitter) {
+        else if (req.user.additionalProvidersData.twitter !== undefined) {
             var usermodel = req.user.additionalProvidersData.twitter;
+        } else {
+            var usermodel = {token: '', tokenSecret: ''};
         }
 
         var client = new Twitter( {
