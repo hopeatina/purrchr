@@ -118,10 +118,10 @@ exports.getHomeTweetByCount = function(req,res){
 
     var options = {count: "200"};
     console.log(req.user);
-    if (req.user != ''){
+    if (req.user != undefined){
         if (req.user.providerData !== undefined && req.user.providerData.provider == 'twitter')
         {var usermodel = req.user.providerData;}
-        else if (req.user.additionalProvidersData.twitter !== undefined) {
+        else if (req.user.additionalProvidersData !== undefined) {
             var usermodel = req.user.additionalProvidersData.twitter;
         } else {
             var usermodel = {token: '', tokenSecret: ''};
@@ -137,8 +137,12 @@ exports.getHomeTweetByCount = function(req,res){
     }
 
 
-    getHomies('/statuses/home_timeline.json',options,res,client);
-
+    if (client != undefined)
+    {
+        getHomies('/statuses/home_timeline.json',options,res,client);
+    }else {
+        3
+    }
 };
 
 exports.countToRequest = function(req, res, next, count) {
