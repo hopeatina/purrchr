@@ -71,6 +71,10 @@ angular.module('users').config(['$stateProvider',
       .state('main-feed',{
         url: '/feed',
         templateUrl: 'modules/users/client/views/feed/main-feed.client.view.html'
-      });
+      })
+        .state('hashtags',{
+          url: '/hashtags',
+          templateUrl: 'modules/users/client/views/feed/hashtags.client.view.html'
+        });
   }
 ]);

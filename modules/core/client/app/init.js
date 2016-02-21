@@ -43,6 +43,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
     storePreviousState(fromState, fromParams);
   });
 
+
   // Store previous state
   function storePreviousState(state, params) {
     // only store this state if it shouldn't be ignored 

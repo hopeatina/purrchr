@@ -1,0 +1,82 @@
+<div class="container behind" ng-controller="HashtagsController as hashctrl">
+  <!--<md-toolbar>-->
+  <!--<div layout="row">-->
+  <!--<div ng-repeat="tag in suggestedHashtags">-->
+  <!--{{tag}}-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</md-toolbar>-->
+  <!--<md-grid-list-->
+  <!--md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="8"-->
+  <!--md-row-height-gt-md="1:1" md-row-height="1:1"-->
+  <!--md-gutter="12px" md-gutter-gt-sm="8px">-->
+  <!--<md-grid-tile ng-repeat="hashtag in suggestedHashtags" class="red"-->
+  <!--md-rowspan="1" md-colspan="1" md-colspan-sm="1">-->
+  <!--{{hashtag}}-->
+  <!--</md-grid-tile>-->
+  <!--</md-grid-list>-->
+  <div layout="column" layout-align="center center">
+    <div class="hashtag-title" layout-align="center"><h1>{{selectedHashtag}}</h1></div>
+    <md-button class="md-raised md-button md-primary" aria-label="Settings">
+      Purrch<!--<md-icon md-svg-icon="img/icons/menu.svg"></md-icon>-->
+    </md-button>
+    <md-button class=”md-raised ” aria-label=”Add” ng-click="toggleSettings()"> SETTINGS</md-button>
+  </div>
+  <md-card ng-show="isOpen" class="select-tool">
+    <div layout="row" layout-align="center">
+    </div>
+    <div layout="row" layout-align="center">
+      <h3>Your Hashtags:</h3>
+      <md-chips ng-model="suggestedHashtags" placeholder="Add an item">
+        <md-chip-template ng-click="switchHash($chip)">
+          <span >
+            #{{$chip}}
+          </span>
+        </md-chip-template>
+      </md-chips>
+      <md-button class="md-raised" ng-click="toggleSettings()">CLOSE</md-button>
+    </div>
+  </md-card>
+  <div layout="row" layout-align="end">
+    <md-button ng-click="go('api/feed/hashtagtimeline')">Refresh Hashtags</md-button>
+    <md-select ng-model="sortOptionSelected" placeholder="Sort By:">
+      <md-option ng-repeat="option in sortOptions" value="{{option}}">
+        {{option}}
+      </md-option>
+    </md-select>
+  </div>
+  <div ng-if="recentPeeps" ng-repeat="person in recentPeeps | orderBy : '-tweets.length'  "
+       class="behind" ng-controller="SingleTweetCtrl">
+    <!--| 'orderBy : '-tweets.length"-->
+    <md-card class="md-padding behind">
+      <md-content class="behind">
+        <div class="behind" layout="row" layout-align="space-around center">
+          <div layout="column" layout-align="center center" class="behind">
+            <img class="md-avatar-icon" ng-if="person" src="{{person.user.profile_image_url}}">
+          </div>
+          <div layout="column" layout-align="center start" class="behind">
+            <span class="md-title">{{person.user.name}}</span>
+            <span class="md-subhead">@{{person.user.screen_name}}</span>
+          </div>
+          <div layout="column" layout-align="space-between center" class="behind">
+            <div ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
+                 style="width:600px;height: auto;"></div>
+            <!--class="animated rotateOutDownLeft"-->
+            <md-button ng-click="toggleTweets()">View All Tweets</md-button>
+          </div>
+          <div layout="column" layout-align="center center">
+            <div>{{person.tweets.length}}</div>
+            <div> Tweets</div>
+          </div>
+        </div>
+        <div layout="row" layout-align="start center">
+          <div ng-show="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
+               style="width:auto;height: auto;"></div>
+          <!--class="animated fadeInRight"-->
+        </div>
+      </md-content>
+    </md-card>
+  </div>
+
+</div>
+

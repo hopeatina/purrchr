@@ -18,6 +18,10 @@ angular.module('users').factory('MainFeed', ['$http','$state', 'Authentication',
                 return $http.get('/currentUserTimeline', auth.user);
             };
 
+        Feed.isLoggedIn = function (auth){
+            return !!auth.user;
+        };
+
       return Feed;
     }
 ]);

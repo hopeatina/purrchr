@@ -4,7 +4,11 @@
 }
 .body{
   background: linear-gradient(88deg,lavender,mediumspringgreen);
-  margin-top: 50px;
+  padding-top: 50px;
+  overflow-y: auto!important;
+}
+.header {
+  /*margin-bottom: 50px;*/
 }
 .undecorated-link:hover {
   text-decoration: none;

@@ -301,7 +301,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                                 clicked[i] = false;
                             }
                             console.log("mouseover", clicked[i]);
-                            if (clicked[i] == false) {
+                            if (clicked[i] == false && cfg.horizontalLayout) {
                                 var format, datetime, dateValue;
                                 if (cfg.dateDimension) {
                                     format = d3.time.format(cfg.dateFormat);
@@ -458,10 +458,10 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
 
                     if (cfg.horizontalLayout == false) {
 
-                        tip.append("div").style("float", "left").html(dateValue );
-                        tip.transition()
-                            .duration(100)
-                            .style("opacity", .9);
+                        //tip.append("div").style("float", "left").html(dateValue );
+                        //tip.transition()
+                        //    .duration(100)
+                        //    .style("opacity", .9);
                     }
 
                     //Adding start and end labels
