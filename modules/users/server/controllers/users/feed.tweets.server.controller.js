@@ -23,7 +23,7 @@ var oauth2 = new OAuth2(process.env.TWITTER_PURRCH_KEY,
     {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'});
 
 exports.reRoute = function (req, res, next) {
-    console.log("reroute", req.user);
+    console.log("reroute", req);
     if (req.user != undefined)
         return next();
 
@@ -73,6 +73,7 @@ exports.getTweetsCallback = function () {
 };
 function getHomies(url, options, res, client, source) {
     //APP ONLY AUTHENTICATION WORKS!!!!
+
     if (source) {
         R({
             url: url,
@@ -82,10 +83,10 @@ function getHomies(url, options, res, client, source) {
             }
         }, function (error, tweet, response) {
             if (error) {
-                console.log(error);
+                console.log("ERROR", error, url);
             }
             else {
-                //console.log(typeof(tweet.body), tweet.body);
+                console.log(typeof(tweet.body), tweet.body, url);
                 var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses);
                 res.json({stream: tweet, overview: parsedTweets});
                 //console.log("TWEET: ", parsedTweets.length, tweet.length);  // Tweet body.
@@ -100,10 +101,10 @@ function getHomies(url, options, res, client, source) {
                 console.log(error);
             }
             else {
-                console.log("TWEET:", tweet);
+                //console.log("TWEET:", tweet);
                 var parsedTweets = checkTweets(tweet);
                 res.json({stream: tweet, overview: parsedTweets});
-                console.log("TWEET: ", parsedTweets.length, tweet.length);  // Tweet body.
+                //console.log("TWEET: ", parsedTweets.length, tweet.length);  // Tweet body.
                 //console.log("RESPONSE: ", response);  // Raw response object.
             }
         });
@@ -132,7 +133,7 @@ function checkTweets(tweets) {
 exports.getHomeTweetByCount = function (req, res) {
 
     var options = {count: "200"};
-    console.log(req.user);
+    //console.log(req.user);
     if (req.user != undefined) {
         if (req.user.providerData !== undefined && req.user.providerData.provider == 'twitter') {
             var usermodel = req.user.providerData;
@@ -162,6 +163,7 @@ exports.getHomeTweetByCount = function (req, res) {
 
 exports.getHashtagTweets = function (req, res) {
 
+    //console.log(req);
     if (req.user != undefined) {
         if (req.user.providerData !== undefined && req.user.providerData.provider == 'twitter') {
             var usermodel = req.user.providerData;
@@ -181,10 +183,12 @@ exports.getHashtagTweets = function (req, res) {
 
     }
     var options = {};
+    var hashtag= req.query.hashtag || "RIPTwitter";
+    hashtag = hashtag.replace('#','');
     if (client != undefined) {
         //https://api.twitter.com/1.1/search/tweets.json?q=%23RIPTwitter
         client = {};
-        getHomies('https://api.twitter.com/1.1/search/tweets.json?q=%23RIPTwitter&result_type=recent&count=100', options, res, client,true);
+        getHomies('https://api.twitter.com/1.1/search/tweets.json?q=%23'+hashtag+'&result_type=recent&count=100', options, res, client,true);
     } else {
 
     }

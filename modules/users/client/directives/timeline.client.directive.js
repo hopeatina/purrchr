@@ -335,7 +335,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                                 tip.append("div").html(dateValue);
                                 tip.transition()
                                     .duration(100)
-                                    .style("opacity", 0.9).style("display", "block").style("float","right").attr("layout","column")
+                                    .style("opacity", 0.9).style("display", "block").attr("layout","row")
                                     .attr("layout-align","center center");
                             }
                         })

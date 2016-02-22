@@ -10,11 +10,11 @@ module.exports = function (app) {
 
     //Get Tweets
     app.route('/api/auth/twitter/recent').get(feed.getTweets);
-    app.route('/api/auth/twiiter/recent/callback').get(feed.getTweetsCallback);
+    app.route('/api/auth/twitter/recent/callback').get(feed.getTweetsCallback);
 
     app.route('/api/feed/hometimeline').get(feed.reRoute, feed.getHomeTweetByCount);
     app.route('/currentUserTimeline').get(feed.reRoute, feed.getHomeTweetByCount);
     app.route('/api/feed/hashtagtimeline').get(feed.reRoute, feed.getHashtagTweets);
 
-    app.param('count', feed.countToRequest);
+    //app.param('count', feed.countToRequest);
 };

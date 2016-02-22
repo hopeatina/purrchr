@@ -85,7 +85,9 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.go = function (url) {
                 console.log(url);
                 $scope.auth = Authentication;
-                $http.get(url, $scope.auth.user).then(function (data) {
+                $http.get(url, { params: {
+                    hashtag: $scope.selectedHashtag
+                }}).then(function (data) {
                     $scope.recentPeeps = data.data.overview;
                     $scope.stream = data.data.stream;
                     var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
