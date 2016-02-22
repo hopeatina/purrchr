@@ -22,7 +22,6 @@ module.exports = function (config) {
     var providerData = profile._json;
     providerData.token = token;
     providerData.tokenSecret = tokenSecret;
-    console.log(providerData);
     // Create the user OAuth profile
     var displayName = profile.displayName.trim();
     var iSpace = displayName.indexOf(' '); // index of the whitespace following the firstName
