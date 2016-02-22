@@ -93,7 +93,6 @@ exports.oauthCall = function (strategy, scope) {
     if (noReturnUrls.indexOf(req.query.redirect_to) === -1) {
       req.session.redirect_to = req.query.redirect_to;
     }
-    console.log(req,res);
     // Authenticate
     passport.authenticate(strategy, scope)(req, res, next);
   };
@@ -109,6 +108,7 @@ exports.oauthCallback = function (strategy) {
     delete req.session.redirect_to;
 
     passport.authenticate(strategy, function (err, user, redirectURL) {
+      console.log("CHECK THIS OUT", err,user,req,strategy);
       if (err) {
         return res.redirect('/authentication/signin?err=' + encodeURIComponent(errorHandler.getErrorMessage(err)));
       }

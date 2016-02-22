@@ -23,7 +23,7 @@ var oauth2 = new OAuth2(process.env.TWITTER_PURRCH_KEY,
     {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'});
 
 exports.reRoute = function (req, res, next) {
-    console.log("reroute", req);
+    //console.log("reroute", req);
     if (req.user != undefined)
         return next();
 
@@ -86,7 +86,7 @@ function getHomies(url, options, res, client, source) {
                 console.log("ERROR", error, url);
             }
             else {
-                console.log(typeof(tweet.body), tweet.body, url);
+                //console.log(typeof(tweet.body), tweet.body, url);
                 var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses);
                 res.json({stream: tweet, overview: parsedTweets});
                 //console.log("TWEET: ", parsedTweets.length, tweet.length);  // Tweet body.
