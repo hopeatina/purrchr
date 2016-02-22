@@ -15,11 +15,12 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 feed.getHomies().then(function (data) {
                     if (data.data.stream != undefined) {
                         $scope.recentPeeps = data.data.overview;
-                        $scope.stream = data.data.stream;
+                        if (data.data.stream != undefined)
+                        {$scope.stream = data.data.stream;
                         var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
                         $scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
                         console.log(toUTC);
-                        console.log(data);
+                        console.log(data);}
                     } else{
 
                     }
@@ -29,11 +30,13 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.go = function (url) {
                 $http.get(url).then(function (data) {
                     $scope.recentPeeps = data.data.overview;
+                    if (data.data.stream != undefined)
+                    {
                     $scope.stream = data.data.stream;
                     var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
                     $scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
                     console.log(toUTC);
-                    console.log(data);
+                    console.log(data);}
                 });
             };
         }
