@@ -55,6 +55,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
 
     // OAuth provider request
     $scope.callOauthProvider = function (url) {
+      console.log($state.previous , $state.previous.href, url, $state, $state.state);
       if ($state.previous && $state.previous.href) {
         url += '?redirect_to=' + encodeURIComponent($state.previous.href).toString();
       }
