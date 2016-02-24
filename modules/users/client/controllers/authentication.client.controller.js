@@ -55,10 +55,10 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
 
     // OAuth provider request
     $scope.callOauthProvider = function (url) {
-      console.log($state.previous , $state.previous.href, url, $state, $state.state, encodeURIComponent($state.previous.href).toString());
-      //if ($state.previous != undefined && $state.previous.href != undefined) {
-      //  url += '?redirect_to=' + '/feed';
-      //}
+      console.log( "CALLOAUTHPROVIDER", url, encodeURIComponent($state.previous.href).toString());
+      if ($state.previous != undefined && $state.previous.href != undefined) {
+        url += '?redirect_to=' + '/feed';
+      }
 
       // Effectively call OAuth authentication route:
       $window.location.href = url;

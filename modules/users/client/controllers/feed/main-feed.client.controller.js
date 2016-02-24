@@ -10,7 +10,6 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.menu = Menus.getMenu('topbar');
             $scope.mainFeed = 'HELLO MAIN FEED';
 
-            console.log($scope.tweetsCollapsed, $scope.timelineConfig);
             $scope.goPerUser = function () {
                 var feed = MainFeed;
                 feed.getHomies().then(function (data) {

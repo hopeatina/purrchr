@@ -110,7 +110,7 @@ exports.oauthCallback = function (strategy) {
     delete req.session.redirect_to;
 
     passport.authenticate(strategy, function (err, user, redirectURL) {
-      console.log("CHECK THIS OUT", err,user,req,strategy);
+      console.log("CHECK THIS OUT", err,user, strategy,redirectURL, sessionRedirectURL);
       if (err) {
         return res.redirect('/authentication/signin?err=' + encodeURIComponent(errorHandler.getErrorMessage(err)));
       }
