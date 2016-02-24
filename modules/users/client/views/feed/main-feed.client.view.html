@@ -1,8 +1,16 @@
 <div class="container behind" ng-controller="MainFeedController">
-  <div ng-if="dataUpTo">Showing {{stream.length}} Tweets since {{dataUpTo}}</div>
-  <md-button ng-click="goPerUser()">PER USER REFRESH</md-button>
+  <div layout="row" layout-align="end">
+    <div ng-if="dataUpTo"><h2>Showing {{stream.length}} tweets from {{recentPeeps.length}} users since {{dataUpTo}}</h2></div>
+  </div>
+  <div layout="row" layout-align="end">
+    <md-button ng-click="goPerUser()">REFRESH HOME TIMELINE</md-button>
 
-  <md-button ng-click="go('/api/feed/hashtagtimeline')">ONLY HOPE Refresh Feed</md-button>
+    <md-select ng-model="sortOptionSelected" placeholder="Sort By:">
+      <md-option ng-repeat="option in sortOptions" value="{{option}}">
+        {{option}}
+      </md-option>
+    </md-select>
+  </div>
   <div ng-if="recentPeeps" ng-repeat="person in recentPeeps | orderBy : '-tweets.length'  "
        class="behind" ng-controller="SingleTweetCtrl">
     <!--| 'orderBy : '-tweets.length"-->
