@@ -93,6 +93,8 @@ exports.oauthCall = function (strategy, scope) {
     if (noReturnUrls.indexOf(req.query.redirect_to) === -1) {
       req.session.redirect_to = req.query.redirect_to;
     }
+    scope = { successRedirect: '/feed',
+      failureRedirect: '/authentication/signin' };
     // Authenticate
     passport.authenticate(strategy, scope)(req, res, next);
   };
