@@ -4,6 +4,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
         function ($scope, $http, moment, $state, Authentication, Menus, MainFeed) {
             $scope.$state = $state;
             $scope.authentication = Authentication;
+            $scope.sortOptions = ["Frequency","Recent","Dopeness", "Virality", "Number of Tweets", "Fire"];
 
             // Get the topbar menu
             $scope.menu = Menus.getMenu('topbar');
