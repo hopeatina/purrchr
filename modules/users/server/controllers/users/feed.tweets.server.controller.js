@@ -135,7 +135,7 @@ exports.getHomeTweetByCount = function (req, res) {
     var options = {count: "200"};
     //console.log(req.user);
     if (req.user != undefined) {
-        if (req.user.providerData !== undefined && req.user.providerData.provider == 'twitter') {
+        if (req.user.providerData !== undefined && req.user.provider == 'twitter') {
             var usermodel = req.user.providerData;
         }
         else if (req.user.additionalProvidersData !== undefined) {
@@ -143,7 +143,7 @@ exports.getHomeTweetByCount = function (req, res) {
         } else {
             var usermodel = {token: '', tokenSecret: ''};
         }
-
+        console.log(req.user);
         var client = new Twitter({
             consumer_key: process.env.TWITTER_PURRCH_KEY, // should be url encoded. skipping for now
             consumer_secret: process.env.TWITTER_SECRET,
