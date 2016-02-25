@@ -61,8 +61,8 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                 var cfg = {
                     width: 600,
                     height: 200,
-                    radius: 10,
-                    lineWidth: 4,
+                    radius: 8,
+                    lineWidth: 2,
                     color: "#999",
                     background: "#FFF",
                     dateFormat: "%Y/%m/%d %I:%M:%S",

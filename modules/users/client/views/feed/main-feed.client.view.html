@@ -1,10 +1,13 @@
 <div class="container behind" ng-controller="MainFeedController">
   <div layout="row" layout-align="end">
-    <div ng-if="dataUpTo"><h2>Showing {{stream.length}} tweets from {{recentPeeps.length}} users since {{dataUpTo}}</h2></div>
+    <div ng-if="dataUpTo"><h2>Showing {{stream.length}} tweets from {{recentPeeps.length}} users since {{dataUpTo}}</h2>
+    </div>
   </div>
+  <!--<div layout="row" layout-align="center">-->
+    <!--<md-progress-circular md-mode="{{modes[4]}}" md-diameter="20"></md-progress-circular>-->
+  <!--</div>-->
   <div layout="row" layout-align="end">
     <md-button ng-click="goPerUser()">REFRESH HOME TIMELINE</md-button>
-
     <md-select ng-model="sortOptionSelected" placeholder="Sort By:">
       <md-option ng-repeat="option in sortOptions" value="{{option}}">
         {{option}}
@@ -15,25 +18,26 @@
        class="behind" ng-controller="SingleTweetCtrl">
     <!--| 'orderBy : '-tweets.length"-->
     <md-card class="md-padding behind">
-      <md-content class="behind">
+      <md-card-content class="behind" layout-wrap>
         <div class="behind" layout="row" layout-align="space-around center">
-          <div layout="column" layout-align="center center" class="behind">
+          <div flex="33" layout="column" layout-align="center center" class="behind">
             <img class="md-avatar-icon" ng-if="person" src="{{person.user.profile_image_url}}">
           </div>
-          <div layout="column" layout-align="center start" class="behind">
+          <div flex="33" layout="column" layout-align="center center" class="behind">
             <span class="md-title">{{person.user.name}}</span>
             <span class="md-subhead">@{{person.user.screen_name}}</span>
           </div>
-          <div layout="column" layout-align="space-between center" class="behind">
-            <div ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
-                 style="width:600px;height: auto;"></div>
-            <!--class="animated rotateOutDownLeft"-->
-            <md-button ng-click="toggleTweets()">View All Tweets</md-button>
-          </div>
-          <div layout="column" layout-align="center center">
+
+          <div flex="33" layout="column" layout-align="center center">
             <div>{{person.tweets.length}}</div>
             <div> Tweets</div>
           </div>
+        </div>
+        <div flex layout="column" layout-align="space-between center" class="behind">
+          <div ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
+               style="width:600px;height: auto;"></div>
+          <!--class="animated rotateOutDownLeft"-->
+          <md-button ng-click="toggleTweets()">View All Tweets</md-button>
         </div>
         <div layout="row" layout-align="start center">
           <div ng-show="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
@@ -45,7 +49,7 @@
           </div>
           <!--class="animated fadeInRight"-->
         </div>
-      </md-content>
+      </md-card-content>
     </md-card>
   </div>
   <!--<div ng-if="stream" ng-repeat="tweet in stream"><img src="{{tweet.user.profile_image_url}}">{{tweet.user.name}},-->
