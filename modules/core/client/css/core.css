@@ -51,6 +51,12 @@ a:hover .header-profile-image {
   position: relative;
   overflow: visible;
 }
+.usercard:hover{
+  z-index:1000;
+  box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+  -moz-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+}
 
 .hashtags.ng-enter {
   transition:0.5s linear all;
@@ -59,5 +65,5 @@ a:hover .header-profile-image {
 
 /* The finishing CSS styles for the enter animation */
 .hashtags.ng-enter.ng-enter-active {
-  opacity:1;
+  opacity: 1;
 }

@@ -155,6 +155,19 @@ exports.getHomeTweetByCount = function (req, res) {
 
 
     if (client != undefined) {
+        /**
+         * Stream statuses filtered by keyword
+         * number of tweets per second depends on topic popularity
+         **/
+        //client.stream('user',  function(stream){
+        //    stream.on('data', function(tweet) {;
+        //        console.log(tweet.text);
+        //    });
+        //
+        //    stream.on('error', function(error) {
+        //        console.log(error);
+        //    });
+        //});
         getHomies('/statuses/home_timeline.json', options, res, client,false);
     } else {
 

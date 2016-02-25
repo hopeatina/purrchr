@@ -22,7 +22,7 @@
     </md-button>
     <md-button class=”md-raised ” aria-label=”Add” ng-click="toggleSettings()"> SETTINGS</md-button>
   </div>
-  <md-card ng-show="isOpen" class="hashtags">
+  <md-card ng-show="isOpen" class="hashtags ">
     <div layout="row" layout-align="center">
     </div>
     <div layout="row" layout-align="center">
@@ -48,7 +48,7 @@
   <div ng-if="recentPeeps" ng-repeat="person in recentPeeps | orderBy : '-tweets.length'  "
        class="behind" ng-controller="SingleTweetCtrl">
     <!--| 'orderBy : '-tweets.length"-->
-    <md-card class="md-padding behind">
+    <md-card class="usercard behind">
       <md-content class="behind">
         <div class="behind" layout="row" layout-align="space-around center">
           <div layout="column" layout-align="center center" class="behind">

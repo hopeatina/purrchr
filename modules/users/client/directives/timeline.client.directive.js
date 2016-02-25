@@ -61,8 +61,8 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                 var cfg = {
                     width: 600,
                     height: 200,
-                    radius: 8,
-                    lineWidth: 2,
+                    radius: 10,
+                    lineWidth: 4,
                     color: "#999",
                     background: "#FFF",
                     dateFormat: "%Y/%m/%d %I:%M:%S",
@@ -139,7 +139,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                     var svg = d3.select(element[0]).append('svg').attr("width", cfg.width).attr("height", cfg.height);
                     var tip = d3.select(element[0])
                         .append('div');
-                    console.log(svg, tip);
+                    //console.log(svg, tip);
                     //.attr("ng-if", "viewall");
                     var clicked = [];
                     for (var i = 0; i < events.length; i++) {
