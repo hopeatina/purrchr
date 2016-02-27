@@ -99,7 +99,12 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                 //.style("padding", "5px 10px 5px 10px")
                 //.style("-moz-border-radius", "8px 8px")
                 //.style("border-radius", "8px 8px");
-                var svg = d3.select(element[0]).append('svg').attr("width", cfg.width).attr("height", cfg.height);
+                var svg = d3.select(element[0])
+                    .append('svg')
+                    .attr("width", cfg.width)
+                    .attr("height", cfg.height)
+                    .attr("preserveAspectRatio", "xMinYMin meet")
+                    .classed("svg-content-responsive", true);
                 var tip = d3.select(element[0])
                     .append('div');
                 //.attr("ng-if", "viewall");
@@ -521,12 +526,11 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                 //
                 //// whenever the bound 'exp' expression changes, execute this
                 scope.$watch('data', function (newVals, oldVals) {
-                    //console.log(newVals,oldVals );
+                    console.log("Data for Someone Changed", newVals, oldVals );
                     d3.select(element[0]).selectAll("*").remove();
                     return scope.render(newVals, options);
                 });
                 scope.$watch('options', function (newVals, oldVals) {
-
                     if (newVals != oldVals){
                         d3.select(element[0]).selectAll("*").remove();
                         return scope.render(events,newVals);

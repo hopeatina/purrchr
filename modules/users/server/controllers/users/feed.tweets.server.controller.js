@@ -143,7 +143,7 @@ exports.getHomeTweetByCount = function (req, res) {
         } else {
             var usermodel = {token: '', tokenSecret: ''};
         }
-        console.log("SERVER CONTROLLER USER", req.user);
+        //console.log("SERVER CONTROLLER USER", req.user);
         var client = new Twitter({
             consumer_key: process.env.TWITTER_PURRCH_KEY, // should be url encoded. skipping for now
             consumer_secret: process.env.TWITTER_SECRET,
