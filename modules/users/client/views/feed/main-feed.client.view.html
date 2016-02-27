@@ -15,9 +15,9 @@
       </md-option>
     </md-select>
   </div>
-  <div ng-if="recentPeeps" ng-repeat="person in recentPeeps   "
+  <div ng-if="recentPeeps" ng-repeat="person in recentPeeps | orderBy : '-tweets.length' "
        class="behind" ng-controller="SingleTweetCtrl">
-    <!--| orderBy : '-tweets.length'-->
+    <!---->
     <!--| 'orderBy : '-tweets.length"-->
     <md-card class="behind usercard">
       <md-card-content class="behind" layout-wrap>
