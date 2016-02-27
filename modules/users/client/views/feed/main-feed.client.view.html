@@ -19,7 +19,7 @@
        class="behind" ng-controller="SingleTweetCtrl">
     <!--| orderBy : '-tweets.length'-->
     <!--| 'orderBy : '-tweets.length"-->
-    <md-card class="behind" ng-mouseover="hovered = hovered == 1 ? 10: 1" md-whiteframe="{{hovered}}">
+    <md-card class="behind usercard">
       <md-card-content class="behind" layout-wrap>
         <div class="behind" layout="row" layout-align="space-around center">
           <div flex="33" layout="column" layout-align="center center" class="behind">
@@ -39,7 +39,7 @@
           <div ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
                style="width:600px;height: auto;"></div>
           <!--class="animated rotateOutDownLeft"-->
-          <!--<md-button ng-click="toggleTweets()">View All Tweets</md-button>-->
+          <md-button ng-click="toggleTweets()">View All Tweets</md-button>
         </div>
         <div layout="row" layout-align="start center">
           <div ng-show="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
