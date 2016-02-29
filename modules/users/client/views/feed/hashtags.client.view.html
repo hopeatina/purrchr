@@ -1,4 +1,4 @@
-<div class="container behind" ng-controller="HashtagsController as hashctrl">
+<div class="container " ng-controller="HashtagsController as hashctrl">
   <!--<md-toolbar>-->
   <!--<div layout="row">-->
   <!--<div ng-repeat="tag in suggestedHashtags">-->
@@ -46,19 +46,19 @@
     </md-select>
   </div>
   <div ng-if="recentPeeps" ng-repeat="person in recentPeeps | orderBy : '-tweets.length'  "
-       class="behind" ng-controller="SingleTweetCtrl">
+       class="" ng-controller="SingleTweetCtrl">
     <!--| 'orderBy : '-tweets.length"-->
-    <md-card class="usercard behind">
-      <md-content class="behind">
-        <div class="behind" layout="row" layout-align="space-around center">
-          <div layout="column" layout-align="center center" class="behind">
+    <md-card class="usercard ">
+      <md-content class="">
+        <div class="" layout="row" layout-align="space-around center">
+          <div layout="column" layout-align="center center" class="">
             <img class="md-avatar-icon" ng-if="person" src="{{person.user.profile_image_url}}">
           </div>
-          <div layout="column" layout-align="center start" class="behind">
+          <div layout="column" layout-align="center start" class="">
             <span class="md-title">{{person.user.name}}</span>
             <span class="md-subhead">@{{person.user.screen_name}}</span>
           </div>
-          <div layout="column" layout-align="space-between center" class="behind">
+          <div layout="column" layout-align="space-between center" class="">
             <div ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
                  style="width:600px;height: auto;"></div>
             <!--class="animated rotateOutDownLeft"-->
@@ -70,8 +70,7 @@
           </div>
         </div>
         <div layout="row" layout-align="start center">
-          <div ng-show="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
-               style="width:auto;height: auto;"></div>
+          <div ng-show="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"></div>
           <!--class="animated fadeInRight"-->
         </div>
       </md-content>

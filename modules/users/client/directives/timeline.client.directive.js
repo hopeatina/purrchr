@@ -4,7 +4,7 @@
 'use strict';
 
 // Users directive used to force lowercase input
-angular.module('users').directive('timeline', ['d3Service', 'moment', function (d3Service, moment) {
+angular.module('users').directive('timeline', ['d3Service', 'moment', '$window', function (d3Service, moment,$window) {
     // define constants and helpers used for the directive
     // ...
 
@@ -113,6 +113,10 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                     clicked[i] = false;
                 }
 
+
+                //
+
+                console.log(scope.width);
                 scope.render = function (events, configoptions) {
                     options = configoptions !== undefined ? configoptions : {
                         horizontalLayout: false,
@@ -122,6 +126,9 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                         showLabels: true,
                         labelFormat: "%I:%M"
                     };
+
+                    console.log(scope.width);
+                    options.width = $window.innerWidth * .7;
 
                     //default configuration overrid
                     if (options !== undefined) {
@@ -523,7 +530,16 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', function (
                     //    });;
                 };
                 //scope.render(events);
-                //
+
+                scope.$watch(function() {
+                    return angular.element($window)[0].innerWidth;
+                }, function(newVals, oldVals) {
+                    if (newVals != oldVals) {
+                        d3.select(element[0]).selectAll("*").remove();
+                        scope.render(events, options);
+                    }
+                });
+
                 //// whenever the bound 'exp' expression changes, execute this
                 scope.$watch('data', function (newVals, oldVals) {
                     console.log("Data for Someone Changed", newVals, oldVals );
