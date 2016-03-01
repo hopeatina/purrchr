@@ -10,7 +10,7 @@ angular.module('users').factory('MainFeed', ['$http','$state', 'Authentication',
           $http.get('api/feed/hometimeline/' + count)
               .then(function (data) {
                   var tweets = data.data;
-                  console.log(tweets);
+                  //console.log(tweets);
               });
       };
         Feed.getHomies =

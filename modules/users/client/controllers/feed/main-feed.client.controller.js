@@ -4,7 +4,14 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
         function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket) {
             $scope.$state = $state;
             $scope.authentication = Authentication;
-            $scope.sortOptions = ["Frequency", "Recent", "Dopeness", "Virality", "Tweet Count", "Fire"];
+            $scope.sortOptions = [
+                {name: "Most Frequent", value: "-tweets.length"},
+                {name: "Least Frequent", value: "tweets.length"},
+                {name: "Recent", value: ""},
+                {name: "Dopeness", value: ""},
+                {name: "Virality", value: ""},
+                {name: "Tweet Count", value: ""},
+                {name: "Fire", value: ""}];
             var self = this, j = 0, counter = 0;
             var temptweet = [];
             $scope.modes = [];
@@ -38,12 +45,12 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
 
             $scope.socket = Socket;
             $scope.updateFeed = function () {
-                console.log(temptweet);
+                //console.log(temptweet);
                 checkTweets(temptweet);
                 temptweet = [];
-                $scope.QueueCount =0;
+                $scope.QueueCount = 0;
 
-                console.log($scope.recentPeeps)
+                //console.log($scope.recentPeeps)
             };
 
             function checkTweets(tweets) {
@@ -86,10 +93,11 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             };
 
             $scope.socket.on("new tweet", function (data) {
-                if (data.user)
-                {temptweet.push(data);
-                $scope.QueueCount = temptweet.length;
-                console.log($scope.QueueCount);}
+                if (data.user) {
+                    temptweet.push(data);
+                    $scope.QueueCount = temptweet.length;
+                    console.log($scope.QueueCount);
+                }
             });
             $scope.socket.on('connected', function (data) {
                 emitMsj("start stream");
@@ -116,6 +124,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                     console.log("Shit! Socket.io didn't start!");
                 }
             }
+
+            $scope.goPerUser();
         }
     ])
     .controller('SingleTweetCtrl', ['$scope', '$http', 'moment',
@@ -126,7 +136,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 height: 80,
                 width: 600,
                 showLabels: true,
-                labelFormat: "%I:%M"
+                labelFormat: "%I:%M",
+                specials: "inline"
             };
             $scope.tweetsCollapsed = false;
             $scope.toggleTweets = function () {
@@ -137,17 +148,20 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                     height: 400,
                     width: 70,
                     showLabels: true,
-                    labelFormat: "%I:%M"
+                    labelFormat: "%I:%M",
+                    specials: ""
                 } : {
                     horizontalLayout: true,
                     color: "55acee",
                     height: 60,
                     width: 600,
                     showLabels: true,
-                    labelFormat: "%I:%M"
+                    labelFormat: "%I:%M",
+                    specials: "inline"
                 };
                 console.log($scope.timelineConfig, $scope.tweetsCollapsed);
             };
+
         }])
     .controller('HashtagsController', ['$scope', '$http', 'moment', 'Authentication',
         function ($scope, $http, moment, Authentication) {
@@ -158,12 +172,12 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 console.log($scope.isOpen);
             };
             $scope.switchHash = function (chip) {
-                console.log(chip);
+                //console.log(chip);
                 $scope.selectedHashtag = "#" + chip;
                 $scope.go('/api/feed/hashtagtimeline');
             };
             $scope.go = function (url) {
-                console.log(url);
+                //console.log(url);
                 $scope.auth = Authentication;
                 $http.get(url, {
                     params: {
@@ -171,14 +185,18 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                     }
                 }).then(function (data) {
                     $scope.recentPeeps = data.data.overview;
-                    $scope.stream = data.data.stream;
-                    var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
-                    $scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
-                    console.log(toUTC);
-                    console.log(data);
+                    if (data.data.stream != undefined) {
+                        $scope.stream = data.data.stream;
+                        var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
+                        $scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
+                        //console.log(toUTC);
+                        //console.log(data);
+                    }
                 });
             };
+            $scope.specials = "inline";
 
             $scope.sortOptions = ["Recent", "Dopeness", "Virality", "Number of Tweets", "Fire"]
+            $scope.go('api/feed/hashtagtimeline');
 
         }]);

@@ -12,7 +12,8 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
         restrict: 'EA', // the directive can be invoked only by using <my-directive> tag in the template
         scope: { // attributes bound to the scope of the directive
             data: '=',
-            options:'='
+            options:'=',
+            specials:'='
         },
         link: function (scope, element, attrs) {
             d3Service.d3().then(function (d3) {
@@ -116,7 +117,6 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
 
                 //
 
-                console.log(scope.width);
                 scope.render = function (events, configoptions) {
                     options = configoptions !== undefined ? configoptions : {
                         horizontalLayout: false,
@@ -127,8 +127,13 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                         labelFormat: "%I:%M"
                     };
 
-                    console.log(scope.width);
+
+                    if (options.horizontalLayout)
                     options.width = $window.innerWidth * .7;
+
+                    if (scope.specials =="inline") {
+                        options.width = options.width * .6;
+                    }
 
                     //default configuration overrid
                     if (options !== undefined) {
@@ -154,6 +159,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     //console.log(svg, tip);
                     //.attr("ng-if", "viewall");
                     var clicked = [];
+                    var currentClick = false;
                     for (var i = 0; i < events.length; i++) {
                         clicked[i] = false;
                     }
@@ -287,7 +293,13 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                             return cfg.lineWidth;
                         })
                         .style("fill", function (d) {
+                            var color;
                             if (d.background !== undefined) {
+                                if (d.name.substring(0, 1) == ".@")
+                                color = "#ffffff";
+                                else if (d.name.substring(0, 1) == "RT") {
+                                    color = "#000000"
+                                }
                                 return d.background;
                             }
                             return cfg.background;
@@ -312,7 +324,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                             if (clicked[i] == undefined) {
                                 clicked[i] = false;
                             }
-                            console.log("mouseover", clicked[i]);
+                            console.log("mouseover", clicked[i], options.width+"px");
                             if (clicked[i] == false && cfg.horizontalLayout) {
                                 var format, datetime, dateValue;
                                 if (cfg.dateDimension) {
@@ -344,15 +356,18 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
                                     d3.select(element[0])
                                 }
-                                tip.append("div").html(dateValue);
+                                tip.append("div").html(dateValue)
+                                    .style("width", options.width+"px")
+                                    .style("layout","row")
+                                    .style("layout-align","center center");
                                 tip.transition()
                                     .duration(100)
-                                    .style("opacity", 0.9).style("display", "block").attr("layout","row")
+                                    .style("opacity", 1).style("display", "block").attr("layout","row")
                                     .attr("layout-align","center center");
                             }
                         })
                         .on("mouseout", function (d, i) {
-                            console.log("mouseout", clicked[i]);
+                            console.log("mouseout", clicked[i], options.width+"px");
                             if (clicked[i] == false) {
                                 d3.select(this)
                                     .style("fill", function (d) {
@@ -401,11 +416,16 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
                                     d3.select(element[0])
                                 }
-                                tip.append("div").html(dateValue);
+                                tip.append("div").html(dateValue).style("width", options.width+"px")
+                                    .style("layout","row")
+                                    .style("layout-align","center center");
                                 tip.transition()
                                     .duration(100)
-                                    .style("opacity", 0.9).style("display", "block");
+                                    .style("opacity", 0.8).style("display", "block")
+                                    .style("width", options.width+"px")
+                                ;
                             }
+
                         })
                         .on("click", function (d, i) {
 
@@ -459,13 +479,15 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
                                     d3.select(element[0])
                                 }
-                                tip.append("div").html(dateValue);
+                                tip.append("div").html(dateValue).style("width", options.width+"px")
+                                    .style("layout","row")
+                                    .style("layout-align","center center");
                                 tip.transition()
                                     .duration(100)
-                                    .style("opacity", 0.9).style("display", "block");
+                                    .style("opacity", 1).style("display", "block");
                                 clicked[i] = true;
                             }
-                            console.log("clicked", clicked[i]);
+                            console.log("clicked", clicked[i], options.width+"px");
                         });
 
                     if (cfg.horizontalLayout == false) {
@@ -542,7 +564,6 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
 
                 //// whenever the bound 'exp' expression changes, execute this
                 scope.$watch('data', function (newVals, oldVals) {
-                    console.log("Data for Someone Changed", newVals, oldVals );
                     d3.select(element[0]).selectAll("*").remove();
                     return scope.render(newVals, options);
                 });

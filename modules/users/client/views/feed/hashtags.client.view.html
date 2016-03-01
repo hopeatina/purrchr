@@ -59,10 +59,9 @@
             <span class="md-subhead">@{{person.user.screen_name}}</span>
           </div>
           <div layout="column" layout-align="space-between center" class="">
-            <div ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"
-                 style="width:600px;height: auto;"></div>
+            <div ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig" specials="specials"></div>
             <!--class="animated rotateOutDownLeft"-->
-            <md-button ng-click="toggleTweets()">View All Tweets</md-button>
+            <!--<md-button ng-click="toggleTweets()">View All Tweets</md-button>-->
           </div>
           <div layout="column" layout-align="center center">
             <div>{{person.tweets.length}}</div>
