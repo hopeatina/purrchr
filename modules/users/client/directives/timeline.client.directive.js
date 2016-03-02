@@ -62,7 +62,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                 var cfg = {
                     width: 600,
                     height: 200,
-                    radius: 10,
+                    radius: 15,
                     lineWidth: 4,
                     color: "#999",
                     background: "#FFF",
@@ -76,10 +76,11 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     dateDimension: true
                 };
 
-                //default configuration overrid
+                //default configuration override
                 if (options !== undefined) {
                     for (var i in options) {
                         cfg[i] = options[i];
+                        console.log(i);
                     }
                 }
 
@@ -110,10 +111,22 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     .append('div');
                 //.attr("ng-if", "viewall");
                 var clicked = [];
+                var colors=[];
                 for (var i = 0; i < events.length; i++) {
                     clicked[i] = false;
+                    if (events[i].name.substr(0,2) == ".@"){
+                        colors[i] = "#1B95E0";
+                        events[i].color = "#1B95E0";
+                    }
+                    else if (events[i].name.substr(0,2) == "RT") {
+                        colors[i] = "#19cf86";
+                        events[i].color = "#19cf86";
+                    }
+                    else {
+                        colors[i] = "#D3D3D3";
+                        events[i].color = "#D3D3D3";
+                    }
                 }
-
 
                 //
 
@@ -132,6 +145,8 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     options.width = $window.innerWidth * .7;
 
                     if (scope.specials =="inline") {
+                        options.width = options.width * .6;
+                    } else if (scope.specials == undefined) {
                         options.width = options.width * .6;
                     }
 
@@ -159,9 +174,22 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     //console.log(svg, tip);
                     //.attr("ng-if", "viewall");
                     var clicked = [];
-                    var currentClick = false;
+                    var currentClick = -1;
+                    var colors=[];
                     for (var i = 0; i < events.length; i++) {
                         clicked[i] = false;
+                        if (events[i].name.substr(0,2) == ".@"){
+                            colors[i] = "#1B95E0";
+                            events[i].color = "#1B95E0";
+                        }
+                        else if (events[i].name.substr(0,2) == "RT") {
+                            colors[i] = "#19cf86";
+                            events[i].color = "#19cf86";
+                        }
+                        else {
+                            colors[i] = "#D3D3D3";
+                            events[i].color = "#D3D3D3";
+                        }
                     }
                     var maxValue, minValue, timestamps;
                     //Calculate times in terms of timestamps
@@ -295,12 +323,16 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                         .style("fill", function (d) {
                             var color;
                             if (d.background !== undefined) {
-                                if (d.name.substring(0, 1) == ".@")
-                                color = "#ffffff";
-                                else if (d.name.substring(0, 1) == "RT") {
-                                    color = "#000000"
-                                }
                                 return d.background;
+                            }
+                            console.log(d.name.substr(0, 2));
+                            if (d.name.substr(0, 2) == ".@"){
+                                color = "#1B95E0";
+                                return color;
+                            }
+                            else if (d.name.substr(0, 2) == "RT") {
+                                color = "#19cf86";
+                                return color;
                             }
                             return cfg.background;
                         })
@@ -526,7 +558,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                 }
                                 return margin + this.getBBox().height / 2;
                             });
-
+                        if(startString != endString)
                         svg.append("text")
                             .text(endString).style("font-size", "70%")
                             .attr("x", function (d) {
