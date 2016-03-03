@@ -80,7 +80,6 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                 if (options !== undefined) {
                     for (var i in options) {
                         cfg[i] = options[i];
-                        console.log(i);
                     }
                 }
 
@@ -147,7 +146,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     if (scope.specials =="inline") {
                         options.width = options.width * .6;
                     } else if (scope.specials == undefined) {
-                        options.width = options.width * .6;
+                        //options.width = options.width * .6;
                     }
 
                     //default configuration overrid
@@ -320,12 +319,12 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                             }
                             return cfg.lineWidth;
                         })
-                        .style("fill", function (d) {
+                        .style("fill", function (d,i) {
                             var color;
                             if (d.background !== undefined) {
+                                console.log(d);
                                 return d.background;
                             }
-                            console.log(d.name.substr(0, 2));
                             if (d.name.substr(0, 2) == ".@"){
                                 color = "#1B95E0";
                                 return color;

@@ -50,22 +50,22 @@
     <!--| 'orderBy : '-tweets.length"-->
     <md-card class="usercard ">
       <md-content class="">
-        <div class="" layout="row" layout-align="space-around center">
-          <div layout="column" layout-align="center center" class="">
+        <div layout="row" layout-align="center" layout-wrap>
+          <div flex="20" layout="column" layout-align="center center" class="">
             <img class="md-avatar-icon" ng-if="person" src="{{person.user.profile_image_url}}">
           </div>
-          <div layout="column" layout-align="center start" class="">
+          <div flex="40" layout="column" layout-align="center start" class="">
             <span class="md-title">{{person.user.name}}</span>
             <span class="md-subhead">@{{person.user.screen_name}}</span>
           </div>
-          <div layout="column" layout-align="space-between center" class="">
+          <div flex="30" layout="column" layout-align="center center">
+            <div>{{person.tweets.length}}</div>
+            <div> Tweets</div>
+          </div>
+          <div flex="80" layout="column" layout-align="space-between center" class="">
             <div ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig" specials="specials"></div>
             <!--class="animated rotateOutDownLeft"-->
             <!--<md-button ng-click="toggleTweets()">View All Tweets</md-button>-->
-          </div>
-          <div layout="column" layout-align="center center">
-            <div>{{person.tweets.length}}</div>
-            <div> Tweets</div>
           </div>
         </div>
         <div layout="row" layout-align="start center">
