@@ -144,7 +144,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     options.width = $window.innerWidth * .7;
 
                     if (scope.specials =="inline") {
-                        options.width = options.width * .6;
+                        //options.width = options.width * .6;
                     } else if (scope.specials == undefined) {
                         //options.width = options.width * .6;
                     }
