@@ -173,7 +173,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     //console.log(svg, tip);
                     //.attr("ng-if", "viewall");
                     var clicked = [];
-                    var currentClick = -1;
+                    var currentClick = null;
                     var colors=[];
                     for (var i = 0; i < events.length; i++) {
                         clicked[i] = false;
@@ -460,7 +460,6 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                         })
                         .on("click", function (d, i) {
 
-
                             if (clicked[i] == true) {
                                 d3.select(this)
                                     .style("fill", function (d) {
@@ -479,7 +478,30 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     .duration(100)
                                     .style("opacity", 0).style("display", "none");
                                 clicked[i] = false;
+                                currentClick = null;
+
                             } else {
+                                if (currentClick != null)
+                                {
+                                    d3.select(currentClick)
+                                        .style("fill", function (d) {
+                                            if (d.background !== undefined) {
+                                                return d.background;
+                                            }
+                                            return cfg.background;
+                                        }).transition()
+                                        .duration(100).attr("r", function (d) {
+                                        if (d.radius !== undefined) {
+                                            return d.radius;
+                                        }
+                                        return cfg.radius;
+                                    });
+                                    tip.transition()
+                                        .duration(100)
+                                        .style("opacity", 0).style("display", "none");
+                                    console.log(this, "Remove clickedpoints");
+                                }
+                                currentClick = this;
                                 var format, datetime, dateValue;
                                 if (cfg.dateDimension) {
                                     format = d3.time.format(cfg.dateFormat);
