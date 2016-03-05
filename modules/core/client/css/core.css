@@ -67,3 +67,11 @@ a:hover .header-profile-image {
 .hashtags.ng-enter.ng-enter-active {
   opacity: 1;
 }
+
+.joystick {
+  top: auto;
+  right: 20px;
+  bottom: 20px;
+  left: auto;
+  position: fixed;
+}

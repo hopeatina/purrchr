@@ -63,7 +63,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     width: 600,
                     height: 200,
                     radius: 15,
-                    lineWidth: 4,
+                    lineWidth: 3,
                     color: "#999",
                     background: "#FFF",
                     dateFormat: "%Y/%m/%d %I:%M:%S",
@@ -325,15 +325,15 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                 console.log(d);
                                 return d.background;
                             }
-                            if (d.name.substr(0, 2) == ".@"){
-                                color = "#1B95E0";
-                                return color;
-                            }
-                            else if (d.name.substr(0, 2) == "RT") {
-                                color = "#19cf86";
-                                return color;
-                            }
-                            return cfg.background;
+                            //if (d.name.substr(0, 2) == ".@"){
+                            //    color = "#1B95E0";
+                            //    return color;
+                            //}
+                            //else if (d.name.substr(0, 2) == "RT") {
+                            //    color = "#19cf86";
+                            //    return color;
+                            //}
+                            return colors[i];
                         })
                         .attr("cy", function (d) {
                             if (cfg.horizontalLayout) {
@@ -566,7 +566,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                             endString = maxValue;
                         }
                         svg.append("text")
-                            .text(startString).style("font-size", "70%")
+                            .text(startString).style("font-size", "95%")
                             .attr("x", function (d) {
                                 if (cfg.horizontalLayout) {
                                     return d3.max([0, (margin - this.getBBox().width / 2)]);
@@ -578,10 +578,15 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     return Math.floor(cfg.height / 2 + (margin + this.getBBox().height));
                                 }
                                 return margin + this.getBBox().height / 2;
-                            });
+                            })
+                            .classed("md-title",true);
+
+
                         if(startString != endString)
+                        {
+                            console.log(startString,endString);
                         svg.append("text")
-                            .text(endString).style("font-size", "70%")
+                            .text(endString).style("font-size", "95%")
                             .attr("x", function (d) {
                                 if (cfg.horizontalLayout) {
                                     return cfg.width - d3.max([this.getBBox().width, (margin + this.getBBox().width / 2)]);
@@ -593,7 +598,9 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     return Math.floor(cfg.height / 2 + (margin + this.getBBox().height));
                                 }
                                 return cfg.height - margin + this.getBBox().height / 2;
-                            });
+                            })
+                            .classed("md-title",true);
+                        }
                     }
 
                     //svg.on("mousemove", function () {
@@ -629,4 +636,173 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
             });
         }
     };
-}]);
+}])
+    .directive('joystick', function() {
+
+        function joystickController ($scope) {
+
+        }
+
+        return {
+            restrict : 'E',
+            controller : ['$scope', function ($scope) {
+                return joystickController($scope);
+            }],
+            scope : {
+                // Using primitives here did not work, so we use an Object, see: http://stackoverflow.com/questions/14049480/what-are-the-nuances-of-scope-prototypal-prototypical-inheritance-in-angularjs
+                position : '='
+            },
+            template : '<canvas class="joystickCanvas"></canvas>',
+            link : function(scope, element) {
+
+                var joystickHeight = 100;
+                var joystickWidth  = 100;
+
+                var center = {
+                    x : joystickHeight / 2,
+                    y : joystickWidth / 2
+                };
+
+                var radiusCircle = 17.5;
+                var radiusBound = 25;
+
+                // Canvas and context element
+                var container = element[0];
+                var canvas = container.children[0];
+                var ctx = canvas.getContext('2d');
+
+                // Id of the touch on the cursor
+                var cursorTouchId = -1;
+                var cursorTouch = {
+                    x : center.x,
+                    y : center.y
+                };
+
+                function resetCanvas() {
+                    canvas.height = joystickHeight;
+                    canvas.width = joystickWidth;
+                }
+
+                function onTouchStart(event) {
+                    var touch = event.targetTouches[0];
+                    console.log(touch);
+                    cursorTouchId = touch.identifier;
+                    cursorTouch = {
+                        x : touch.pageX - touch.target.offsetLeft,
+                        y : touch.pageY - touch.target.offsetTop
+                    };
+                }
+
+                function onTouchMove(event) {
+                    // Prevent the browser from doing its default thing (scroll, zoom)
+                    event.preventDefault();
+                    for(var i = 0; i < event.changedTouches.length; i++){
+                        var touch = event.changedTouches[i];
+
+                        if(cursorTouchId === touch.identifier)
+                        {
+                            cursorTouch = {
+                                x : touch.pageX - touch.target.offsetLeft,
+                                y : touch.pageY - touch.target.offsetTop
+                            };
+
+                            var scaleX = radiusBound / (cursorTouch.x - center.x);
+                            var scaleY = radiusBound / (cursorTouch.y - center.y);
+
+                            if(Math.abs(scaleX) < 1) {
+                                cursorTouch.x = Math.abs(cursorTouch.x - center.x) * scaleX + center.x;
+                            }
+
+                            if (Math.abs(scaleY) < 1) {
+                                cursorTouch.y = Math.abs(cursorTouch.y - center.y) * scaleY + center.y;
+                            }
+
+                            scope.$apply(
+                                scope.position = {
+                                    x : Math.round(((cursorTouch.x - center.x)/radiusBound) * 100),
+                                    y : Math.round(((cursorTouch.y - center.y)/radiusBound) * -100)
+                                }
+                            );
+
+                            break;
+                        }
+                    }
+
+                }
+
+                function onTouchEnd() {
+
+                    cursorTouchId = -1;
+
+                    scope.$apply(
+                        scope.position = {
+                            x : 0,
+                            y : 0
+                        }
+                    );
+
+                    cursorTouch.x = center.x;
+                    cursorTouch.y = center.y;
+                }
+
+                function draw() {
+                    // Clear the canvas
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'cyan';
+                    ctx.lineWidth = 5;
+                    ctx.arc(center.x, center.y, radiusCircle, 0, Math.PI*2, true);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'cyan';
+                    ctx.lineWidth = 2;
+                    ctx.arc(center.x, center.y, radiusBound, 0, Math.PI*2, true);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'cyan';
+                    ctx.lineWidth = 2;
+                    ctx.arc(cursorTouch.x, cursorTouch.y, radiusCircle, 0, Math.PI*2, true);
+                    ctx.stroke();
+
+                    requestAnimFrame(draw);
+                }
+
+                // Check if touch is enabled
+                var touchable = true;
+
+                if(touchable) {
+                    canvas.addEventListener( 'touchstart', onTouchStart, false );
+                    canvas.addEventListener( 'touchmove', onTouchMove, false );
+                    canvas.addEventListener( 'touchend', onTouchEnd, false );
+
+                    window.onorientationchange = resetCanvas;
+                    window.onresize = resetCanvas;
+                }
+
+                // Bind to the values from outside as well
+                scope.$watch('position', function(newval) {
+                    cursorTouch = {
+                        x : ((newval.x * radiusBound) / 100) + center.x,
+                        y : ((newval.y * radiusBound) / -100) + center.y
+                    };
+                });
+
+                resetCanvas();
+                draw();
+
+            }
+
+        };
+
+    });
+window.requestAnimFrame = (function(){
+    return  window.requestAnimationFrame   ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame    ||
+        function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+        };
+})();

@@ -1,6 +1,10 @@
 <div class="container " ng-controller="MainFeedController" layout-fill role="main">
-  <!--<md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)" style="position: fixed">-->
+  <!--<md-button class="md-fab md-fab-bottom-right" aria-label="Add" style="position: fixed">-->
+
   <!--</md-button>-->
+  <!--<joystick class="joystick" position="pos"></joystick>-->
+
+  <!--<p>{{pos.x}}, {{pos.y}}</p>&lt;!&ndash;&ndash;&gt;-->
   <div layout="row" layout-align="end">
     <div ng-if="dataUpTo"><h2>Showing {{stream.length}} tweets from {{recentPeeps.length}} users since {{dataUpTo}}</h2>
     </div>

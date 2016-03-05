@@ -2,6 +2,16 @@
 
 angular.module('users').controller('MainFeedController', ['$scope', '$http', 'moment', '$state', 'Authentication', 'Menus', 'MainFeed', '$interval', 'Socket',
         function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket) {
+            $scope.pos = {
+                x : 0,
+                y : 0
+            };
+
+            $scope.counter = 0;
+
+            $scope.count = function() {
+                $scope.counter += 1;
+            };
             $scope.$state = $state;
             $scope.authentication = Authentication;
             $scope.sortOptions = [
