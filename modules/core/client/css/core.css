@@ -3,8 +3,9 @@
   background: inherit;
 }
 .body{
-  background: linear-gradient(88deg,lavender,mediumspringgreen);
+  /*background: linear-gradient(88deg,lavender,mediumspringgreen);*/
   padding-top: 50px;
+  background: #90ade2;
   overflow-y: auto!important;
 }
 .header {
@@ -19,7 +20,8 @@
 .ng-cloak,
 .x-ng-cloak {
   display: none !important;
-  background: linear-gradient(88deg,lavender,mediumspringgreen);
+  /*background: linear-gradient(88deg,lavender,mediumspringgreen);*/
+  background: #90ade2;
 }
 .header-profile-image {
   opacity: 0.8;
@@ -74,4 +76,31 @@ a:hover .header-profile-image {
   bottom: 20px;
   left: auto;
   position: fixed;
+}
+.customnav {
+  background-color: white;
+}
+
+.icon-bar {
+  background: #90ade2;
+}
+
+#features {
+  background: rgb(47, 72, 158);
+  width: 100%;
+  height: 300px;
+  color: white;
+}
+
+#footer {
+  width: 100%;
+  height: 100%;
+}
+
+.signindiv {
+  padding: 40px;
+}
+.signinbutton {
+  background-color: rgba(211,101,13,1);
+  color: white;
 }

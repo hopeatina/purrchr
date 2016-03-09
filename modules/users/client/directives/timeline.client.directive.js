@@ -345,8 +345,9 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                         .attr("cx", function (d, i) {
                             if (cfg.horizontalLayout) {
                                 var datum = (cfg.dateDimension) ? new Date(d.date).getTime() : d.value;
-                                var x = Math.floor(step * (datum - minValue) + margin);
-                                return x;
+                                console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                return Math.floor(step * (datum - minValue) + margin);
                             }
                             return Math.floor(cfg.width / 2);
                         })
@@ -355,7 +356,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                             if (clicked[i] == undefined) {
                                 clicked[i] = false;
                             }
-                            console.log("mouseover", clicked[i], options.width+"px");
+                            console.log("mouseover", clicked[i], i, options.width+"px", margin, step);
                             if (clicked[i] == false && cfg.horizontalLayout) {
                                 var format, datetime, dateValue;
                                 if (cfg.dateDimension) {
@@ -398,7 +399,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                             }
                         })
                         .on("mouseout", function (d, i) {
-                            console.log("mouseout", clicked[i], options.width+"px");
+                            console.log("mouseout", clicked[i], i, options.width+"px");
                             if (clicked[i] == false) {
                                 d3.select(this)
                                     .style("fill", function (d) {
@@ -540,7 +541,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     .style("opacity", 1).style("display", "block");
                                 clicked[i] = true;
                             }
-                            console.log("clicked", clicked[i], options.width+"px");
+                            console.log("clicked", clicked[i], i, options.width+"px");
                         });
 
                     if (cfg.horizontalLayout == false) {
@@ -624,8 +625,11 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
 
                 //// whenever the bound 'exp' expression changes, execute this
                 scope.$watch('data', function (newVals, oldVals) {
-                    d3.select(element[0]).selectAll("*").remove();
-                    return scope.render(newVals, options);
+                    if (JSON.stringify(newVals) === JSON.stringify(oldVals) ) {
+                        console.log(JSON.stringify(newVals),JSON.stringify(oldVals));
+                        d3.select(element[0]).selectAll("*").remove();
+                        return scope.render(newVals, options);
+                    }
                 });
                 scope.$watch('options', function (newVals, oldVals) {
                     if (newVals != oldVals){

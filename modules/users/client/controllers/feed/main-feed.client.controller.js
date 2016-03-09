@@ -67,6 +67,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
 
                 tweets.forEach(function (tweet, key, tweets) {
                     var inArray = false;
+                    console.log(tweet);
                     if (tweet.user) {
                         for (var i = 0; i < $scope.recentPeeps.length; i++) {
                             if (tweet.user.id === $scope.recentPeeps[i].user.id || $scope.recentPeeps === []) {

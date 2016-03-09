@@ -1,27 +1,39 @@
 <section ng-controller="HomeController">
-  <div class="text-center">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-        <img alt="PURRCHR" src="https://vectr.com/theonlyhope/designs/untitled-vABP5wFll.svg" style="width: 200px;height: 200px">
-      </div>
+  <div id="top" layout="column" layout-align="center center">
+    <div>
+      <img alt="PURRCHR" src="https://vectr.com/theonlyhope/designs/untitled-j5OwItprW.svg"
+           style="width: 300px;height: 300px">
     </div>
     <br>
-    <div class="row">
-      <h1 >
+    <!----><div layout="column" layout-align="center center">
+      <h1>
         Purrchr
       </h1>
-      <h1 >
-        Never Miss a Tweet.
-      </h1>
+      <div layout="row" layout-align="center center">
+        <h1>Never miss the tweets that matter to you.</h1>
+      </div>
+    <!--</div>-->
+    <div class="signindiv">
+      <md-button class="signinbutton" ng-click="callOauthProvider('/api/auth/twitter')">Sign in with Twitter
+      </md-button>
     </div>
-    <div class="row">
-      <md-button  class="md-raised md-primary" ng-click="callOauthProvider('/api/auth/twitter')">Sign in with Twitter</md-button>
+  </div>
+  <div id="features" layout="column" layout-align="space-around center">
+    <div layout="row" layout-align="center center">
+      <h3 >Quickly cut through the noise. Browse your timeline by user. </h3>
+      <!--<img flex="25">-->
+    </div>
+    <div layout="row" layout-align="center center">
+      <!--&lt;!&ndash;&ndash;&gt;<img flex="25">-->
+      <h3 >Follow hashtags and topics you're interested and view engaging conversations.</h3>
+    </div>
+    <div layout="row" layout-align="center center">
+      <h3>Follow hashtags and topics you're interested and view engaging conversations.</h3>
     </div>
   </div>
-  <div class="text-center" >
-    <h3>Cut through the noise. Check out happened and what's happening on your timeline.</h3>
-  </div>
-  <div class="text-center" >
-    <h3>Follow hashtags and topics you're interested and view engaging conversations.</h3>
-  </div>
+    </div>
+
 </section>
+<!--<md-toolbar id="footer">-->
+  <!--Place footer info here.-->
+<!--</md-toolbar>-->
