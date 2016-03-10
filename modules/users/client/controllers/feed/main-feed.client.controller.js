@@ -17,11 +17,12 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.sortOptions = [
                 {name: "Most Frequent", value: "-tweets.length"},
                 {name: "Least Frequent", value: "tweets.length"},
-                {name: "Recent", value: ""},
-                {name: "Dopeness", value: ""},
-                {name: "Virality", value: ""},
-                {name: "Tweet Count", value: ""},
-                {name: "Fire", value: ""}];
+                {name: "Recent", value: ""}
+                //{name: "Dopeness", value: ""},
+                //{name: "Virality", value: ""},
+                //{name: "Tweet Count", value: ""},
+                //{name: "Fire", value: ""}
+             ];
             var self = this, j = 0, counter = 0;
             var temptweet = [];
             $scope.modes = [];

@@ -17,15 +17,10 @@
   <!--</md-grid-list>-->
   <div layout="column" layout-align="center center">
     <div class="hashtag-title" layout-align="center"><h1>{{selectedHashtag}}</h1></div>
-    <md-button class="md-raised md-button md-primary" aria-label="Settings">
-      Purrch<!--<md-icon md-svg-icon="img/icons/menu.svg"></md-icon>-->
-    </md-button>
-    <md-button class=”md-raised ” aria-label=”Add” ng-click="toggleSettings()"> SETTINGS</md-button>
+    <md-button ng-hide="isOpen" class="md-raised md-button md-primary" aria-label=”Add” ng-click="toggleSettings()"> MORE</md-button>
   </div>
   <md-card ng-show="isOpen" class="hashtags ">
-    <div layout="row" layout-align="center">
-    </div>
-    <div layout="row" layout-align="center">
+    <div layout="column" layout-align="center center">
       <h3>Your Hashtags:</h3>
       <md-chips ng-model="suggestedHashtags" placeholder="Add an item">
         <md-chip-template ng-click="switchHash($chip)">
@@ -34,11 +29,11 @@
           </span>
         </md-chip-template>
       </md-chips>
-      <md-button class="md-raised" ng-click="toggleSettings()">CLOSE</md-button>
+      <md-button class="signinbutton" ng-click="toggleSettings()">CLOSE</md-button>
     </div>
   </md-card>
   <div layout="row" layout-align="end">
-    <md-button ng-click="go('api/feed/hashtagtimeline')">Refresh Hashtags</md-button>
+    <md-button ng-click="go('api/feed/hashtagtimeline')">Update</md-button>
     <md-select ng-model="sortOptionSelected" placeholder="Sort By:">
       <md-option ng-repeat="option in sortOptions" value="{{option}}">
         {{option}}

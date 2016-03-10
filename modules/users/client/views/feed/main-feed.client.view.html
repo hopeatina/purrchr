@@ -1,29 +1,34 @@
-<div class="container " ng-controller="MainFeedController" layout-fill role="main">
+<div class="" ng-controller="MainFeedController" layout-fill role="main">
   <!--<md-button class="md-fab md-fab-bottom-right" aria-label="Add" style="position: fixed">-->
 
   <!--</md-button>-->
   <!--<joystick class="joystick" position="pos"></joystick>-->
 
   <!--<p>{{pos.x}}, {{pos.y}}</p>&lt;!&ndash;&ndash;&gt;-->
-  <div layout="row" layout-align="end">
-    <div ng-if="dataUpTo"><h2>Showing {{stream.length}} tweets from {{recentPeeps.length}} users since {{dataUpTo}}</h2>
+
+  <md-toolbar >
+    <div layout="row" layout-align="space-around center">
+      <h4 flex="15">{{stream.length}} Tweets</h4>
+      <h4 flex="25"> {{recentPeeps.length}} Users </h4>
+      <h4 flex="25">Since {{dataUpTo}}</h4>
+      <md-select flex="30" ng-model="sortOptionSelected" placeholder="Sort By:">
+        <md-option ng-repeat="option in sortOptions" value="{{option.value}}">
+          {{option.name}}
+        </md-option>
+      </md-select>
     </div>
+  </md-toolbar>
+
+  <div layout="row" layout-align="center" class="signindiv">
+    <md-button class="signinbutton" ng-if="QueueCount > 0" ng-click="updateFeed()">{{QueueCount}} New Tweets
+    </md-button>
+    <!--&lt;!&ndash;&ndash;&gt;<md-button ng-click="goPerUser()">Update</md-button>-->
   </div>
-  <md-button class="md-raised md-alert" ng-if="QueueCount > 0" ng-click="updateFeed()">{{QueueCount}} New Tweets
-  </md-button>
   <!--<div layout="row" layout-align="center">-->
   <!--<md-progress-circular md-mode="{{modes[4]}}" md-diameter="20"></md-progress-circular>-->
   <!--</div>-->
-  <div layout="row" layout-align="end">
-    <md-button ng-click="goPerUser()">REFRESH HOME TIMELINE</md-button>
-    <md-select ng-model="sortOptionSelected" placeholder="Sort By:">
-      <md-option ng-repeat="option in sortOptions" value="{{option.value}}">
-        {{option.name}}
-      </md-option>
-    </md-select>
-  </div>
   <div ng-if="recentPeeps" ng-repeat="person in recentPeeps | orderBy : sortOptionSelected "
-       class="" ng-controller="SingleTweetCtrl">
+       class="container" ng-controller="SingleTweetCtrl">
     <!---->
     <!--| 'orderBy : '-tweets.length"-->
     <md-card class=" usercard">

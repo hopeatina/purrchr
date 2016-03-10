@@ -2,38 +2,39 @@
   <div id="top" layout="column" layout-align="center center">
     <div>
       <img alt="PURRCHR" src="https://vectr.com/theonlyhope/designs/untitled-j5OwItprW.svg"
-           style="width: 300px;height: 300px">
+           style="width: 250px;height: 250px">
     </div>
     <br>
-    <!----><div layout="column" layout-align="center center">
+    <!---->
+    <div layout="column" layout-align="center center" style="margin-top: -60px;">
       <h1>
         Purrchr
       </h1>
-      <div layout="row" layout-align="center center">
+      <!--<div layout="row" layout-align="center center">-->
         <h1>Never miss the tweets that matter to you.</h1>
+      <!--</div>-->
+      <!--</div>-->
+      <div class="signindiv">
+        <md-button class="signinbutton" ng-click="callOauthProvider('/api/auth/twitter')">Sign in with Twitter
+        </md-button>
       </div>
-    <!--</div>-->
-    <div class="signindiv">
-      <md-button class="signinbutton" ng-click="callOauthProvider('/api/auth/twitter')">Sign in with Twitter
-      </md-button>
+    </div>
+    <div id="features" layout="column" layout-align="space-around center">
+      <div layout="row" layout-align="center center">
+        <h3>Quickly cut through the noise. Browse your timeline by user. </h3>
+        <!--<img flex="25">-->
+      </div>
+      <div layout="row" layout-align="center center">
+        <!--&lt;!&ndash;&ndash;&gt;<img flex="25">-->
+        <h3>Follow hashtags and topics you're interested in and join engaging conversations.</h3>
+      </div>
+      <div layout="row" layout-align="center center">
+        <h3>Control your feed. Filter based on Time of Day, Frequency, Virality and many others.</h3>
+      </div>
     </div>
   </div>
-  <div id="features" layout="column" layout-align="space-around center">
-    <div layout="row" layout-align="center center">
-      <h3 >Quickly cut through the noise. Browse your timeline by user. </h3>
-      <!--<img flex="25">-->
-    </div>
-    <div layout="row" layout-align="center center">
-      <!--&lt;!&ndash;&ndash;&gt;<img flex="25">-->
-      <h3 >Follow hashtags and topics you're interested and view engaging conversations.</h3>
-    </div>
-    <div layout="row" layout-align="center center">
-      <h3>Follow hashtags and topics you're interested and view engaging conversations.</h3>
-    </div>
-  </div>
-    </div>
 
 </section>
 <!--<md-toolbar id="footer">-->
-  <!--Place footer info here.-->
+<!--Place footer info here.-->
 <!--</md-toolbar>-->

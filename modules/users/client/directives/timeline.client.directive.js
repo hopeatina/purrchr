@@ -345,8 +345,8 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                         .attr("cx", function (d, i) {
                             if (cfg.horizontalLayout) {
                                 var datum = (cfg.dateDimension) ? new Date(d.date).getTime() : d.value;
-                                console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
-                                console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
                                 return Math.floor(step * (datum - minValue) + margin);
                             }
                             return Math.floor(cfg.width / 2);
@@ -585,7 +585,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
 
                         if(startString != endString)
                         {
-                            console.log(startString,endString);
+                            //console.log(startString,endString);
                         svg.append("text")
                             .text(endString).style("font-size", "95%")
                             .attr("x", function (d) {
@@ -626,7 +626,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                 //// whenever the bound 'exp' expression changes, execute this
                 scope.$watch('data', function (newVals, oldVals) {
                     if (JSON.stringify(newVals) === JSON.stringify(oldVals) ) {
-                        console.log(JSON.stringify(newVals),JSON.stringify(oldVals));
+                        //console.log(JSON.stringify(newVals),JSON.stringify(oldVals));
                         d3.select(element[0]).selectAll("*").remove();
                         return scope.render(newVals, options);
                     }
