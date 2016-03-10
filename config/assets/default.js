@@ -30,7 +30,8 @@ module.exports = {
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },
     css: [
-      'modules/*/client/css/*.css'
+      'modules/*/client/css/*.css',
+        'https://fonts.googleapis.com/icon?family=Material+Icons'
     ],
     less: [
       'modules/*/client/less/*.less'

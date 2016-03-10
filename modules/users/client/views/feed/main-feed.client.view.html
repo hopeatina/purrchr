@@ -6,12 +6,18 @@
 
   <!--<p>{{pos.x}}, {{pos.y}}</p>&lt;!&ndash;&ndash;&gt;-->
 
-  <md-toolbar >
+  <md-toolbar style="height: 50px;">
     <div layout="row" layout-align="space-around center">
-      <h4 flex="15">{{stream.length}} Tweets</h4>
-      <h4 flex="25"> {{recentPeeps.length}} Users </h4>
-      <h4 flex="25">Since {{dataUpTo}}</h4>
-      <md-select flex="30" ng-model="sortOptionSelected" placeholder="Sort By:">
+      <h4>{{stream.length}} Tweets</h4>
+      <div layout="row" layout-align="center center">
+        <i class="material-icons md-48">person_outline</i>
+        <h4> {{recentPeeps.length}} </h4>
+      </div>
+      <div layout="row" layout-align="center center">
+        <i class="material-icons md-48">access_time</i>
+        <h4> Since {{dataUpTo}}</h4>
+      </div>
+      <md-select ng-model="sortOptionSelected" placeholder="Sort By:">
         <md-option ng-repeat="option in sortOptions" value="{{option.value}}">
           {{option.name}}
         </md-option>

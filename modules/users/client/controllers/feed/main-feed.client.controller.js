@@ -211,4 +211,9 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.sortOptions = ["Recent", "Dopeness", "Virality", "Number of Tweets", "Fire"]
             $scope.go('api/feed/hashtagtimeline');
 
-        }]);
+        }])
+    .config(function($mdIconProvider) {
+        $mdIconProvider
+            .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
+            .defaultIconSet('img/icons/sets/core-icons.svg', 24);
+    });;
