@@ -27,8 +27,8 @@ module.exports = {
   // for obsecurity reasons
   sessionKey: 'sessionId',
   sessionCollection: 'sessions',
-  logo: 'modules/core/client/img/brand/purrchr_logo1.png',
-  favicon: 'modules/core/client/img/brand/purrchr_logo1.png',
+  logo: 'modules/core/client/img/brand/purrchr_logo2.png',
+  favicon: 'modules/core/client/img/brand/purrchr_logo2.png',
   //favicon: 'https://vectr.com/theonlyhope/designs/untitled-vABP5wFll',
   uploads: {
     profileUpload: {
