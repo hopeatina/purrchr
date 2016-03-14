@@ -2,6 +2,9 @@
 
 angular.module('core').controller('HomeController', ['$scope', 'Authentication','$state','$window',
   function ($scope, Authentication, $state,$window) {
+    $window.Maitre = { uuid: "MF3af70aaa3f" };
+    console.log($window);
+
     // This provides Authentication context.
     $scope.authentication = Authentication;
     $scope.callOauthProvider = function (url) {

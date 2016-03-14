@@ -70,11 +70,17 @@ angular.module('users').config(['$stateProvider',
       })
       .state('main-feed',{
         url: '/feed',
-        templateUrl: 'modules/users/client/views/feed/main-feed.client.view.html'
+        templateUrl: 'modules/users/client/views/feed/main-feed.client.view.html',
+        data: {
+          roles: ['user', 'admin']
+        }
       })
         .state('hashtags',{
           url: '/hashtags',
-          templateUrl: 'modules/users/client/views/feed/hashtags.client.view.html'
+          templateUrl: 'modules/users/client/views/feed/hashtags.client.view.html',
+          data: {
+            roles: ['user', 'admin']
+          }
         });
   }
 ]);

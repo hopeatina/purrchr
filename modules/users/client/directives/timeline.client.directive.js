@@ -801,6 +801,36 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
 
         };
 
+    })
+    .directive('script', function() {
+        return {
+            restrict: 'E',
+            scope: false,
+            link: function(scope, elem, attr)
+            {
+                if (attr.type==='text/javascript-lazy')
+                {
+                    var s = document.createElement("script");
+                    s.type = "text/javascript";
+                    var src = elem.attr('src');
+                    if(src!==undefined)
+                    {
+                        s.src = src;
+                    }
+                    else
+                    {
+                        var code = elem.text();
+                        s.text = code;
+                    }
+                    s.setAttribute('data-maitre', '');
+                    s.setAttribute('async','');
+                   var parent = elem.parent();
+                    console.log(s);
+                    parent.append(s);
+                    elem.remove();
+                }
+            }
+        };
     });
 window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame   ||
