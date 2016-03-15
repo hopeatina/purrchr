@@ -104,6 +104,9 @@ a:hover .header-profile-image {
   background-color: rgba(211,101,13,1);
   color: white;
 }
+.sortby {
+  padding-bottom: 10px; color: #E1E3F1;
+}
 
 /*[data-maitre-submit-button] {*/
   /*background-color: rgba(211,101,13,1);*/

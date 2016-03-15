@@ -56,8 +56,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
 
             $scope.socket = Socket;
             $scope.updateFeed = function () {
-                //console.log(temptweet);
-                checkTweets(temptweet);
+                //console.log(temptw
+                // checkTweets(temptweet);
                 temptweet = [];
                 $scope.QueueCount = 0;
 
@@ -66,9 +66,10 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
 
             function checkTweets(tweets) {
 
+
                 tweets.forEach(function (tweet, key, tweets) {
                     var inArray = false;
-                    console.log(tweet);
+                    console.log(tweet.user.screen_name,tweet.text);
                     if (tweet.user) {
                         for (var i = 0; i < $scope.recentPeeps.length; i++) {
                             if (tweet.user.id === $scope.recentPeeps[i].user.id || $scope.recentPeeps === []) {
@@ -84,7 +85,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                             //console.log(tweet);
                         }
                     }
-                });
+                })
             }
 
             $scope.goPerUser = function () {
@@ -152,8 +153,10 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 specials: "inline"
             };
             $scope.tweetsCollapsed = false;
+            $scope.expandarrow = $scope.tweetsCollapsed ? "expand_less": "expand_more";
             $scope.toggleTweets = function () {
                 $scope.tweetsCollapsed = $scope.tweetsCollapsed ? false : true;
+                $scope.expandarrow = $scope.tweetsCollapsed ? "expand_less": "expand_more";
                 $scope.timelineConfig = $scope.tweetsCollapsed ? {
                     horizontalLayout: false,
                     color: "55acee",
@@ -173,6 +176,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 };
                 console.log($scope.timelineConfig, $scope.tweetsCollapsed);
             };
+
 
         }])
     .controller('HashtagsController', ['$scope', '$http', 'moment', 'Authentication',

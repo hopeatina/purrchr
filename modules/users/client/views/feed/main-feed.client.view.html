@@ -17,7 +17,7 @@
         <i class="material-icons md-48">access_time</i>
         <h4> Since {{dataUpTo}}</h4>
       </div>
-      <md-select ng-model="sortOptionSelected" placeholder="Sort By:">
+      <md-select class="sortby" ng-model="sortOptionSelected" placeholder="Sort By:">
         <md-option ng-repeat="option in sortOptions" value="{{option.value}}">
           {{option.name}}
         </md-option>
@@ -41,7 +41,7 @@
       <md-card-content class="">
         <div class="" layout="row" layout-align="space-around center">
           <div flex="33" layout="column" layout-align="center center" class="">
-            <img class="md-avatar-icon" ng-if="person" src="{{person.user.profile_image_url}}">
+            <img style="width: 48px; height: 48px;" class="md-avatar-icon" ng-if="person" src="{{person.user.profile_image_url}}">
           </div>
           <div flex="45" layout="column" layout-align="center center" class="">
             <span class="md-title">{{person.user.name}}</span>
@@ -56,9 +56,9 @@
         <div flex layout="row" layout-align="center" class="">
           <div ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"></div>
         </div>
-        <div flex layout="row" layout-align="center center" class="">
+        <div ng-if="person.tweets.length > 1" flex layout="row" layout-align="center center" class="">
           <!--class="animated rotateOutDownLeft"-->
-          <md-button ng-click="toggleTweets()">View All Tweets</md-button>
+          <md-button class="md-icon-button" aria-label="expandarrow" ng-click="toggleTweets()"><i class="material-icons md-48">{{expandarrow}}</i></md-button>
         </div>
         <div ng-show="tweetsCollapsed" layout="row" layout-align="center center">
           <div timeline data="person.tweets" options="timelineConfig"

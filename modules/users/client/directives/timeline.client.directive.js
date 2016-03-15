@@ -390,11 +390,11 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                 }
                                 tip.append("div").html(dateValue)
                                     .style("width", options.width+"px")
-                                    .style("layout","row")
-                                    .style("layout-align","center center");
+                                    .attr("layout","column")
+                                    .attr("layout-align","center center");
                                 tip.transition()
                                     .duration(100)
-                                    .style("opacity", 1).style("display", "block").attr("layout","row")
+                                    .style("opacity", 1).style("display", "block").attr("layout","column")
                                     .attr("layout-align","center center");
                             }
                         })
@@ -428,7 +428,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                         return d;
                                     }; // TODO
                                     datetime = d.value;
-                                    dateValue = d.name + " <small>(" + d.value + ")</small>";
+                                    dateValue = "<div> " +d.name + "</div>" + " <small>(" + d.value + ")</small>";
                                 }
                                 d3.select(this)
                                     .style("fill", function (d) {
@@ -448,14 +448,17 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
                                     d3.select(element[0])
                                 }
-                                tip.append("div").html(dateValue).style("width", options.width+"px")
-                                    .style("layout","row")
-                                    .style("layout-align","center center");
+                                tip.append("div").style("width", options.width +"px")
+                                    .attr("layout","column")
+                                    .attr("layout-align","center center")
+                                    .style("text-align", "center").html(dateValue);
                                 tip.transition()
                                     .duration(100)
-                                    .style("opacity", 0.8).style("display", "block")
-                                    .style("width", options.width+"px")
-                                ;
+                                    .style("opacity", 1).style("display", "block")
+                                    .style("width", options.width +"px").attr("layout","column")
+                                    .attr("layout-align","center center")
+                                    .style("text-align", "center");
+
                             }
 
                         })
@@ -535,10 +538,12 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                 }
                                 tip.append("div").html(dateValue).style("width", options.width+"px")
                                     .style("layout","row")
-                                    .style("layout-align","center center");
+                                    .style("layout-align","center center")
+                                    .style("text-align", "center");
                                 tip.transition()
                                     .duration(100)
-                                    .style("opacity", 1).style("display", "block");
+                                    .style("opacity", 1).style("display", "block")
+                                    .style("text-align", "center");
                                 clicked[i] = true;
                             }
                             console.log("clicked", clicked[i], i, options.width+"px");
