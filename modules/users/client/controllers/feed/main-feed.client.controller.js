@@ -69,7 +69,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
 
                 tweets.forEach(function (tweet, key, tweets) {
                     var inArray = false;
-                    console.log(tweet.user.screen_name,tweet.text);
+                    //console.log(tweet.user.screen_name,tweet.text);
                     if (tweet.user) {
                         for (var i = 0; i < $scope.recentPeeps.length; i++) {
                             if (tweet.user.id === $scope.recentPeeps[i].user.id || $scope.recentPeeps === []) {
@@ -109,12 +109,12 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 if (data.user) {
                     temptweet.push(data);
                     $scope.QueueCount = temptweet.length;
-                    console.log($scope.QueueCount);
+                    //console.log($scope.QueueCount);
                 }
             });
             $scope.socket.on('connected', function (data) {
                 emitMsj("start stream");
-                console.log("THIS ACTUALLY WORKED SOCKETS: ", data);
+                console.log("THIS ACTUALLY WORKED SOCKETS: ");
 
             });
             //$scope.go = function (url) {
@@ -174,7 +174,6 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                     labelFormat: "%I:%M",
                     specials: "inline"
                 };
-                console.log($scope.timelineConfig, $scope.tweetsCollapsed);
             };
 
 
@@ -185,7 +184,6 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.suggestedHashtags = ["RIPTwitter", "Purrchrocks", "TeamFollowBack", "SolidSaturdays"];
             $scope.toggleSettings = function () {
                 $scope.isOpen = $scope.isOpen ? false : true;
-                console.log($scope.isOpen);
             };
             $scope.switchHash = function (chip) {
                 //console.log(chip);
