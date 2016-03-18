@@ -18,7 +18,17 @@ var _ = require('lodash'),
   endOfLine = require('os').EOL,
   protractor = require('gulp-protractor').protractor,
   webdriver_update = require('gulp-protractor').webdriver_update,
-  webdriver_standalone = require('gulp-protractor').webdriver_standalone;
+  webdriver_standalone = require('gulp-protractor').webdriver_standalone,
+ minify = require('gulp-minify');
+
+gulp.task('compress', function() {
+    gulp.src('lib/*.js')
+        .pipe(minify({
+            exclude: ['tasks'],
+            ignoreFiles: ['.combo.js', '-min.js']
+        }))
+        .pipe(gulp.dest('dist'))
+});
 
 // Set NODE_ENV to 'test'
 gulp.task('env:test', function () {
@@ -296,5 +306,5 @@ gulp.task('debug', function (done) {
 
 // Run the project in production mode
 gulp.task('prod', function (done) {
-  runSequence('templatecache', 'build', 'env:prod', 'lint', ['nodemon', 'watch'], done);
+  runSequence('templatecache', 'build', 'env:prod', 'lint','compress', ['nodemon', 'watch'], done);
 });

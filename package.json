@@ -72,6 +72,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
+    "glossary": "^0.1.1",
     "grunt-concurrent": "^2.0.0",
     "grunt-contrib-copy": "~0.8.0",
     "grunt-contrib-csslint": "^0.4.0",
@@ -103,6 +104,7 @@
     "gulp-less": "^3.0.3",
     "gulp-livereload": "^3.8.0",
     "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-minify": "0.0.5",
     "gulp-mocha": "^2.1.2",
     "gulp-ng-annotate": "^1.0.0",
     "gulp-nodemon": "^2.0.3",
@@ -122,6 +124,7 @@
     "mock-fs": "~3.4.0",
     "run-sequence": "^1.1.1",
     "should": "^7.0.1",
-    "supertest": "^1.0.1"
+    "supertest": "^1.0.1",
+    "twitter-text": "^1.13.4"
   }
 }

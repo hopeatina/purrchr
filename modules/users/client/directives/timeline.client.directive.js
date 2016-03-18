@@ -76,12 +76,17 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     dateDimension: true
                 };
 
+
+                if ( events.length == 1) {
+                    options.width = 50;
+                }
                 //default configuration override
                 if (options !== undefined) {
                     for (var i in options) {
                         cfg[i] = options[i];
                     }
                 }
+
 
                 if (cfg.addNow !== false) {
                     events.push({date: new Date(), name: cfg.addNowLabel || "Today"});
@@ -147,6 +152,10 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                         //options.width = options.width * .6;
                     } else if (scope.specials == undefined) {
                         //options.width = options.width * .6;
+                    }
+
+                    if ( events.length == 1) {
+                        options.width = 50;
                     }
 
                     //default configuration overrid
@@ -289,205 +298,121 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                         })
                         .style("stroke-width", cfg.lineWidth);
 
-                    svg.selectAll("circle")
-                        .data(events).enter()
-                        .append("circle")
-                        .attr("class", "timeline-event")
-                        .attr("r", function (d) {
-                            if (d.radius !== undefined) {
-                                return d.radius;
-                            }
-                            return cfg.radius;
-                        })
-                        .style("stroke", function (d) {
-                                if (d.color !== undefined) {
-                                    return d.color;
+
+                    if (events.length > 1) {
+                        svg.selectAll("circle")
+                            .data(events).enter()
+                            .append("circle")
+                            .attr("class", "timeline-event")
+                            .attr("r", function (d) {
+                                if (d.radius !== undefined) {
+                                    return d.radius;
                                 }
-                                if (d.series !== undefined) {
-                                    if (series.indexOf(d.series) < 0) {
-                                        series.push(d.series);
+                                return cfg.radius;
+                            })
+                            .style("stroke", function (d) {
+                                    if (d.color !== undefined) {
+                                        return d.color;
                                     }
-                                    //console.log(d.series, series, series.indexOf(d.series));
-                                    return cfg.seriesColor(series.indexOf(d.series));
+                                    if (d.series !== undefined) {
+                                        if (series.indexOf(d.series) < 0) {
+                                            series.push(d.series);
+                                        }
+                                        //console.log(d.series, series, series.indexOf(d.series));
+                                        return cfg.seriesColor(series.indexOf(d.series));
+                                    }
+                                    return cfg.color;
                                 }
-                                return cfg.color;
-                            }
-                        )
-                        .style("stroke-width", function (d) {
-                            if (d.lineWidth !== undefined) {
-                                return d.lineWidth;
-                            }
-                            return cfg.lineWidth;
-                        })
-                        .style("fill", function (d,i) {
-                            var color;
-                            if (d.background !== undefined) {
-                                console.log(d);
-                                return d.background;
-                            }
-                            //if (d.name.substr(0, 2) == ".@"){
-                            //    color = "#1B95E0";
-                            //    return color;
-                            //}
-                            //else if (d.name.substr(0, 2) == "RT") {
-                            //    color = "#19cf86";
-                            //    return color;
-                            //}
-                            return colors[i];
-                        })
-                        .attr("cy", function (d) {
-                            if (cfg.horizontalLayout) {
-                                return Math.floor(cfg.height / 2);
-                            }
-                            var datum = (cfg.dateDimension) ? new Date(d.date).getTime() : d.value;
-                            return Math.floor(step * (datum - minValue) + margin);
-                        })
-                        .attr("cx", function (d, i) {
-                            if (cfg.horizontalLayout) {
+                            )
+                            .style("stroke-width", function (d) {
+                                if (d.lineWidth !== undefined) {
+                                    return d.lineWidth;
+                                }
+                                return cfg.lineWidth;
+                            })
+                            .style("fill", function (d, i) {
+                                var color;
+                                if (d.background !== undefined) {
+                                    console.log(d);
+                                    return d.background;
+                                }
+                                //if (d.name.substr(0, 2) == ".@"){
+                                //    color = "#1B95E0";
+                                //    return color;
+                                //}
+                                //else if (d.name.substr(0, 2) == "RT") {
+                                //    color = "#19cf86";
+                                //    return color;
+                                //}
+                                return colors[i];
+                            })
+                            .attr("cy", function (d) {
+                                if (cfg.horizontalLayout) {
+                                    return Math.floor(cfg.height / 2);
+                                }
                                 var datum = (cfg.dateDimension) ? new Date(d.date).getTime() : d.value;
-                                //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
-                                //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
                                 return Math.floor(step * (datum - minValue) + margin);
-                            }
-                            return Math.floor(cfg.width / 2);
-                        })
-                        .on("mouseover", function (d) {
-
-                            if (clicked[i] == undefined) {
-                                clicked[i] = false;
-                            }
-                            console.log("mouseover", clicked[i], i, options.width+"px", margin, step);
-                            if (clicked[i] == false && cfg.horizontalLayout) {
-                                var format, datetime, dateValue;
-                                if (cfg.dateDimension) {
-                                    format = d3.time.format(cfg.dateFormat);
-                                    datetime = format(new Date(d.date));
-                                    dateValue = (datetime !== "") ? (d.name + " <small>(" + datetime + ")</small>") : d.name;
-                                } else {
-                                    format = function (d) {
-                                        return d;
-                                    }; // TODO
-                                    datetime = d.value;
-                                    dateValue = d.name + " <small>(" + d.value + ")</small>";
+                            })
+                            .attr("cx", function (d, i) {
+                                if (cfg.horizontalLayout) {
+                                    var datum = (cfg.dateDimension) ? new Date(d.date).getTime() : d.value;
+                                    //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                    //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                    return Math.floor(step * (datum - minValue) + margin);
                                 }
-                                d3.select(this)
-                                    .style("fill", function (d) {
-                                        if (d.color !== undefined) {
-                                            return d.color;
-                                        }
-                                        return cfg.color;
-                                    }).transition()
-                                    .duration(100).attr("r", function (d) {
-                                    if (d.radius !== undefined) {
-                                        return Math.floor(d.radius * 1.5);
-                                    }
-                                    return Math.floor(cfg.radius * 1.5);
-                                });
-                                tip.html("");
-                                if (d.img !== undefined) {
-                                    tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
-                                    d3.select(element[0])
+                                return Math.floor(cfg.width / 2);
+                            })
+                            .on("mouseover", function (d) {
+
+                                if (clicked[i] == undefined) {
+                                    clicked[i] = false;
                                 }
-                                tip.append("div").html(dateValue)
-                                    .style("width", options.width+"px")
-                                    .attr("layout","column")
-                                    .attr("layout-align","center center");
-                                tip.transition()
-                                    .duration(100)
-                                    .style("opacity", 1).style("display", "block").attr("layout","column")
-                                    .attr("layout-align","center center");
-                            }
-                        })
-                        .on("mouseout", function (d, i) {
-                            console.log("mouseout", clicked[i], i, options.width+"px");
-                            if (clicked[i] == false) {
-                                d3.select(this)
-                                    .style("fill", function (d) {
-                                        if (d.background !== undefined) {
-                                            return d.background;
-                                        }
-                                        return cfg.background;
-                                    }).transition()
-                                    .duration(100).attr("r", function (d) {
-                                    if (d.radius !== undefined) {
-                                        return d.radius;
+                                console.log("mouseover", clicked[i], i, options.width + "px", margin, step);
+                                if (clicked[i] == false && cfg.horizontalLayout) {
+                                    var format, datetime, dateValue;
+                                    if (cfg.dateDimension) {
+                                        format = d3.time.format(cfg.dateFormat);
+                                        datetime = format(new Date(d.date));
+                                        dateValue = (datetime !== "") ? (d.name + " <small>(" + datetime + ")</small>") : d.name;
+                                    } else {
+                                        format = function (d) {
+                                            return d;
+                                        }; // TODO
+                                        datetime = d.value;
+                                        dateValue = d.name + " <small>(" + d.value + ")</small>";
                                     }
-                                    return cfg.radius;
-                                });
-                                tip.transition()
-                                    .duration(100)
-                                    .style("opacity", 0).style("display", "none");
-                            } else {
-                                var format, datetime, dateValue;
-                                if (cfg.dateDimension) {
-                                    format = d3.time.format(cfg.dateFormat);
-                                    datetime = format(new Date(d.date));
-                                    dateValue = (datetime !== "") ? (d.name + " <small>(" + datetime + ")</small>") : d.name;
-                                } else {
-                                    format = function (d) {
-                                        return d;
-                                    }; // TODO
-                                    datetime = d.value;
-                                    dateValue = "<div> " +d.name + "</div>" + " <small>(" + d.value + ")</small>";
+                                    d3.select(this)
+                                        .style("fill", function (d) {
+                                            if (d.color !== undefined) {
+                                                return d.color;
+                                            }
+                                            return cfg.color;
+                                        }).transition()
+                                        .duration(100).attr("r", function (d) {
+                                        if (d.radius !== undefined) {
+                                            return Math.floor(d.radius * 1.5);
+                                        }
+                                        return Math.floor(cfg.radius * 1.5);
+                                    });
+                                    tip.html("");
+                                    if (d.img !== undefined) {
+                                        tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
+                                        d3.select(element[0])
+                                    }
+                                    tip.append("div").html(dateValue)
+                                        .style("width", options.width + "px")
+                                        .attr("layout", "column")
+                                        .attr("layout-align", "center center");
+                                    tip.transition()
+                                        .duration(100)
+                                        .style("opacity", 1).style("display", "block").attr("layout", "column")
+                                        .attr("layout-align", "center center");
                                 }
-                                d3.select(this)
-                                    .style("fill", function (d) {
-                                        if (d.color !== undefined) {
-                                            return d.color;
-                                        }
-                                        return cfg.color;
-                                    }).transition()
-                                    .duration(100).attr("r", function (d) {
-                                    if (d.radius !== undefined) {
-                                        return Math.floor(d.radius * 1.5);
-                                    }
-                                    return Math.floor(cfg.radius * 1.5);
-                                });
-                                tip.html("");
-                                if (d.img !== undefined) {
-                                    tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
-                                    d3.select(element[0])
-                                }
-                                tip.append("div").style("width", options.width +"px")
-                                    .attr("layout","column")
-                                    .attr("layout-align","center center")
-                                    .style("text-align", "center").html(dateValue);
-                                tip.transition()
-                                    .duration(100)
-                                    .style("opacity", 1).style("display", "block")
-                                    .style("width", options.width +"px").attr("layout","column")
-                                    .attr("layout-align","center center")
-                                    .style("text-align", "center");
-
-                            }
-
-                        })
-                        .on("click", function (d, i) {
-
-                            if (clicked[i] == true) {
-                                d3.select(this)
-                                    .style("fill", function (d) {
-                                        if (d.background !== undefined) {
-                                            return d.background;
-                                        }
-                                        return cfg.background;
-                                    }).transition()
-                                    .duration(100).attr("r", function (d) {
-                                    if (d.radius !== undefined) {
-                                        return d.radius;
-                                    }
-                                    return cfg.radius;
-                                });
-                                tip.transition()
-                                    .duration(100)
-                                    .style("opacity", 0).style("display", "none");
-                                clicked[i] = false;
-                                currentClick = null;
-
-                            } else {
-                                if (currentClick != null)
-                                {
-                                    d3.select(currentClick)
+                            })
+                            .on("mouseout", function (d, i) {
+                                console.log("mouseout", clicked[i], i, options.width + "px");
+                                if (clicked[i] == false) {
+                                    d3.select(this)
                                         .style("fill", function (d) {
                                             if (d.background !== undefined) {
                                                 return d.background;
@@ -503,51 +428,203 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     tip.transition()
                                         .duration(100)
                                         .style("opacity", 0).style("display", "none");
-                                    console.log(this, "Remove clickedpoints");
-                                }
-                                currentClick = this;
-                                var format, datetime, dateValue;
-                                if (cfg.dateDimension) {
-                                    format = d3.time.format(cfg.dateFormat);
-                                    datetime = format(new Date(d.date));
-                                    dateValue = (datetime !== "") ? (d.name + " <small>(" + datetime + ")</small>") : d.name;
                                 } else {
-                                    format = function (d) {
-                                        return d;
-                                    }; // TODO
-                                    datetime = d.value;
-                                    dateValue = d.name + " <small>(" + d.value + ")</small>";
-                                }
-                                d3.select(this)
-                                    .style("fill", function (d) {
-                                        if (d.color !== undefined) {
-                                            return d.color;
-                                        }
-                                        return cfg.color;
-                                    }).transition()
-                                    .duration(100).attr("r", function (d) {
-                                    if (d.radius !== undefined) {
-                                        return Math.floor(d.radius * 1.5);
+                                    var format, datetime, dateValue;
+                                    if (cfg.dateDimension) {
+                                        format = d3.time.format(cfg.dateFormat);
+                                        datetime = format(new Date(d.date));
+                                        dateValue = (datetime !== "") ? (d.name + " <small>(" + datetime + ")</small>") : d.name;
+                                    } else {
+                                        format = function (d) {
+                                            return d;
+                                        }; // TODO
+                                        datetime = d.value;
+                                        dateValue = "<div> " + d.name + "</div>" + " <small>(" + d.value + ")</small>";
                                     }
-                                    return Math.floor(cfg.radius * 1.5);
-                                });
-                                tip.html("");
-                                if (d.img !== undefined) {
-                                    tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
-                                    d3.select(element[0])
+                                    d3.select(this)
+                                        .style("fill", function (d) {
+                                            if (d.color !== undefined) {
+                                                return d.color;
+                                            }
+                                            return cfg.color;
+                                        }).transition()
+                                        .duration(100).attr("r", function (d) {
+                                        if (d.radius !== undefined) {
+                                            return Math.floor(d.radius * 1.5);
+                                        }
+                                        return Math.floor(cfg.radius * 1.5);
+                                    });
+                                    tip.html("");
+                                    if (d.img !== undefined) {
+                                        tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
+                                        d3.select(element[0])
+                                    }
+                                    tip.append("div").style("width", options.width + "px")
+                                        .attr("layout", "column")
+                                        .attr("layout-align", "center center")
+                                        .style("text-align", "center").html(dateValue);
+                                    tip.transition()
+                                        .duration(100)
+                                        .style("opacity", 1).style("display", "block")
+                                        .style("width", options.width + "px").attr("layout", "column")
+                                        .attr("layout-align", "center center")
+                                        .style("text-align", "center");
+
                                 }
-                                tip.append("div").html(dateValue).style("width", options.width+"px")
-                                    .style("layout","row")
-                                    .style("layout-align","center center")
-                                    .style("text-align", "center");
-                                tip.transition()
-                                    .duration(100)
-                                    .style("opacity", 1).style("display", "block")
-                                    .style("text-align", "center");
-                                clicked[i] = true;
-                            }
-                            console.log("clicked", clicked[i], i, options.width+"px");
-                        });
+
+                            })
+                            .on("click", function (d, i) {
+
+                                if (clicked[i] == true) {
+                                    d3.select(this)
+                                        .style("fill", function (d) {
+                                            if (d.background !== undefined) {
+                                                return d.background;
+                                            }
+                                            return cfg.background;
+                                        }).transition()
+                                        .duration(100).attr("r", function (d) {
+                                        if (d.radius !== undefined) {
+                                            return d.radius;
+                                        }
+                                        return cfg.radius;
+                                    });
+                                    tip.transition()
+                                        .duration(100)
+                                        .style("opacity", 0).style("display", "none");
+                                    clicked[i] = false;
+                                    currentClick = null;
+
+                                } else {
+                                    if (currentClick != null) {
+                                        d3.select(currentClick)
+                                            .style("fill", function (d) {
+                                                if (d.background !== undefined) {
+                                                    return d.background;
+                                                }
+                                                return cfg.background;
+                                            }).transition()
+                                            .duration(100).attr("r", function (d) {
+                                            if (d.radius !== undefined) {
+                                                return d.radius;
+                                            }
+                                            return cfg.radius;
+                                        });
+                                        tip.transition()
+                                            .duration(100)
+                                            .style("opacity", 0).style("display", "none");
+                                        console.log(this, "Remove clickedpoints");
+                                    }
+                                    currentClick = this;
+                                    var format, datetime, dateValue;
+                                    if (cfg.dateDimension) {
+                                        format = d3.time.format(cfg.dateFormat);
+                                        datetime = format(new Date(d.date));
+                                        dateValue = (datetime !== "") ? (d.name + " <small>(" + datetime + ")</small>") : d.name;
+                                    } else {
+                                        format = function (d) {
+                                            return d;
+                                        }; // TODO
+                                        datetime = d.value;
+                                        dateValue = d.name + " <small>(" + d.value + ")</small>";
+                                    }
+                                    d3.select(this)
+                                        .style("fill", function (d) {
+                                            if (d.color !== undefined) {
+                                                return d.color;
+                                            }
+                                            return cfg.color;
+                                        }).transition()
+                                        .duration(100).attr("r", function (d) {
+                                        if (d.radius !== undefined) {
+                                            return Math.floor(d.radius * 1.5);
+                                        }
+                                        return Math.floor(cfg.radius * 1.5);
+                                    });
+                                    tip.html("");
+                                    if (d.img !== undefined) {
+                                        tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
+                                        d3.select(element[0])
+                                    }
+                                    tip.append("div").html(dateValue).style("width", options.width + "px")
+                                        .style("layout", "row")
+                                        .style("layout-align", "center center")
+                                        .style("text-align", "center");
+                                    tip.transition()
+                                        .duration(100)
+                                        .style("opacity", 1).style("display", "block")
+                                        .style("text-align", "center");
+                                    clicked[i] = true;
+                                }
+                                console.log("clicked", clicked[i], i, options.width + "px");
+                            });
+                    }
+                    else {
+                        options.width= 50;
+                        cfg.width = 50;
+                        svg.selectAll("circle")
+                            .data(events).enter()
+                            .append("circle")
+                            .attr("class", "timeline-event")
+                            .attr("r", function (d) {
+                                if (d.radius !== undefined) {
+                                    return d.radius;
+                                }
+                                return cfg.radius;
+                            })
+                            .style("stroke", function (d) {
+                                    if (d.color !== undefined) {
+                                        return d.color;
+                                    }
+                                    if (d.series !== undefined) {
+                                        if (series.indexOf(d.series) < 0) {
+                                            series.push(d.series);
+                                        }
+                                        //console.log(d.series, series, series.indexOf(d.series));
+                                        return cfg.seriesColor(series.indexOf(d.series));
+                                    }
+                                    return cfg.color;
+                                }
+                            )
+                            .style("stroke-width", function (d) {
+                                if (d.lineWidth !== undefined) {
+                                    return d.lineWidth;
+                                }
+                                return cfg.lineWidth;
+                            })
+                            .style("fill", function (d, i) {
+                                var color;
+                                if (d.background !== undefined) {
+                                    console.log(d);
+                                    return d.background;
+                                }
+                                //if (d.name.substr(0, 2) == ".@"){
+                                //    color = "#1B95E0";
+                                //    return color;
+                                //}
+                                //else if (d.name.substr(0, 2) == "RT") {
+                                //    color = "#19cf86";
+                                //    return color;
+                                //}
+                                return colors[i];
+                            })
+                            .attr("cy", function (d) {
+                                if (cfg.horizontalLayout) {
+                                    return Math.floor(cfg.height / 2);
+                                }
+                                var datum = (cfg.dateDimension) ? new Date(d.date).getTime() : d.value;
+                                return Math.floor(step * (datum - minValue) + margin);
+                            })
+                            .attr("cx", function (d, i) {
+                                if (cfg.horizontalLayout) {
+                                    var datum = (cfg.dateDimension) ? new Date(d.date).getTime() : d.value;
+                                    //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                    //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                    return Math.floor(step * (datum - minValue) + margin);
+                                }
+                                return Math.floor(cfg.width / 2);
+                            })
+                    }
 
                     if (cfg.horizontalLayout == false) {
 

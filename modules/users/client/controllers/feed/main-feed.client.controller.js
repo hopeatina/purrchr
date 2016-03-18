@@ -56,8 +56,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
 
             $scope.socket = Socket;
             $scope.updateFeed = function () {
-                //console.log(temptw
-                // checkTweets(temptweet);
+                //console.log(temptweet);
+                checkTweets(temptweet);
                 temptweet = [];
                 $scope.QueueCount = 0;
 
@@ -175,6 +175,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                     specials: "inline"
                 };
             };
+            $scope.timeflex = $scope.person.tweets.length == 1 ? 20: 0;
+            //console.log($scope);
 
 
         }])

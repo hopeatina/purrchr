@@ -9,6 +9,8 @@ var Twitter = require('twitter'),
     http = require('http'),
     OAuth = require('oauth'),
     config = require(path.resolve('./config/config'));
+var twittertxt = require('twitter-text');
+console.log(twittertxt);
 
 var R = require("request");
 
@@ -113,11 +115,16 @@ function getHomies(url, options, res, client, source) {
 }
 function checkTweets(tweets) {
     var Userray = [];
+    var mentionsRay = [];
+    var keyword = [];
     tweets.forEach(function (tweet, key, tweets) {
         var inArray = false;
         for (var i = 0; i < Userray.length; i++) {
             if (tweet.user.id === Userray[i].user.id || Userray === []) {
                 inArray = true;
+                var mentions = twittertxt.extractMentions(tweet.text);
+
+                console.log(mentions);
                 Userray[i].tweets.push({name: tweet.text, date: tweet.created_at});
             }
         }
@@ -209,4 +216,9 @@ exports.getHashtagTweets = function (req, res) {
 exports.countToRequest = function (req, res, next, count) {
     req.count = count;
     next();
+};
+
+exports.handleMaitre = function (req,res, next, count) {
+    console.log(req);
+
 };
