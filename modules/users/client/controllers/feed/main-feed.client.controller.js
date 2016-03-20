@@ -58,6 +58,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.updateFeed = function () {
                 //console.log(temptweet);
                 checkTweets(temptweet);
+                $scope.goPerUser();
                 temptweet = [];
                 $scope.QueueCount = 0;
 
@@ -94,6 +95,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                         $scope.recentPeeps = data.data.overview;
                         if (data.data.stream != undefined) {
                             $scope.stream = data.data.stream;
+                            console.log(data.data.stream.length);
                             var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
                             $scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
                         }
