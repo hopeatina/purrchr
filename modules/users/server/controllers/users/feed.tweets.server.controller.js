@@ -219,6 +219,6 @@ exports.countToRequest = function (req, res, next, count) {
 };
 
 exports.handleMaitre = function (req,res, next, count) {
-    console.log(req);
+    console.log("Some post was made");
 
 };
