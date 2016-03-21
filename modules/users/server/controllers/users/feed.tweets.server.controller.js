@@ -9,8 +9,8 @@ var Twitter = require('twitter'),
     http = require('http'),
     OAuth = require('oauth'),
     config = require(path.resolve('./config/config'));
-var twittertxt = require('twitter-text');
-console.log(twittertxt);
+//var twittertxt = require('twitter-text');
+//console.log(twittertxt);
 
 var R = require("request");
 
