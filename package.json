@@ -16,7 +16,8 @@
   },
   "scripts": {
     "start": "grunt",
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "bower install --config.interactive=false"
   },
   "dependencies": {
     "acl": "~0.4.4",
@@ -42,7 +43,7 @@
     "helmet": "~0.9.1",
     "jasmine-core": "^2.3.4",
     "lodash": "^3.10.0",
-    "material-design-icons": "^2.2.0",
+    "material-design-icons": "^2.2.3",
     "method-override": "^2.3.3",
     "mocha": "~1.20.0",
     "moment": "^2.11.2",
@@ -120,6 +121,7 @@
     "karma-phantomjs-launcher": "~0.2.0",
     "load-grunt-tasks": "^3.2.0",
     "mock-fs": "~3.4.0",
+    "material-design-icons": "^2.2.3",
     "run-sequence": "^1.1.1",
     "should": "^7.0.1",
     "supertest": "^1.0.1"

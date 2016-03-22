@@ -122,9 +122,9 @@ function checkTweets(tweets) {
         for (var i = 0; i < Userray.length; i++) {
             if (tweet.user.id === Userray[i].user.id || Userray === []) {
                 inArray = true;
-                var mentions = twittertxt.extractMentions(tweet.text);
-
-                console.log(mentions);
+                //var mentions = twittertxt.extractMentions(tweet.text);
+                //
+                //console.log(mentions);
                 Userray[i].tweets.push({name: tweet.text, date: tweet.created_at});
             }
         }

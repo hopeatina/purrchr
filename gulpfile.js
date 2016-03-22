@@ -18,7 +18,7 @@ var _ = require('lodash'),
   endOfLine = require('os').EOL,
   protractor = require('gulp-protractor').protractor,
   webdriver_update = require('gulp-protractor').webdriver_update,
-  webdriver_standalone = require('gulp-protractor').webdriver_standalone,
+  webdriver_standalone = require('gulp-protractor').webdriver_standalone;
  //minify = require('gulp-minify');
 
 //gulp.task('compress', function() {
