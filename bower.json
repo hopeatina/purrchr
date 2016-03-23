@@ -21,6 +21,7 @@
   },
   "resolutions": {
     "angular": "1.5.2",
-    "moment": "^2.11.2"
+    "moment": "^2.11.2",
+    "angular-messages": "^1.4.8"
   }
 }
