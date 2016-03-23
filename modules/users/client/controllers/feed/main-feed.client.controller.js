@@ -189,6 +189,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.toggleSettings = function () {
                 $scope.isOpen = $scope.isOpen ? false : true;
             };
+            $scope.timeflex = $scope.person.tweets.length == 1 ? 70: 0;
             $scope.switchHash = function (chip) {
                 //console.log(chip);
                 $scope.selectedHashtag = "#" + chip;
@@ -205,8 +206,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                     $scope.recentPeeps = data.data.overview;
                     if (data.data.stream != undefined) {
                         $scope.stream = data.data.stream;
-                        var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
-                        $scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
+                        //var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
+                        //$scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
                         //console.log(toUTC);
                         //console.log(data);
                     }
@@ -217,9 +218,9 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.sortOptions = ["Recent", "Dopeness", "Virality", "Number of Tweets", "Fire"]
             $scope.go('api/feed/hashtagtimeline');
 
-        }])
-    .config(function($mdIconProvider) {
-        $mdIconProvider
-            .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
-            .defaultIconSet('img/icons/sets/core-icons.svg', 24);
-    });;
+        }]);
+    //.config(function($mdIconProvider) {
+    //    $mdIconProvider
+    //        .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
+    //        .defaultIconSet('img/icons/sets/core-icons.svg', 24);
+    //});
