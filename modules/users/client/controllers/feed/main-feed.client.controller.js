@@ -177,8 +177,9 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                     specials: "inline"
                 };
             };
-            $scope.timeflex = $scope.person.tweets.length == 1 ? 20: 0;
-            //console.log($scope);
+            if ($scope.person != undefined) {
+                $scope.timeflex = $scope.person.tweets.length == 1 ? 20 : 0;
+            }//console.log($scope);
 
 
         }])
@@ -189,7 +190,6 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.toggleSettings = function () {
                 $scope.isOpen = $scope.isOpen ? false : true;
             };
-            $scope.timeflex = $scope.person.tweets.length == 1 ? 70: 0;
             $scope.switchHash = function (chip) {
                 //console.log(chip);
                 $scope.selectedHashtag = "#" + chip;
