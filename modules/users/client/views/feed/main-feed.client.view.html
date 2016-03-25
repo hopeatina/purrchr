@@ -8,22 +8,34 @@
 
   <md-toolbar style="height: 50px;">
     <div layout="row" layout-align="space-around center">
-      <h4>{{stream.length}} Tweets</h4>
-      <div layout="row" layout-align="center center">
-        <i class="material-icons md-48">person_outline</i>
+      <!--<h4>{{stream.length}} Tweets</h4>-->
+      <div flex="33" aria-label="Users" layout="row" layout-align="center center">
+        <i class="material-icons md-36">person_outline</i>
         <h4> {{recentPeeps.length}} </h4>
       </div>
-      <div layout="row" layout-align="center center">
-        <i class="material-icons md-48">access_time</i>
-        <h4> Since {{dataUpTo}}</h4>
+      <div flex="33" layout="row" layout-align="center center">
+        <!--<i  class="material-icons md-24">access_time</i>-->
+        <md-select class="sortby" ng-model="timeOptionSelected" placeholder="From">
+          <md-option ng-repeat="option in timeSort" value="{{option.value}}">
+            <md-button>{{option.name}}</md-button>
+          </md-option>
+        </md-select>
+        <!--<h4> Since {{dataUpTo}}</h4>-->
       </div>
-      <md-select class="sortby" ng-model="sortOptionSelected" placeholder="Sort By:">
-        <md-option ng-repeat="option in sortOptions" value="{{option.value}}">
-          {{option.name}}
-        </md-option>
-      </md-select>
+      <div flex="33" layout="row" layout-align="center center">
+        <md-select flex="33" class="sortby" ng-model="sortOptionSelected" placeholder="Sort By:">
+          <md-option ng-repeat="option in sortOptions" value="{{option.value}}">
+            {{option.name}}
+          </md-option>
+        </md-select>
+      </div>
     </div>
   </md-toolbar>
+  <div layout="row" style="overflow-x: scroll">
+    <img ng-href="#{{person.user.name}}" ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; "
+         class="md-avatar-icon" ng-if="person"
+         src="{{person.user.profile_image_url}}">
+  </div>
 
   <div layout="row" layout-align="center" class="signindiv">
     <md-button class="signinbutton" ng-if="QueueCount > 0" ng-click="updateFeed()">{{QueueCount}} New Tweets
@@ -37,7 +49,7 @@
        class="container" ng-controller="SingleTweetCtrl">
     <!---->
     <!--| 'orderBy : '-tweets.length"-->
-    <md-card class=" usercard">
+    <md-card name="{{person.user.name}}" class=" usercard">
       <md-card-content class="">
         <div class="" layout="row" layout-align="space-around center">
           <div flex="33" layout="column" layout-align="center center" class="">
@@ -55,7 +67,8 @@
           </div>
         </div>
         <div flex layout="row" layout-align="center center" class="">
-          <div layout="column" layout-align="center center"flex="timeflex"ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"></div>
+          <div layout="column" layout-align="center center" flex="timeflex" ng-hide="tweetsCollapsed" timeline
+               data="person.tweets" options="timelineConfig"></div>
           <div flex="80" ng-if="person.tweets.length == 1">
             <div layout="row" ng-repeat="ptweet in person.tweets">
               {{ptweet.name}}, {{ptweet.date}}
@@ -65,7 +78,7 @@
         <div ng-if="person.tweets.length > 1" flex layout="row" layout-align="center center" class="">
           <!--class="animated rotateOutDownLeft"-->
           <md-button class="md-icon-button" aria-label="expandarrow" ng-click="toggleTweets()"><i
-            class="material-icons md-48">{{expandarrow}}</i></md-button>
+            class="material-icons md-24">{{expandarrow}}</i></md-button>
         </div>
         <div ng-show="tweetsCollapsed" layout="row" layout-align="center center">
           <div timeline data="person.tweets" options="timelineConfig"

@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('users').controller('MainFeedController', ['$scope', '$http', 'moment', '$state', 'Authentication', 'Menus', 'MainFeed', '$interval', 'Socket',
-        function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket) {
+        function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket, $mdDialog) {
             $scope.pos = {
                 x : 0,
                 y : 0
@@ -15,14 +15,26 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.$state = $state;
             $scope.authentication = Authentication;
             $scope.sortOptions = [
-                {name: "Most Frequent", value: "-tweets.length"},
-                {name: "Least Frequent", value: "tweets.length"},
+                {name: "Activity", value: "-tweets.length"},
+                {name: "Inactivity", value: "tweets.length"},
                 {name: "Recent", value: ""}
                 //{name: "Dopeness", value: ""},
                 //{name: "Virality", value: ""},
                 //{name: "Tweet Count", value: ""},
                 //{name: "Fire", value: ""}
              ];
+            $scope.timeSort = [
+                {name: "Past 1 hr" , value: "60"},
+                {name: "Past 3 hrs" , value: "240"},
+                {name: "Past day" , value: "1440"},
+                {name: "Past week" , value: "week"}
+            ];
+            var originatorEv;
+            $scope.openMenu = function($mdOpenMenu, ev) {
+                originatorEv = ev;
+                $mdOpenMenu(ev);
+                console.log("Menu should open");
+            };
             var self = this, j = 0, counter = 0;
             var temptweet = [];
             $scope.modes = [];
