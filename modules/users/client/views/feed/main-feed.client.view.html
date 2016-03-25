@@ -31,7 +31,7 @@
       </div>
     </div>
   </md-toolbar>
-  <div layout="row" style="overflow-x: auto">
+  <div layout="row" class="topusers">
     <img ng-href="#{{person.user.name}}" ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; "
          class="md-avatar-icon" ng-if="person"
          src="{{person.user.profile_image_url}}">

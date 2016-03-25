@@ -77,6 +77,9 @@ a:hover .header-profile-image {
   left: auto;
   position: fixed;
 }
+.topusers {
+  overflow-x: auto;
+}
 .customnav {
   background-color: white;
 }
