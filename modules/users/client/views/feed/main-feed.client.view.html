@@ -17,13 +17,13 @@
         <!--<i  class="material-icons md-24">access_time</i>-->
         <md-select class="sortby" ng-model="timeOptionSelected" placeholder="From">
           <md-option ng-repeat="option in timeSort" value="{{option.value}}">
-            <md-button>{{option.name}}</md-button>
+            <md-button ng-click="updateTimePeriod(option.value)">{{option.name}}</md-button>
           </md-option>
         </md-select>
         <!--<h4> Since {{dataUpTo}}</h4>-->
       </div>
       <div flex="33" layout="row" layout-align="center center">
-        <md-select flex="33" class="sortby" ng-model="sortOptionSelected" placeholder="Sort By:">
+        <md-select  class="sortby" ng-model="sortOptionSelected" placeholder="Sort By">
           <md-option ng-repeat="option in sortOptions" value="{{option.value}}">
             {{option.name}}
           </md-option>
@@ -31,7 +31,7 @@
       </div>
     </div>
   </md-toolbar>
-  <div layout="row" style="overflow-x: scroll">
+  <div layout="row" style="overflow-x: auto">
     <img ng-href="#{{person.user.name}}" ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; "
          class="md-avatar-icon" ng-if="person"
          src="{{person.user.profile_image_url}}">

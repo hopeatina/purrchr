@@ -29,6 +29,12 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 {name: "Past day" , value: "1440"},
                 {name: "Past week" , value: "week"}
             ];
+
+            $scope.updateTimePeriod= function(timeValue){
+                MainFeed.getTimeHomies(timeValue).then(function (data) {
+                    parseReturnedTweets(data);
+                });
+            };
             var originatorEv;
             $scope.openMenu = function($mdOpenMenu, ev) {
                 originatorEv = ev;
@@ -100,23 +106,26 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                     }
                 })
             }
+            function parseReturnedTweets (data){
+                if (data.data.stream != undefined) {
+                    $scope.recentPeeps = data.data.overview;
+                    if (data.data.stream != undefined) {
+                        $scope.stream = data.data.stream;
+                        console.log(data.data.stream.length);
+                        var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
+                        $scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
+                    }
+                    //console.log(toUTC);
+                    //console.log(data);}
+                } else {
+
+                }
+            }
 
             $scope.goPerUser = function () {
                 MainFeed.getHomies().then(function (data) {
-                    if (data.data.stream != undefined) {
-                        $scope.recentPeeps = data.data.overview;
-                        if (data.data.stream != undefined) {
-                            $scope.stream = data.data.stream;
-                            console.log(data.data.stream.length);
-                            var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
-                            $scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
-                        }
-                        //console.log(toUTC);
-                        //console.log(data);}
-                    } else {
-
-                    }
-                })
+                    parseReturnedTweets(data);
+                });
             };
 
             $scope.socket.on("new tweet", function (data) {

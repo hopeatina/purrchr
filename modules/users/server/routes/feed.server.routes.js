@@ -14,6 +14,7 @@ module.exports = function (app) {
 
     app.route('/api/feed/hometimeline').get(feed.reRoute, feed.getHomeTweetByCount);
     app.route('/currentUserTimeline').get(feed.reRoute, feed.getHomeTweetByCount);
+    app.route('/currentUserTimeline').post(feed.reRoute, feed.getHomeTweetByCount);
     app.route('/api/feed/hashtagtimeline').get(feed.reRoute, feed.getHashtagTweets);
     app.route('/api/maitre').post(feed.handleMaitre);
 

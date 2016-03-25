@@ -25,7 +25,7 @@ var oauth2 = new OAuth2(process.env.TWITTER_PURRCH_KEY,
     {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'});
 
 exports.reRoute = function (req, res, next) {
-    //console.log("reroute", req);
+    console.log("reroute", req);
     if (req.user != undefined)
         return next();
 

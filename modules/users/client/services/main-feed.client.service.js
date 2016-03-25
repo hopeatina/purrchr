@@ -18,6 +18,11 @@ angular.module('users').factory('MainFeed', ['$http','$state', 'Authentication',
                 return $http.get('/currentUserTimeline', auth.user);
             };
 
+        Feed.getTimeHomies =
+            function (time) {
+                return $http.post('/currentUserTimeline', {user: auth.user, time: time})
+            };
+
         Feed.isLoggedIn = function (auth){
             return !!auth.user;
         };
