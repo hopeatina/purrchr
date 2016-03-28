@@ -68,7 +68,8 @@
     "socket.io": "^1.3.7",
     "swig": "^1.4.2",
     "twitter": "^1.2.5",
-    "validator": "^3.41.2"
+    "validator": "^3.41.2",
+    "twitter-text": "latest"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
@@ -124,6 +125,7 @@
     "material-design-icons": "^2.2.3",
     "run-sequence": "^1.1.1",
     "should": "^7.0.1",
-    "supertest": "^1.0.1"
+    "supertest": "^1.0.1",
+    "twitter-text": "latest"
   }
 }

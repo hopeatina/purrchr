@@ -1,13 +1,21 @@
 'use strict'
 
-angular.module('users').controller('MainFeedController', ['$scope', '$http', 'moment', '$state', 'Authentication', 'Menus', 'MainFeed', '$interval', 'Socket',
-        function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket, $mdDialog) {
+angular.module('users').controller('MainFeedController', ['$scope', '$http', 'moment', '$state', 'Authentication',
+        'Menus', 'MainFeed', '$interval', 'Socket', '$sce',
+        function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket, $sce) {
             $scope.pos = {
                 x : 0,
                 y : 0
             };
+            $scope.usersHidden = true;
+            $scope.showHideUsers = function () {
+                $scope.usersHidden = !$scope.usersHidden;
+            };
 
             $scope.counter = 0;
+            $scope.getHtml = function (html) {
+                return $sce.trustAsHtml(html);
+            };
 
             $scope.count = function() {
                 $scope.counter += 1;
@@ -75,7 +83,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.socket = Socket;
             $scope.updateFeed = function () {
                 //console.log(temptweet);
-                checkTweets(temptweet);
+                //checkTweets(temptweet);
                 $scope.goPerUser();
                 temptweet = [];
                 $scope.QueueCount = 0;
@@ -108,15 +116,22 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             }
             function parseReturnedTweets (data){
                 if (data.data.stream != undefined) {
-                    $scope.recentPeeps = data.data.overview;
+                    $scope.recentPeeps = data.data.overview.Userray;
+                    if ($scope.recentPeeps != undefined) {
+                        $scope.currentTweets = $scope.recentPeeps.slice(0, 30);
+                    }
+                    $scope.currentLinks = data.data.linkers;
                     if (data.data.stream != undefined) {
                         $scope.stream = data.data.stream;
-                        console.log(data.data.stream.length);
+                        //console.log(data.data.stream.length);
+                        //data.data.stream.forEach(function (user) {
+                        //    console.log(user.id, user.user.name);
+                        //});
                         var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
                         $scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
                     }
                     //console.log(toUTC);
-                    //console.log(data);}
+                    console.log(data);
                 } else {
 
                 }
@@ -204,8 +219,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
 
 
         }])
-    .controller('HashtagsController', ['$scope', '$http', 'moment', 'Authentication',
-        function ($scope, $http, moment, Authentication) {
+    .controller('HashtagsController', ['$scope', '$http', 'moment', 'Authentication', '$sce',
+        function ($scope, $http, moment, Authentication, $sce) {
             $scope.selectedHashtag = "#hashtags";
             $scope.suggestedHashtags = ["RIPTwitter", "Purrchrocks", "TeamFollowBack", "SolidSaturdays"];
             $scope.toggleSettings = function () {
@@ -215,6 +230,9 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 //console.log(chip);
                 $scope.selectedHashtag = "#" + chip;
                 $scope.go('/api/feed/hashtagtimeline');
+            };
+            $scope.getHtml = function (html) {
+                return $sce.trustAsHtml(html);
             };
             $scope.go = function (url) {
                 //console.log(url);
@@ -230,7 +248,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                         //var toUTC = moment.utc(data.data.stream[data.data.stream.length - 1].created_at + 'UTC').toDate();
                         //$scope.dataUpTo = moment(toUTC).format("h:mm, MM/DD");
                         //console.log(toUTC);
-                        //console.log(data);
+                        console.log(data);
                     }
                 });
             };

@@ -9,7 +9,7 @@ var Twitter = require('twitter'),
     http = require('http'),
     OAuth = require('oauth'),
     config = require(path.resolve('./config/config'));
-//var twittertxt = require('twitter-text');
+var twittertxt = require('twitter-text');
 //console.log(twittertxt);
 
 var R = require("request");
@@ -88,9 +88,14 @@ function getHomies(url, options, res, client, source) {
                 console.log("ERROR", error, url);
             }
             else {
-                //console.log(typeof(tweet.body), tweet.body, url);
                 var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses);
-                res.json({stream: tweet, overview: parsedTweets});
+
+                res.json({
+                    stream: tweet,
+                    overview: parsedTweets.Userray,
+                    linkers: parsedTweets.Linksray,
+                    tweets: parsedTweets.Tweets
+                });
                 //console.log("TWEET: ", parsedTweets.length, tweet.length);  // Tweet body.
                 //console.log("RESPONSE: ", response);  // Raw response object.
             }
@@ -103,21 +108,79 @@ function getHomies(url, options, res, client, source) {
                 console.log(error);
             }
             else {
-                //console.log("TWEET:", tweet);
+                console.log("EXAMINING TWEET CONSTRUCT", typeof(tweet.body), tweet, url);
+
                 var parsedTweets = checkTweets(tweet);
-                res.json({stream: tweet, overview: parsedTweets});
-                //console.log("TWEET: ", parsedTweets.length, tweet.length);  // Tweet body.
-                //console.log("RESPONSE: ", response);  // Raw response object.
+                //var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses);
+                var tempresponse = response;
+                var tempmaxid = parsedTweets.maxid;
+                var number = parseInt(tempresponse.headers["x-rate-limit-remaining"]);
+                //while(number > 1) {
+                //    getMoreTweets(parsedTweets, tempmaxid, tempresponse, setParams);
+                //    console.log( "GETS LEFT" , number, tempresponse.headers["x-rate-limit-remaining"]);
+                //    number--;
+                //}
+
+                res.json({
+                    stream: tweet,
+                    overview: parsedTweets,
+                    linkers: parsedTweets.Linksray,
+                    rawresponse: response
+                });
             }
+        });
+    }
+    function setParams(tempTweets, parsedTweets, tempmaxid, tempresponse) {
+        parsedTweets.Linksray = parsedTweets.Linksray.concat(tempTweets.Linksray);
+        parsedTweets.Userray = parsedTweets.Userray.concat(tempTweets.Userray);
+        tempmaxid = tempTweets.maxid;
+        tempresponse = tempTweets.response;
+    }
+
+    function getMoreTweets(parsedTweets, maxid, response, setParams) {
+        var tempparsedTweets;
+        var tempresponse;
+        client.get(url, options, function (error, tweet, response) {
+            tempparsedTweets = checkTweets(tweet);
+            tempresponse = response;
+            setParams(tempparsedTweets, parsedTweets, maxid, response);
         });
     }
 
 }
+function linkUp(tweet) {
+    if (tweet.text != undefined)
+        tweet.text = twittertxt.autoLink(tweet.text, [tweet.entities]);
+    //console.log("Linking text" , tweet.text, tweet.entities);
+    return tweet.text;
+}
+
+
 function checkTweets(tweets) {
     var Userray = [];
-    var mentionsRay = [];
+    var Linksray = [];
     var keyword = [];
+    var maxid;
     tweets.forEach(function (tweet, key, tweets) {
+        if (tweet.entities.urls != undefined) {
+            tweet.entities.urls.forEach(function (url, urlkey, urls) {
+
+                if (Linksray.indexOf({url: url.expanded_url, users: [tweet.user]}) > -1) {
+                    Linksray[Linksray.indexOf({
+                        url: url.expanded_url,
+                        users: [tweet.user.name]
+                    })].users.push(tweet.user);
+                    //if (Linksray[url.expanded_url].indexOf(tweet.user.name) > -1 || Linksray === [] )
+                    //{
+                    //    Linksray[url.expanded_url].push(tweet.user.name);
+                    //    console.log('ALREADY IN ARRAY ADDED', urlkey, Linksray[url.expanded_url].indexOf(tweet.user.name), Linksray.length);
+                    //}
+                } else {
+                    Linksray.push({url: url.expanded_url, users: [tweet.user]});
+                    //console.log('NEW TWEET IN ARRAY', urlkey, Linksray.length);
+                }
+            });
+        }
         var inArray = false;
         for (var i = 0; i < Userray.length; i++) {
             if (tweet.user.id === Userray[i].user.id || Userray === []) {
@@ -125,22 +188,30 @@ function checkTweets(tweets) {
                 //var mentions = twittertxt.extractMentions(tweet.text);
                 //
                 //console.log(mentions);
-                Userray[i].tweets.push({name: tweet.text, date: tweet.created_at});
+                Userray[i].tweets.push({name: linkUp(tweet), date: tweet.created_at});
             }
         }
         if (!inArray) {
-            Userray.push({user: tweet.user, tweets: [{name: tweet.text, date: tweet.created_at}]});
+            Userray.push({user: tweet.user, tweets: [{name: linkUp(tweet), date: tweet.created_at}]});
             //console.log(tweet);
         }
-
+        if (tweets.length - 1 == key) {
+            maxid = tweet.id;
+            //console.log(key, tweet.id);
+        }
     });
-    return Userray;
+    return {Userray: Userray, maxid: maxid, Linksray: Linksray, Tweets: tweets};
 }
 
 exports.getHomeTweetByCount = function (req, res) {
 
     var options = {count: "200"};
-    //console.log(req.user);
+    console.log("REQUEST OBJECT: ", req);
+    if (req.body != undefined) {
+        var timeperiod = req.body.time;
+    }
+
+
     if (req.user != undefined) {
         if (req.user.providerData !== undefined && req.user.provider == 'twitter') {
             var usermodel = req.user.providerData;

@@ -20,8 +20,6 @@ module.exports = {
         'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
         'public/lib/angular-file-upload/angular-file-upload.min.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.min.js',
-        'public/lib/timeknots/src/d3.v2.min.js',
-        'public/lib/timeknots/src/timeknots-min.js',
         'public/lib/angular-aria/angular-aria.min.js',
         'public/lib/angular-material/angular-material.min.js',
         'public/lib/moment/min/moment.min.js',

@@ -462,13 +462,13 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     tip.append("div").style("width", options.width + "px")
                                         .attr("layout", "column")
                                         .attr("layout-align", "center center")
-                                        .style("text-align", "center").html(dateValue);
+                                        .style("text-align", "left").html(dateValue);
                                     tip.transition()
                                         .duration(100)
                                         .style("opacity", 1).style("display", "block")
                                         .style("width", options.width + "px").attr("layout", "column")
                                         .attr("layout-align", "center center")
-                                        .style("text-align", "center");
+                                        .style("text-align", "left");
 
                                 }
 
@@ -549,11 +549,11 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     tip.append("div").html(dateValue).style("width", options.width + "px")
                                         .style("layout", "row")
                                         .style("layout-align", "center center")
-                                        .style("text-align", "center");
+                                        .style("text-align", "left");
                                     tip.transition()
                                         .duration(100)
                                         .style("opacity", 1).style("display", "block")
-                                        .style("text-align", "center");
+                                        .style("text-align", "left");
                                     clicked[i] = true;
                                 }
                                 console.log("clicked", clicked[i], i, options.width + "px");
