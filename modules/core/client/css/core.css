@@ -68,6 +68,9 @@ background: whitesmoke;
   transition:0.5s linear all;
   opacity:0;
 }
+.wraplink {
+  word-wrap: break-word;
+}
 
 /* The finishing CSS styles for the enter animation */
 .hashtags.ng-enter.ng-enter-active {

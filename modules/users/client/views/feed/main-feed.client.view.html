@@ -106,10 +106,19 @@
 
           <div md-padding layout="column">
 
-            <div layout="row" layout-align="start center" ng-repeat="user in link.users">
+            <div layout="row" layout-align="space-around center" ng-repeat="user in link.users">
               <img style="width: 48px; height: 48px;" class="md-avatar-icon"
                    src="{{user.profile_image_url}}">
-              <a href="{{link.url}}" target="_blank">{{link.url}}</a>
+              <a class="wraplink" flex="40" href="{{link.url}}" target="_blank">{{link.url}}</a>
+              <div>
+                Retweets
+              </div>
+              <div>
+                Likes
+              </div>
+              <div>
+                Replies
+              </div>
           </div>
         </div>
 
