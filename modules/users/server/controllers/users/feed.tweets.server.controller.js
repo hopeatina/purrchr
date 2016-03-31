@@ -188,7 +188,7 @@ function checkTweets(tweets) {
                 //var mentions = twittertxt.extractMentions(tweet.text);
                 //
                 //console.log(mentions);
-                Userray[i].tweets.push({name: linkUp(tweet), date: tweet.created_at});
+                Userray[i].tweets.push({name: linkUp(tweet), date: tweet.created_at, tweetid: tweet.id_str, tweetuser: tweet.screen_name});
             }
         }
         if (!inArray) {

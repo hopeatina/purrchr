@@ -59,7 +59,11 @@ a:hover .header-profile-image {
   -webkit-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
   -moz-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
 }
-
+.tweetcard {
+position: relative;
+margin-top: 10px;
+background: whitesmoke;
+}
 .hashtags.ng-enter {
   transition:0.5s linear all;
   opacity:0;

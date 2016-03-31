@@ -133,8 +133,13 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                 }
 
                 //
+                scope.tweetLink = function (link) {
+                    $window.location.href = link;
+                    console.log("attempted to go to: "  + link);
+                };
 
                 scope.render = function (events, configoptions) {
+
                     options = configoptions !== undefined ? configoptions : {
                         horizontalLayout: false,
                         color: "55acee",
@@ -373,13 +378,13 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     if (cfg.dateDimension) {
                                         format = d3.time.format(cfg.dateFormat);
                                         datetime = format(new Date(d.date));
-                                        dateValue = (datetime !== "") ? (d.name + " <small>(" + datetime + ")</small>") : d.name;
+                                        dateValue = (datetime !== "") ? ("<div>" + d.name + "</div>" + " <div>" + datetime + "</div>") : d.name;
                                     } else {
                                         format = function (d) {
                                             return d;
                                         }; // TODO
                                         datetime = d.value;
-                                        dateValue = d.name + " <small>(" + d.value + ")</small>";
+                                        dateValue = "<div>" + d.name + "</div>" + " <div>" + d.value + "</div>";
                                     }
                                     d3.select(this)
                                         .style("fill", function (d) {
@@ -399,14 +404,17 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                         tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
                                         d3.select(element[0])
                                     }
-                                    tip.append("div").html(dateValue)
+                                    tip.append("md-card").html(dateValue)
                                         .style("width", options.width + "px")
-                                        .attr("layout", "column")
-                                        .attr("layout-align", "center center");
+                                        .style("position", "relative")
+                                        .style("margin-top","10px")
+                                        .style("background", "whitesmoke")
+                                        .attr("href", function (d) {
+                                            return "https://www.google.com";
+                                        });
                                     tip.transition()
                                         .duration(100)
-                                        .style("opacity", 1).style("display", "block").attr("layout", "column")
-                                        .attr("layout-align", "center center");
+                                        .style("opacity", 1).style("display", "block");
                                 }
                             })
                             .on("mouseout", function (d, i) {
@@ -433,13 +441,13 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     if (cfg.dateDimension) {
                                         format = d3.time.format(cfg.dateFormat);
                                         datetime = format(new Date(d.date));
-                                        dateValue = (datetime !== "") ? (d.name + " <small>(" + datetime + ")</small>") : d.name;
+                                        dateValue = (datetime !== "") ? ("<div>" + d.name + "</div>" + " <div>" + datetime + "</div>") : d.name;
                                     } else {
                                         format = function (d) {
                                             return d;
                                         }; // TODO
                                         datetime = d.value;
-                                        dateValue = "<div> " + d.name + "</div>" + " <small>(" + d.value + ")</small>";
+                                        dateValue = "<div>" + d.name + "</div>" + " <div>" + datetime + "</div>";
                                     }
                                     d3.select(this)
                                         .style("fill", function (d) {
@@ -459,16 +467,19 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                         tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
                                         d3.select(element[0])
                                     }
-                                    tip.append("div").style("width", options.width + "px")
-                                        .attr("layout", "column")
-                                        .attr("layout-align", "center center")
-                                        .style("text-align", "left").html(dateValue);
+                                    tip.append("md-card").style("width", options.width + "px")
+                                        .html(dateValue)
+                                        .style("position", "relative")
+                                        .style("margin-top","10px")
+                                        .style("background", "whitesmoke")
+                                        .attr("ng-click", function (d) {
+                                            return "tweetLink('https://www.google.com')";
+                                        });
+                                    //scope.tweetLink('https://www.google.com');
                                     tip.transition()
                                         .duration(100)
                                         .style("opacity", 1).style("display", "block")
-                                        .style("width", options.width + "px").attr("layout", "column")
-                                        .attr("layout-align", "center center")
-                                        .style("text-align", "left");
+                                        .style("width", options.width + "px");
 
                                 }
 
@@ -520,13 +531,13 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     if (cfg.dateDimension) {
                                         format = d3.time.format(cfg.dateFormat);
                                         datetime = format(new Date(d.date));
-                                        dateValue = (datetime !== "") ? (d.name + " <small>(" + datetime + ")</small>") : d.name;
+                                        dateValue = (datetime !== "") ? ("<div>" + d.name + "</div>" + " <div>" + datetime + "</div>") : d.name;
                                     } else {
                                         format = function (d) {
                                             return d;
                                         }; // TODO
                                         datetime = d.value;
-                                        dateValue = d.name + " <small>(" + d.value + ")</small>";
+                                        dateValue = "<div>" + d.name + "</div>" + " <div>" + datetime + "</div>";
                                     }
                                     d3.select(this)
                                         .style("fill", function (d) {
@@ -546,14 +557,17 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                         tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
                                         d3.select(element[0])
                                     }
-                                    tip.append("div").html(dateValue).style("width", options.width + "px")
-                                        .style("layout", "row")
-                                        .style("layout-align", "center center")
-                                        .style("text-align", "left");
+                                    tip.append("md-card").html(dateValue)
+                                        .style("width", options.width + "px")
+                                        .style("position", "relative")
+                                        .style("margin-top","10px")
+                                        .style("background", "whitesmoke")
+                                        .attr("href", function (d) {
+                                            return "https://www.google.com";
+                                        });
                                     tip.transition()
                                         .duration(100)
-                                        .style("opacity", 1).style("display", "block")
-                                        .style("text-align", "left");
+                                        .style("opacity", 1).style("display", "block");
                                     clicked[i] = true;
                                 }
                                 console.log("clicked", clicked[i], i, options.width + "px");

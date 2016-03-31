@@ -1,8 +1,8 @@
 'use strict'
 
 angular.module('users').controller('MainFeedController', ['$scope', '$http', 'moment', '$state', 'Authentication',
-        'Menus', 'MainFeed', '$interval', 'Socket', '$sce',
-        function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket, $sce) {
+        'Menus', 'MainFeed', '$interval', 'Socket', '$sce','$location',
+        function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket, $sce,$location) {
             $scope.pos = {
                 x : 0,
                 y : 0
@@ -90,6 +90,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
 
                 //console.log($scope.recentPeeps)
             };
+
 
             function checkTweets(tweets) {
 
@@ -179,8 +180,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
             $scope.goPerUser();
         }
     ])
-    .controller('SingleTweetCtrl', ['$scope', '$http', 'moment',
-        function ($scope, $http, moment) {
+    .controller('SingleTweetCtrl', ['$scope', '$http', 'moment','$location','$window',
+        function ($scope, $http, moment,$location, $window) {
             $scope.timelineConfig = {
                 horizontalLayout: true,
                 color: "55acee",
