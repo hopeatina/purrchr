@@ -70,9 +70,10 @@
             </div>
             <div flex layout="row" layout-align="center center" class="">
               <div layout="column" layout-align="center center" flex="timeflex" ng-hide="tweetsCollapsed" timeline
-                   data="person.tweets" options="timelineConfig" ></div>
+                   data="person.tweets" options="timelineConfig"></div>
               <div flex="80" ng-if="person.tweets.length == 1">
-                <md-card style="position: relative;margin-top: 10px;background: whitesmoke;" layout="row" ng-repeat="ptweet in person.tweets">
+                <md-card style="position: relative;margin-top: 10px;background: whitesmoke;" layout="row"
+                         ng-repeat="ptweet in person.tweets">
                   <div ng-bind-html="getHtml(ptweet.name + ptweet.date)"></div>
                 </md-card>
               </div>
@@ -103,24 +104,25 @@
 
       <div class="container">
         <md-card class="usercard" ng-repeat="link in currentLinks">
+          <md-card-content>
+            <div md-padding layout="column">
 
-          <div md-padding layout="column">
-
-            <div layout="row" layout-align="space-around center" ng-repeat="user in link.users">
-              <img style="width: 48px; height: 48px;" class="md-avatar-icon"
-                   src="{{user.profile_image_url}}">
-              <a class="wraplink" flex="40" href="{{link.url}}" target="_blank">{{link.url}}</a>
-              <div>
-                Retweets
+              <div layout="row" layout-align="space-around center" ng-repeat="user in link.users">
+                <img style="width: 48px; height: 48px;" class="md-avatar-icon"
+                     src="{{user.profile_image_url}}">
+                <a class="wraplink" flex="40" href="{{link.url}}" target="_blank">{{link.url}}</a>
+                <div>
+                  Retweets
+                </div>
+                <div>
+                  Likes
+                </div>
+                <div>
+                  Replies
+                </div>
               </div>
-              <div>
-                Likes
-              </div>
-              <div>
-                Replies
-              </div>
-          </div>
-        </div>
+            </div>
+          </md-card-content>
 
 
         </md-card>

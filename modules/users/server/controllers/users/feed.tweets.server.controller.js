@@ -25,7 +25,7 @@ var oauth2 = new OAuth2(process.env.TWITTER_PURRCH_KEY,
     {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'});
 
 exports.reRoute = function (req, res, next) {
-    console.log("reroute", req);
+    //console.log("reroute", req);
     if (req.user != undefined)
         return next();
 
@@ -108,25 +108,49 @@ function getHomies(url, options, res, client, source) {
                 console.log(error);
             }
             else {
-                console.log("EXAMINING TWEET CONSTRUCT", typeof(tweet.body), tweet, url);
+                console.log("EXAMINING TWEET CONSTRUCT", url);
 
                 var parsedTweets = checkTweets(tweet);
                 //var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses);
                 var tempresponse = response;
                 var tempmaxid = parsedTweets.maxid;
                 var number = parseInt(tempresponse.headers["x-rate-limit-remaining"]);
-                //while(number > 1) {
-                //    getMoreTweets(parsedTweets, tempmaxid, tempresponse, setParams);
-                //    console.log( "GETS LEFT" , number, tempresponse.headers["x-rate-limit-remaining"]);
-                //    number--;
-                //}
+                                console.log(number);
+                //for ( var x=15-number; x < 3; x++){
+                //    getMoreTweets(parsedTweets, tempmaxid, tempresponse, x, function(results,y){
+                //        parsedTweets.Linksray = parsedTweets.Linksray.concat(results.parsedTweets.Linksray);
+                //        parsedTweets.Userray = parsedTweets.Userray.concat(results.parsedTweets.Userray);
+                //        tempmaxid = results.maxid;
+                //        tempresponse = results.response;
+                //        //console.log(results);
+                //        number = parseInt(tempresponse.headers["x-rate-limit-remaining"]);
+                //        console.log( "GETS LEFT" , y, number, tempmaxid, parsedTweets.Linksray.length, parsedTweets.Userray.length);
+                //
+                //        (function(e) {
+                //        if(e == 2)
+                //        {
+                //            res.json({
+                //                stream: tweet,
+                //                overview: parsedTweets,
+                //                linkers: parsedTweets.Linksray,
+                //                rawresponse: response
+                //            });
+                //        }
+                //        })(y);
+                //        //.headers["x-rate-limit-remaining"]
+                //    });
 
-                res.json({
-                    stream: tweet,
-                    overview: parsedTweets,
-                    linkers: parsedTweets.Linksray,
-                    rawresponse: response
-                });
+                    res.json({
+                        stream: tweet,
+                        overview: parsedTweets,
+                        linkers: parsedTweets.Linksray,
+                        rawresponse: response
+                    });
+
+
+
+
+
             }
         });
     }
@@ -134,16 +158,22 @@ function getHomies(url, options, res, client, source) {
         parsedTweets.Linksray = parsedTweets.Linksray.concat(tempTweets.Linksray);
         parsedTweets.Userray = parsedTweets.Userray.concat(tempTweets.Userray);
         tempmaxid = tempTweets.maxid;
-        tempresponse = tempTweets.response;
+        //tempresponse = tempTweets.response;
+        console.log("HERE ARE THE TEMPPARSEDTWEETS", tempTweets);
+        return {parsedTweets: parsedTweets, maxid: tempmaxid, response: tempresponse};
     }
 
-    function getMoreTweets(parsedTweets, maxid, response, setParams) {
+    function getMoreTweets(parsedTweets, maxid, response, x,callback) {
         var tempparsedTweets;
-        var tempresponse;
         client.get(url, options, function (error, tweet, response) {
+            if (error){
+                console.log(error);
+            }
+            else {
             tempparsedTweets = checkTweets(tweet);
-            tempresponse = response;
-            setParams(tempparsedTweets, parsedTweets, maxid, response);
+            callback(setParams(tempparsedTweets, parsedTweets, maxid, response),x);
+            console.log("PARAMS BACK", maxid);
+            }
         });
     }
 
@@ -206,7 +236,7 @@ function checkTweets(tweets) {
 exports.getHomeTweetByCount = function (req, res) {
 
     var options = {count: "200"};
-    console.log("REQUEST OBJECT: ", req);
+    //console.log("REQUEST OBJECT: ", req);
     if (req.body != undefined) {
         var timeperiod = req.body.time;
     }

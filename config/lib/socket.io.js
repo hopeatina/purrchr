@@ -126,7 +126,7 @@ module.exports = function (app, db) {
                 if (streams === null) {
                     client.stream('user', function (stream) {
                         streams = stream;
-                        console.log(stream, client);
+                        //console.log(stream, client);
                         stream.on('data', function (tweet) {
                             // only broadcast when users are online
                             if(users.length > 0) {
@@ -143,7 +143,7 @@ module.exports = function (app, db) {
                                 streams.destroy();
                                 streams = null;
                             }
-                            console.log(tweet.text);
+                            //console.log(tweet.text);
                         });
 
                         stream.on('error', function (error) {

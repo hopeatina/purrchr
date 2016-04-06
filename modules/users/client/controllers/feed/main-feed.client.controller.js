@@ -119,7 +119,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 if (data.data.stream != undefined) {
                     $scope.recentPeeps = data.data.overview.Userray;
                     if ($scope.recentPeeps != undefined) {
-                        $scope.currentTweets = $scope.recentPeeps.slice(0, 30);
+                        $scope.currentTweets = $scope.recentPeeps;
+                        //$scope.currentTweets = $scope.recentPeeps.slice(0, 30);
                     }
                     $scope.currentLinks = data.data.linkers;
                     if (data.data.stream != undefined) {
@@ -223,7 +224,7 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
     .controller('HashtagsController', ['$scope', '$http', 'moment', 'Authentication', '$sce',
         function ($scope, $http, moment, Authentication, $sce) {
             $scope.selectedHashtag = "#hashtags";
-            $scope.suggestedHashtags = ["RIPTwitter", "Purrchrocks", "TeamFollowBack", "SolidSaturdays"];
+            $scope.suggestedHashtags = ["RIPTwitter", "SXSW", "OpTrump", ""];
             $scope.toggleSettings = function () {
                 $scope.isOpen = $scope.isOpen ? false : true;
             };
