@@ -1,8 +1,12 @@
 'use strict'
 
-angular.module('users').controller('MainFeedController', ['$scope', '$http', 'moment', '$state', 'Authentication',
-        'Menus', 'MainFeed', '$interval', 'Socket', '$sce','$location',
-        function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket, $sce,$location) {
+angular.module('users')
+    .run(['$anchorScroll', function($anchorScroll) {
+        $anchorScroll.yOffset = 500;   // always scroll by 50 extra pixels
+    }])
+    .controller('MainFeedController', ['$scope', '$http', 'moment', '$state', 'Authentication',
+        'Menus', 'MainFeed', '$interval', 'Socket', '$sce','$location', '$anchorScroll',
+        function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket, $sce,$location, $anchorScroll) {
             $scope.pos = {
                 x : 0,
                 y : 0
@@ -17,6 +21,14 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 return $sce.trustAsHtml(html);
             };
 
+            $scope.gotoAnchor = function(person) {
+                // set the location.hash to the id of
+                // the element you wish to scroll to.
+                $location.hash(person);
+
+                // call $anchorScroll()
+                $anchorScroll();
+            };
             $scope.count = function() {
                 $scope.counter += 1;
             };
@@ -119,8 +131,8 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 if (data.data.stream != undefined) {
                     $scope.recentPeeps = data.data.overview.Userray;
                     if ($scope.recentPeeps != undefined) {
-                        $scope.currentTweets = $scope.recentPeeps;
-                        //$scope.currentTweets = $scope.recentPeeps.slice(0, 30);
+                        //$scope.currentTweets = $scope.recentPeeps;
+                        $scope.currentTweets = $scope.recentPeeps.slice(0, 30);
                     }
                     $scope.currentLinks = data.data.linkers;
                     if (data.data.stream != undefined) {
@@ -192,6 +204,10 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
                 labelFormat: "%I:%M",
                 specials: "inline"
             };
+            $scope.followed = "UNFOLLOW";
+            $scope.follow = function () {
+                $scope.followed = $scope.followed == "FOLLOW"? "UNFOLLOW" : "FOLLOW";
+            };
             $scope.tweetsCollapsed = false;
             $scope.expandarrow = $scope.tweetsCollapsed ? "expand_less": "expand_more";
             $scope.toggleTweets = function () {
@@ -224,13 +240,14 @@ angular.module('users').controller('MainFeedController', ['$scope', '$http', 'mo
     .controller('HashtagsController', ['$scope', '$http', 'moment', 'Authentication', '$sce',
         function ($scope, $http, moment, Authentication, $sce) {
             $scope.selectedHashtag = "#hashtags";
-            $scope.suggestedHashtags = ["RIPTwitter", "SXSW", "OpTrump", ""];
+            $scope.suggestedHashtags = ["RIPTwitter", "SXSW", "OpTrump"];
             $scope.toggleSettings = function () {
                 $scope.isOpen = $scope.isOpen ? false : true;
             };
+            $scope.followed = "FOLLOW";
             $scope.switchHash = function (chip) {
                 //console.log(chip);
-                $scope.selectedHashtag = "#" + chip;
+                $scope.selectedHashtag = chip;
                 $scope.go('/api/feed/hashtagtimeline');
             };
             $scope.getHtml = function (html) {

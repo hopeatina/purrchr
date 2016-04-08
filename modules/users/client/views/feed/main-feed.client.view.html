@@ -31,7 +31,7 @@
     </div>
   </md-toolbar>
   <div ng-hide="usersHidden" layout="row" class="topusers">
-    <img ng-href="#{{person.user.name}}" ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; "
+    <img ng-click="gotoAnchor(person.user.name)" ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; "
          class="md-avatar-icon" ng-if="person"
          src="{{person.user.profile_image_url}}">
   </div>
@@ -51,16 +51,22 @@
            class="container" ng-controller="SingleTweetCtrl">
         <!---->
         <!--| 'orderBy : '-tweets.length"-->
-        <md-card name="{{person.user.name}}" class=" usercard">
+        <md-card id="{{person.user.name}}" class=" usercard">
           <md-card-content class="">
             <div class="" layout="row" layout-align="space-around center">
               <div flex="33" layout="column" layout-align="center center" class="">
                 <img style="width: 48px; height: 48px;" class="md-avatar-icon" ng-if="person"
                      src="{{person.user.profile_image_url}}">
               </div>
-              <div flex="45" layout="column" layout-align="center center" class="">
+              <div flex="45" layout="row" layout-align="center center" class="">
+                <div layout = "column">
                 <span class="md-title">{{person.user.name}}</span>
                 <span class="md-subhead">@{{person.user.screen_name}}</span>
+                  </div>
+                <div layout = "column">
+                  <md-button class="signinbutton" ng-click="follow()">{{followed}}
+                  </md-button>
+                </div>
               </div>
 
               <div flex="33" layout="column" layout-align="center center">

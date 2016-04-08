@@ -110,47 +110,55 @@ function getHomies(url, options, res, client, source) {
             else {
                 console.log("EXAMINING TWEET CONSTRUCT", url);
 
-                var parsedTweets = checkTweets(tweet);
-                //var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses);
-                var tempresponse = response;
-                var tempmaxid = parsedTweets.maxid;
-                var number = parseInt(tempresponse.headers["x-rate-limit-remaining"]);
-                                console.log(number);
-                //for ( var x=15-number; x < 3; x++){
-                //    getMoreTweets(parsedTweets, tempmaxid, tempresponse, x, function(results,y){
-                //        parsedTweets.Linksray = parsedTweets.Linksray.concat(results.parsedTweets.Linksray);
-                //        parsedTweets.Userray = parsedTweets.Userray.concat(results.parsedTweets.Userray);
-                //        tempmaxid = results.maxid;
-                //        tempresponse = results.response;
-                //        //console.log(results);
-                //        number = parseInt(tempresponse.headers["x-rate-limit-remaining"]);
-                //        console.log( "GETS LEFT" , y, number, tempmaxid, parsedTweets.Linksray.length, parsedTweets.Userray.length);
-                //
-                //        (function(e) {
-                //        if(e == 2)
-                //        {
-                //            res.json({
-                //                stream: tweet,
-                //                overview: parsedTweets,
-                //                linkers: parsedTweets.Linksray,
-                //                rawresponse: response
-                //            });
-                //        }
-                //        })(y);
-                //        //.headers["x-rate-limit-remaining"]
-                //    });
+                if (tweet != undefined) {
+                    var parsedTweets = checkTweets(tweet);
 
-                    res.json({
-                        stream: tweet,
-                        overview: parsedTweets,
-                        linkers: parsedTweets.Linksray,
-                        rawresponse: response
-                    });
-
-
-
-
-
+                    //var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses);
+                    var tempresponse = response;
+                    var tempmaxid = parsedTweets.maxid;
+                    var number = parseInt(tempresponse.headers["x-rate-limit-remaining"]);
+                    console.log(number);
+                    //for (var x = number; x > 10; x--) {
+                    //    console.log("OUTSID GET INSIDE FOR" ,  options);
+                    //    getMoreTweets(parsedTweets, tempmaxid, tempresponse, x, function (results, y) {
+                    //        parsedTweets.Linksray = parsedTweets.Linksray.concat(results.parsedTweets.Linksray);
+                    //        parsedTweets.Userray = parsedTweets.Userray.concat(results.parsedTweets.Userray);
+                    //        console.log("HERE ARE THE TEMPPARSEDTWEETS links ", parsedTweets.Linksray.length,results.Linksray.length);
+                    //        console.log("HERE ARE THE TEMPPARSEDTWEETS userray ", parsedTweets.Userray.length,results.Userray.length);
+                    //        tempmaxid = results.maxid;
+                    //        options.max_id = tempmaxid;
+                    //        tempresponse = results.response;
+                    //        //console.log(results);
+                    //        number = parseInt(tempresponse.headers["x-rate-limit-remaining"]);
+                    //        console.log("GETS LEFT", y, number, tempmaxid, options, parsedTweets.Linksray.length, parsedTweets.Userray.length);
+                    //
+                    //        (function (e) {
+                    //            if (e == 11) {
+                    //                res.json({
+                    //                    stream: tweet,
+                    //                    overview: parsedTweets,
+                    //                    linkers: parsedTweets.Linksray,
+                    //                    rawresponse: response
+                    //                });
+                    //            }
+                    //        })(number);
+                    //        //.headers["x-rate-limit-remaining"]
+                    //    });
+                    //
+                    //    //res.json({
+                    //    //    stream: tweet,
+                    //    //    overview: parsedTweets,
+                    //    //    linkers: parsedTweets.Linksray,
+                    //    //    rawresponse: response
+                    //    //});
+                    //}
+                        res.json({
+                            stream: tweet,
+                            overview: parsedTweets,
+                            linkers: parsedTweets.Linksray,
+                            rawresponse: response
+                        });
+                }
             }
         });
     }
@@ -158,20 +166,21 @@ function getHomies(url, options, res, client, source) {
         parsedTweets.Linksray = parsedTweets.Linksray.concat(tempTweets.Linksray);
         parsedTweets.Userray = parsedTweets.Userray.concat(tempTweets.Userray);
         tempmaxid = tempTweets.maxid;
-        //tempresponse = tempTweets.response;
-        console.log("HERE ARE THE TEMPPARSEDTWEETS", tempTweets);
+        console.log("HERE ARE THE TEMPPARSEDTWEETS links ", parsedTweets.Linksray.length,tempTweets.Linksray.length);
+        console.log("HERE ARE THE TEMPPARSEDTWEETS userray ", parsedTweets.Userray.length,tempTweets.Userray.length);
         return {parsedTweets: parsedTweets, maxid: tempmaxid, response: tempresponse};
     }
 
     function getMoreTweets(parsedTweets, maxid, response, x,callback) {
         var tempparsedTweets;
+        console.log(options);
         client.get(url, options, function (error, tweet, response) {
             if (error){
                 console.log(error);
             }
             else {
             tempparsedTweets = checkTweets(tweet);
-            callback(setParams(tempparsedTweets, parsedTweets, maxid, response),x);
+            callback(setParams(tempparsedTweets, parsedTweets, tempparsedTweets.maxid, response),x);
             console.log("PARAMS BACK", maxid);
             }
         });
@@ -305,11 +314,12 @@ exports.getHashtagTweets = function (req, res) {
     }
     var options = {};
     var hashtag= req.query.hashtag || "RIPTwitter";
-    hashtag = hashtag.replace('#','');
+    hashtag = hashtag.replace('#','%23');
     if (client != undefined) {
         //https://api.twitter.com/1.1/search/tweets.json?q=%23RIPTwitter
         client = {};
-        getHomies('https://api.twitter.com/1.1/search/tweets.json?q=%23'+hashtag+'&result_type=recent&count=100', options, res, client,true);
+        getHomies('https://api.twitter.com/1.1/search/tweets.json?q='+hashtag+'&result_type=recent&count=100', options, res, client,true);
+    //%23
     } else {
 
     }
