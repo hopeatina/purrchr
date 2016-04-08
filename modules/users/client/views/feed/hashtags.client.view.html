@@ -1,4 +1,4 @@
-<div class="container " ng-controller="HashtagsController as hashctrl">
+<div  ng-controller="HashtagsController as hashctrl">
   <!--<md-toolbar>-->
   <!--<div layout="row">-->
   <!--<div ng-repeat="tag in suggestedHashtags">-->
@@ -15,6 +15,35 @@
   <!--{{hashtag}}-->
   <!--</md-grid-tile>-->
   <!--</md-grid-list>-->
+  <md-toolbar style="height: 50px;">
+    <div layout="row" layout-align="space-around center">
+      <!--<h4>{{stream.length}} Tweets</h4>-->
+      <div ng-click="showHideUsers()" flex="33" aria-label="Users" layout="row" layout-align="center center">
+        <i class="material-icons md-36">person_outline</i>
+      </div>
+      <div flex="33" layout="row" layout-align="center center">
+        <!--<i  class="material-icons md-24">access_time</i>-->
+        <md-select class="sortby" ng-model="timeOptionSelected" placeholder="From">
+          <md-option ng-repeat="option in timeSort" value="{{option.value}}">
+            <md-button ng-click="updateTimePeriod(option.value)">{{option.name}}</md-button>
+          </md-option>
+        </md-select>
+        <!--<h4> Since {{dataUpTo}}</h4>-->
+      </div>
+      <div flex="33" layout="row" layout-align="center center">
+        <md-select class="sortby" ng-model="sortOptionSelected" placeholder="Sort By">
+          <md-option ng-repeat="option in sortOptions" value="{{option.value}}">
+            {{option.name}}
+          </md-option>
+        </md-select>
+      </div>
+    </div>
+  </md-toolbar>
+  <div ng-hide="usersHidden" layout="row" class="topusers">
+    <img ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; "
+         class="md-avatar-icon" ng-if="!person"
+         src="{{person.user.profile_image_url}}">
+  </div>
   <div layout="column" layout-align="center center">
     <div class="hashtag-title" layout-align="center"><h1>{{selectedHashtag}}</h1></div>
     <md-button ng-hide="isOpen" class="md-raised md-button md-primary" aria-label=”Add” ng-click="toggleSettings()">
@@ -47,7 +76,7 @@
     </md-select>
   </div>
   <div ng-if="recentPeeps" ng-repeat="person in recentPeeps | orderBy : sortOptionSelected "
-       class="" ng-controller="SingleTweetCtrl">
+       class="container" ng-controller="SingleTweetCtrl">
     <!---->
     <!--| 'orderBy : '-tweets.length"-->
     <md-card class=" usercard">

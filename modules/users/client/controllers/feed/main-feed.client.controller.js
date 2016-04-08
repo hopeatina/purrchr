@@ -198,7 +198,7 @@ angular.module('users')
             $scope.timelineConfig = {
                 horizontalLayout: true,
                 color: "55acee",
-                height: 80,
+                height: 100,
                 width: 600,
                 showLabels: true,
                 labelFormat: "%I:%M",
@@ -250,6 +250,14 @@ angular.module('users')
                 $scope.selectedHashtag = chip;
                 $scope.go('/api/feed/hashtagtimeline');
             };
+            $scope.showHideUsers = function () {
+                $scope.usersHidden = !$scope.usersHidden;
+            };
+            $scope.updateTimePeriod= function(timeValue){
+                MainFeed.getTimeHomies(timeValue).then(function (data) {
+                    parseReturnedTweets(data);
+                });
+            };
             $scope.getHtml = function (html) {
                 return $sce.trustAsHtml(html);
             };
@@ -271,9 +279,21 @@ angular.module('users')
                     }
                 });
             };
+            $scope.timeSort = [
+                {name: "Past 1 hr" , value: "60"},
+                {name: "Past 3 hrs" , value: "240"},
+                {name: "Past day" , value: "1440"},
+                {name: "Past week" , value: "week"}
+            ];
             $scope.specials = "inline";
 
-            $scope.sortOptions = ["Recent", "Dopeness", "Virality", "Number of Tweets", "Fire"]
+            $scope.sortOptions = [
+                {name: "Activity", value: "-tweets.length"},
+                {name: "Inactivity", value: "tweets.length"},
+                {name: "Recent", value: ""},
+                {name: "Virality", value: "viral"},
+                {name: "Fire", value: "Fire"}
+            ];
             $scope.go('api/feed/hashtagtimeline');
 
         }]);
