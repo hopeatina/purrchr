@@ -8,10 +8,6 @@
   <md-toolbar style="height: 50px;">
     <div layout="row" layout-align="space-around center">
       <!--<h4>{{stream.length}} Tweets</h4>-->
-      <div ng-click="showHideUsers()" flex="33" aria-label="Users" layout="row" layout-align="center center">
-        <i class="material-icons md-36">person_outline</i>
-        <h4> {{recentPeeps.length}} </h4>
-      </div>
       <div flex="33" layout="row" layout-align="center center">
         <!--<i  class="material-icons md-24">access_time</i>-->
         <md-select class="sortby" ng-model="timeOptionSelected" placeholder="From">
@@ -20,6 +16,10 @@
           </md-option>
         </md-select>
         <!--<h4> Since {{dataUpTo}}</h4>-->
+      </div>
+      <div ng-click="showHideUsers()" flex="33" aria-label="Users" layout="row" layout-align="center center">
+        <i class="material-icons md-36">person_outline</i>
+        <h4> {{recentPeeps.length}} </h4>
       </div>
       <div flex="33" layout="row" layout-align="center center">
         <md-select class="sortby" ng-model="sortOptionSelected" placeholder="Sort By">
@@ -63,10 +63,10 @@
                 <span class="md-title">{{person.user.name}}</span>
                 <span class="md-subhead">@{{person.user.screen_name}}</span>
                   </div>
-                <div layout = "column">
-                  <md-button class="signinbutton" ng-click="follow()">{{followed}}
-                  </md-button>
-                </div>
+
+                  <!--<md-button class="signinbutton" ng-click="follow()">{{followed}}-->
+                  <!--</md-button>-->
+
               </div>
 
               <div flex="33" layout="column" layout-align="center center">
@@ -118,13 +118,12 @@
                      src="{{user.profile_image_url}}">
                 <a class="wraplink" flex="40" href="{{link.url}}" target="_blank">{{link.url}}</a>
                 <div>
+                  {{link.retweets}}
                   Retweets
                 </div>
                 <div>
-                  Likes
-                </div>
-                <div>
-                  Replies
+                  {{link.faves}}
+                  Favorites
                 </div>
               </div>
             </div>

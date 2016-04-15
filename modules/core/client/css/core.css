@@ -87,6 +87,14 @@ background: whitesmoke;
 .topusers {
   overflow-x: auto;
 }
+.toplists {
+  overflow-x: auto;
+  position: absolute;
+  height: 80%;
+  width: 100%;
+  z-index: 1;
+  background: #57ff79;
+}
 .customnav {
   background-color: white;
 }

@@ -66,10 +66,10 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     lineWidth: 3,
                     color: "#999",
                     background: "#FFF",
-                    dateFormat: "%Y/%m/%d %I:%M:%S",
+                    dateFormat: "%I:%M , %m/%d/%Y",
                     horizontalLayout: true,
                     showLabels: false,
-                    labelFormat: "%Y/%m/%d %I:%M:%S",
+                    labelFormat: "%I:%M , %m/%d/%Y",
                     addNow: false,
                     addNowLabel: "Now",
                     seriesColor: d3.scale.category20(),
@@ -112,7 +112,16 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     .attr("preserveAspectRatio", "xMinYMin meet")
                     .classed("svg-content-responsive", true);
                 var tip = d3.select(element[0])
-                    .append('div');
+                    .append('div')
+                    //.style("opacity", 0)
+                    //.style("position", "absolute")
+                    //.style("font-family", "Helvetica Neue")
+                    //.style("font-weight", "300")
+                    //.style("background","rgba(0,0,0,0.5)")
+                    ////.style("color", "white")
+                    //.style("padding", "5px 10px 5px 10px")
+                    //.style("-moz-border-radius", "8px 8px")
+                    //.style("border-radius", "8px 8px");;
                 //.attr("ng-if", "viewall");
                 var clicked = [];
                 var colors=[];
@@ -183,7 +192,16 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
 
                     var svg = d3.select(element[0]).append('svg').attr("width", cfg.width).attr("height", cfg.height);
                     var tip = d3.select(element[0])
-                        .append('div');
+                        .append('div')
+                        //.style("opacity", 0)
+                        //.style("position", "absolute");
+                        //.style("font-family", "Helvetica Neue")
+                        //.style("font-weight", "300")
+                        //.style("background","rgba(0,0,0,0.5)")
+                        ////.style("color", "white")
+                        //.style("padding", "5px 10px 5px 10px")
+                        //.style("-moz-border-radius", "8px 8px")
+                        //.style("border-radius", "8px 8px");;
                     //console.log(svg, tip);
                     //.attr("ng-if", "viewall");
                     var clicked = [];
@@ -372,7 +390,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                 if (clicked[i] == undefined) {
                                     clicked[i] = false;
                                 }
-                                console.log("mouseover", clicked[i], i, options.width + "px", margin, step);
+                                console.log("mouseover", clicked[i], i, options.width/2 + "px", margin, step);
                                 if (clicked[i] == false && cfg.horizontalLayout) {
                                     var format, datetime, dateValue;
                                     if (cfg.dateDimension) {
@@ -405,7 +423,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                         d3.select(element[0])
                                     }
                                     tip.append("md-card").html(dateValue)
-                                        .style("width", options.width + "px")
+                                        .style("width", options.width/2 + "px")
                                         .style("position", "relative")
                                         .style("margin-top","10px")
                                         .style("background", "whitesmoke")
@@ -418,7 +436,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                 }
                             })
                             .on("mouseout", function (d, i) {
-                                console.log("mouseout", clicked[i], i, options.width + "px");
+                                console.log("mouseout", clicked[i], i, options.width/2 + "px");
                                 if (clicked[i] == false) {
                                     d3.select(this)
                                         .style("fill", function (d) {
@@ -467,7 +485,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                         tip.append("img").style("float", "left").style("margin-right", "4px").attr("src", d.img).attr("width", "50px").style("z-index", "100").style("position", "relative");
                                         d3.select(element[0])
                                     }
-                                    tip.append("md-card").style("width", options.width + "px")
+                                    tip.append("md-card").style("width", options.width/2 + "px")
                                         .html(dateValue)
                                         .style("position", "relative")
                                         .style("margin-top","10px")
@@ -479,7 +497,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                     tip.transition()
                                         .duration(100)
                                         .style("opacity", 1).style("display", "block")
-                                        .style("width", options.width + "px");
+                                        .style("width", options.width/2 + "px");
 
                                 }
 
@@ -558,7 +576,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                         d3.select(element[0])
                                     }
                                     tip.append("md-card").html(dateValue)
-                                        .style("width", options.width + "px")
+                                        .style("width", options.width/2 + "px")
                                         .style("position", "relative")
                                         .style("margin-top","10px")
                                         .style("background", "whitesmoke")
@@ -570,7 +588,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                         .style("opacity", 1).style("display", "block");
                                     clicked[i] = true;
                                 }
-                                console.log("clicked", clicked[i], i, options.width + "px");
+                                console.log("clicked", clicked[i], i, options.width/2 + "px");
                             });
                     }
                     else {
@@ -700,13 +718,13 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                         }
                     }
 
-                    //svg.on("mousemove", function () {
-                    //        var tipPixels = parseInt(tip.style("height").replace("px", ""));
-                    //        return tip.style("top", (d3.event.pageY - tipPixels - margin) + "px").style("left", (d3.event.pageX + 20) + "px");
-                    //    })
-                    //    .on("mouseout", function () {
-                    //        return tip.style("opacity", 0).style("top", "0px").style("left", "0px");
-                    //    });;
+                    svg.on("mousemove", function () {
+                            var tipPixels = parseInt(tip.style("height").replace("px", ""));
+                            return tip.style("top", (d3.event.pageY - tipPixels - margin) + "px").style("left", (d3.event.pageX + 20) + "px");
+                        })
+                        .on("mouseout", function () {
+                            return tip.style("opacity", 0).style("top", "0px").style("left", "0px");
+                        });;
                 };
                 //scope.render(events);
 

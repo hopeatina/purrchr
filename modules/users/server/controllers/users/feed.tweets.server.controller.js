@@ -215,7 +215,7 @@ function checkTweets(tweets) {
                     //    console.log('ALREADY IN ARRAY ADDED', urlkey, Linksray[url.expanded_url].indexOf(tweet.user.name), Linksray.length);
                     //}
                 } else {
-                    Linksray.push({url: url.expanded_url, users: [tweet.user]});
+                    Linksray.push({url: url.expanded_url, users: [tweet.user], retweets: tweet.retweet_count, faves: tweet.favorite_count });
                     //console.log('NEW TWEET IN ARRAY', urlkey, Linksray.length);
                 }
             });

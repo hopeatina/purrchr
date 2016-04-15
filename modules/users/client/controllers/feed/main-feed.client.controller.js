@@ -249,10 +249,19 @@ angular.module('users')
                 //console.log(chip);
                 $scope.selectedHashtag = chip;
                 $scope.go('/api/feed/hashtagtimeline');
+                $scope.toggleSettings();
             };
+            $scope.usersHidden = true;
             $scope.showHideUsers = function () {
                 $scope.usersHidden = !$scope.usersHidden;
+                console.log($scope.usersHidden);
             };
+            $scope.lists = [
+                {span: {col: 1, row: 1}, background: {"background-color" : "coral"}, title: "#RIPTwitter", keywords: "#RIPTwitter"},
+                {span: {col: 1, row: 1}, background: {"background-color" : "coral"}, title: "#SXSW", keywords: "#SXSW"},
+                {span: {col: 1, row: 1}, background: {"background-color" : "coral"}, title: "#OpTrump", keywords: "#OpTrump"},
+                {span: {col: 1, row: 1}, background: {"background-color" : "coral"}, title: "#RIPTwitter", keywords: "#RIPTwitter"}
+            ];
             $scope.updateTimePeriod= function(timeValue){
                 MainFeed.getTimeHomies(timeValue).then(function (data) {
                     parseReturnedTweets(data);

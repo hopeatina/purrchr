@@ -1,4 +1,4 @@
-<div  ng-controller="HashtagsController as hashctrl">
+<div ng-controller="HashtagsController as hashctrl">
   <!--<md-toolbar>-->
   <!--<div layout="row">-->
   <!--<div ng-repeat="tag in suggestedHashtags">-->
@@ -18,9 +18,6 @@
   <md-toolbar style="height: 50px;">
     <div layout="row" layout-align="space-around center">
       <!--<h4>{{stream.length}} Tweets</h4>-->
-      <div ng-click="showHideUsers()" flex="33" aria-label="Users" layout="row" layout-align="center center">
-        <i class="material-icons md-36">person_outline</i>
-      </div>
       <div flex="33" layout="row" layout-align="center center">
         <!--<i  class="material-icons md-24">access_time</i>-->
         <md-select class="sortby" ng-model="timeOptionSelected" placeholder="From">
@@ -29,6 +26,9 @@
           </md-option>
         </md-select>
         <!--<h4> Since {{dataUpTo}}</h4>-->
+      </div>
+      <div ng-click="toggleSettings()" flex="33" aria-label="Users" layout="row" layout-align="center center">
+        <i class="material-icons md-36">list</i> Lists
       </div>
       <div flex="33" layout="row" layout-align="center center">
         <md-select class="sortby" ng-model="sortOptionSelected" placeholder="Sort By">
@@ -39,11 +39,38 @@
       </div>
     </div>
   </md-toolbar>
-  <div ng-hide="usersHidden" layout="row" class="topusers">
-    <img ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; "
-         class="md-avatar-icon" ng-if="!person"
-         src="{{person.user.profile_image_url}}">
-  </div>
+  <!--<div ng-show="isOpen" layout="column" class="toplists" >-->
+    <!--<div layout="row" >-->
+      <!--<div flex="30" layout="row" layout-align="center center">-->
+        <!--<i class="material-icons md-36">add_circle_outline</i>Add List-->
+      <!--</div>-->
+      <!--<div flex="70" layout="row" layout-align="end center">-->
+        <!--<md-input-container flex>-->
+          <!--<label>&nbsp;</label>-->
+          <!--<input ng-model="search.list" placeholder="enter search">-->
+        <!--</md-input-container>-->
+        <!--<i class="material-icons md-36">search</i> Search-->
+      <!--</div>-->
+    <!--</div>-->
+      <!--<div layout="column" >-->
+        <!--<md-grid-list-->
+          <!--md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"-->
+          <!--md-row-height-gt-md="1:1" md-row-height="1:2"-->
+          <!--md-gutter="8px" md-gutter-gt-sm="8px">-->
+          <!--<md-grid-tile ng-repeat="tile in lists"-->
+                        <!--md-rowspan="{{tile.span.row}}"-->
+                        <!--md-colspan="{{tile.span.col}}"-->
+                        <!--md-colspan-sm="1"-->
+                        <!--md-colspan-xs="1"-->
+                        <!--ng-style="tile.background"-->
+                        <!--ng-click="switchHash(tile.keywords)">-->
+            <!--{{tile.title}}-->
+            <!--&lt;!&ndash;<md-grid-tile-footer><h3>{{tile.title}}</h3></md-grid-tile-footer>&ndash;&gt;-->
+          <!--</md-grid-tile>-->
+          <!--</md-grid-list>-->
+      <!--</div>-->
+  <!--</div>-->
+
   <div layout="column" layout-align="center center">
     <div class="hashtag-title" layout-align="center"><h1>{{selectedHashtag}}</h1></div>
     <md-button ng-hide="isOpen" class="md-raised md-button md-primary" aria-label=”Add” ng-click="toggleSettings()">
@@ -61,20 +88,16 @@
         </md-chip-template>
       </md-chips>
       <md-button layout="column" layout-align="center center" class="md-icon-button" ng-click="toggleSettings()">
-      <i class="material-icons md-48">clear</i>
+        <i class="material-icons md-48">clear</i>
       </md-button>
     </div>
   </md-card>
-  <div layout="row" layout-align="end center">
-    <md-button layout="column" layout-align="center center"  class="md-icon-button" ng-click="go('api/feed/hashtagtimeline')">
-      <i class="material-icons md-48">cached</i>
-    </md-button>
-    <md-select ng-model="sortOptionSelected" placeholder="Sort By:">
-      <md-option ng-repeat="option in sortOptions" value="{{option}}">
-        {{option}}
-      </md-option>
-    </md-select>
-  </div>
+  <!--<div layout="row" layout-align="center center">-->
+    <!--<md-button layout="column" layout-align="center center" class="md-icon-button"-->
+               <!--ng-click="go('api/feed/hashtagtimeline')">-->
+      <!--<i class="material-icons md-48">cached</i>-->
+    <!--</md-button>-->
+  <!--</div>-->
   <div ng-if="recentPeeps" ng-repeat="person in recentPeeps | orderBy : sortOptionSelected "
        class="container" ng-controller="SingleTweetCtrl">
     <!---->
@@ -96,7 +119,8 @@
           </div>
         </div>
         <div flex layout="row" layout-align="center" class="">
-          <div layout="column" layout-align="center center"flex="timeflex"ng-hide="tweetsCollapsed" timeline data="person.tweets" options="timelineConfig"></div>
+          <div layout="column" layout-align="center center" flex="timeflex" ng-hide="tweetsCollapsed" timeline
+               data="person.tweets" options="timelineConfig"></div>
           <div flex="80" ng-if="person.tweets.length == 1">
             <div layout="row" ng-repeat="ptweet in person.tweets">
               <div ng-bind-html="getHtml(ptweet.name + ptweet.date)"></div>
