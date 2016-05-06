@@ -37,8 +37,8 @@
   </div>
 
   <md-tabs md-selected="selectedIndex" class="md-shadow-animated" md-dynamic-height md-swipe-content
-           md-stretch-tabs="auto" md-center-tabs>
-    <md-tab label="Feed">
+           md-stretch-tabs="auto" md-center-tabs >
+    <md-tab label="Feed" md-on-select="updateSortOptions()">
       <div layout="row" layout-align="center" class="signindiv">
         <md-button class="signinbutton" ng-if="QueueCount > 0" ng-click="updateFeed()">{{QueueCount}} New Tweets
         </md-button>
@@ -47,7 +47,7 @@
       <!--<div layout="row" layout-align="center">-->
       <!--<md-progress-circular md-mode="{{modes[4]}}" md-diameter="20"></md-progress-circular>-->
       <!--</div>-->
-      <div ng-if="recentPeeps" ng-repeat="person in currentTweets | orderBy : sortOptionSelected "
+      <div ng-if="recentPeeps" ng-repeat="person in currentTweets | orderBy : sortOptionSelected"
            class="container" ng-controller="SingleTweetCtrl">
         <!---->
         <!--| 'orderBy : '-tweets.length"-->
@@ -106,23 +106,23 @@
       <!--@{{tweet.user.screen_name}},{{tweet.created_at}} : {{tweet.text}}-->
       <!--</div>-->
     </md-tab>
-    <md-tab label="Links">
+    <md-tab label="Links" md-on-select="updateSortOptions()">
 
       <div class="container">
         <md-card class="usercard" ng-repeat="link in currentLinks">
           <md-card-content>
             <div md-padding layout="column">
 
-              <div layout="row" layout-align="space-around center" ng-repeat="user in link.users">
+              <div layout="row" layout-align="space-around center" ng-repeat="user in link.userObj | orderBy : sortOptionSelected">
                 <img style="width: 48px; height: 48px;" class="md-avatar-icon"
-                     src="{{user.profile_image_url}}">
+                     src="{{user.user.profile_image_url}}">
                 <a class="wraplink" flex="40" href="{{link.url}}" target="_blank">{{link.url}}</a>
                 <div>
-                  {{link.retweets}}
+                  {{user.values.retweets}}
                   Retweets
                 </div>
                 <div>
-                  {{link.faves}}
+                  {{user.values.faves}}
                   Favorites
                 </div>
               </div>
@@ -133,7 +133,7 @@
         </md-card>
       </div>
     </md-tab>
-    <md-tab label="Media">
+    <md-tab label="Media" md-on-select="updateSortOptions()">
     </md-tab>
   </md-tabs>
 </div>

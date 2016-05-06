@@ -77,7 +77,8 @@
       MORE
     </md-button>
   </div>
-  <md-card ng-show="isOpen" class="hashtags ">
+  <div class="container">
+  <md-card ng-show="isOpen">
     <div layout="column" layout-align="center center">
       <h3>Your Hashtags:</h3>
       <md-chips ng-model="suggestedHashtags" placeholder="Add an item">
@@ -92,6 +93,7 @@
       </md-button>
     </div>
   </md-card>
+  </div>
   <!--<div layout="row" layout-align="center center">-->
     <!--<md-button layout="column" layout-align="center center" class="md-icon-button"-->
                <!--ng-click="go('api/feed/hashtagtimeline')">-->

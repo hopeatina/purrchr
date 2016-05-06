@@ -39,7 +39,7 @@
 </head>
 
 <body class="ng-cloak body">
-  <header ng-include="'/modules/core/client/views/header.client.view.html'" class="customnav navbar navbar-fixed-top "></header>
+  <header ng-include="'/modules/core/client/views/header.client.view.html'" class=" navbar navbar-fixed-top "></header>
   <section class="content" >
     <section >
       {% block content %}{% endblock %}
@@ -59,7 +59,7 @@
 
   {% if livereload %}
   <!--&lt;!&ndash;Livereload script rendered&ndash;&gt;-->
-  <!--<script type="text/javascript" src="{{host}}:35729/livereload.js"></script>-->
+  <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
 
   {% endif %}
   <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>

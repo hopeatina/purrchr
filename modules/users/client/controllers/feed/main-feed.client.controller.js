@@ -34,6 +34,7 @@ angular.module('users')
             };
             $scope.$state = $state;
             $scope.authentication = Authentication;
+            $scope.selectedIndex = 0;
             $scope.sortOptions = [
                 {name: "Activity", value: "-tweets.length"},
                 {name: "Inactivity", value: "tweets.length"},
@@ -42,7 +43,53 @@ angular.module('users')
                 //{name: "Virality", value: ""},
                 //{name: "Tweet Count", value: ""},
                 //{name: "Fire", value: ""}
-             ];
+            ];
+            $scope.updateSortOptions = function () {
+                console.log($scope.selectedIndex);
+                console.log($scope.sortOptionSelected);
+            switch ($scope.selectedIndex) {
+                case 0:
+                    $scope.sortOptions = [
+                        {name: "Activity", value: "-tweets.length"},
+                        {name: "Inactivity", value: "tweets.length"},
+                        {name: "Recent", value: ""}
+                        //{name: "Dopeness", value: ""},
+                        //{name: "Virality", value: ""},
+                        //{name: "Tweet Count", value: ""},
+                        //{name: "Fire", value: ""}
+                    ];
+                    break;
+                case 1:
+                    $scope.sortOptions = [
+                        {name: "Retweets", value: "values.retweets"},
+                        {name: "Favorites", value: "values.faves"},
+                        {name: "Recent", value: ""}
+                    ];
+                    break;
+                case 2:
+                    $scope.sortOptions = [
+                        {name: "Activity", value: "-tweets.length"},
+                        {name: "Inactivity", value: "tweets.length"},
+                        {name: "Recent", value: ""}
+                        //{name: "Dopeness", value: ""},
+                        //{name: "Virality", value: ""},
+                        //{name: "Tweet Count", value: ""},
+                        //{name: "Fire", value: ""}
+                    ];
+                    break;
+                default:
+                    $scope.sortOptions = [
+                        {name: "Activity", value: "-tweets.length"},
+                        {name: "Inactivity", value: "tweets.length"},
+                        {name: "Recent", value: ""}
+                        //{name: "Dopeness", value: ""},
+                        //{name: "Virality", value: ""},
+                        //{name: "Tweet Count", value: ""},
+                        //{name: "Fire", value: ""}
+                    ];
+                }
+            };
+
             $scope.timeSort = [
                 {name: "Past 1 hr" , value: "60"},
                 {name: "Past 3 hrs" , value: "240"},
@@ -131,8 +178,8 @@ angular.module('users')
                 if (data.data.stream != undefined) {
                     $scope.recentPeeps = data.data.overview.Userray;
                     if ($scope.recentPeeps != undefined) {
-                        //$scope.currentTweets = $scope.recentPeeps;
-                        $scope.currentTweets = $scope.recentPeeps.slice(0, 30);
+                        $scope.currentTweets = $scope.recentPeeps;
+                        //$scope.currentTweets = $scope.recentPeeps.slice(0, 30);
                     }
                     $scope.currentLinks = data.data.linkers;
                     if (data.data.stream != undefined) {

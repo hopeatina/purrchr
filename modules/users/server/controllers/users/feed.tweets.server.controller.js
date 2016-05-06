@@ -208,15 +208,15 @@ function checkTweets(tweets) {
                     Linksray[Linksray.indexOf({
                         url: url.expanded_url,
                         users: [tweet.user.name]
-                    })].users.push(tweet.user);
+                    })].userObj.user.push(tweet.user);
                     //if (Linksray[url.expanded_url].indexOf(tweet.user.name) > -1 || Linksray === [] )
                     //{
                     //    Linksray[url.expanded_url].push(tweet.user.name);
                     //    console.log('ALREADY IN ARRAY ADDED', urlkey, Linksray[url.expanded_url].indexOf(tweet.user.name), Linksray.length);
                     //}
                 } else {
-                    Linksray.push({url: url.expanded_url, users: [tweet.user], retweets: tweet.retweet_count, faves: tweet.favorite_count });
-                    //console.log('NEW TWEET IN ARRAY', urlkey, Linksray.length);
+                    Linksray.push({url: url.expanded_url, userObj: [{values: {retweets: tweet.retweet_count, faves: tweet.favorite_count }, user: tweet.user}] });
+                    console.log('NEW TWEET IN ARRAY', urlkey, Linksray.length, tweet);
                 }
             });
         }
