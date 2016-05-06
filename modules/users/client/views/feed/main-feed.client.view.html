@@ -109,11 +109,11 @@
     <md-tab label="Links" md-on-select="updateSortOptions()">
 
       <div class="container">
-        <md-card class="usercard" ng-repeat="link in currentLinks">
+        <md-card class="usercard" ng-repeat="link in currentLinks | orderBy : sortOptionSelected">
           <md-card-content>
             <div md-padding layout="column">
 
-              <div layout="row" layout-align="space-around center" ng-repeat="user in link.userObj | orderBy : sortOptionSelected">
+              <div layout="row" layout-align="space-around center" ng-repeat="user in link.userObj">
                 <img style="width: 48px; height: 48px;" class="md-avatar-icon"
                      src="{{user.user.profile_image_url}}">
                 <a class="wraplink" flex="40" href="{{link.url}}" target="_blank">{{link.url}}</a>

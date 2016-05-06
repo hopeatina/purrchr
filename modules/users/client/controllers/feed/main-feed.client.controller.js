@@ -286,8 +286,8 @@ angular.module('users')
         }])
     .controller('HashtagsController', ['$scope', '$http', 'moment', 'Authentication', '$sce',
         function ($scope, $http, moment, Authentication, $sce) {
-            $scope.selectedHashtag = "#hashtags";
-            $scope.suggestedHashtags = ["RIPTwitter", "SXSW", "OpTrump"];
+            $scope.selectedHashtag = "#NoDaysOff";
+            $scope.suggestedHashtags = ["RIPTwitter", "SXSW", "OpTrump", "MetGala","Superman"];
             $scope.toggleSettings = function () {
                 $scope.isOpen = $scope.isOpen ? false : true;
             };
