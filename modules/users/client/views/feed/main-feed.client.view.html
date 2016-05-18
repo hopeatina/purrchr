@@ -78,7 +78,7 @@
               <div layout="column" layout-align="center center" flex="timeflex" ng-hide="tweetsCollapsed" timeline
                    data="person.tweets" options="timelineConfig"></div>
               <div flex="80" ng-if="person.tweets.length == 1">
-                <md-card style="position: relative;margin-top: 10px;background: whitesmoke;" layout="row"
+                <md-card style="position: relative;margin-top: 10px;background: whitesmoke; font-size: large" layout="row"
                          ng-repeat="ptweet in person.tweets">
                   <div ng-bind-html="getHtml(ptweet.name + ptweet.date)"></div>
                 </md-card>
