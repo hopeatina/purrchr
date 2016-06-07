@@ -122,7 +122,7 @@ exports.oauthCallback = function (strategy) {
           return res.redirect('/authentication/signin');
         }
 
-        return res.redirect( sessionRedirectURL || '/');
+        return res.redirect( sessionRedirectURL || '/feed');
       });
     })(req, res, next);
   };

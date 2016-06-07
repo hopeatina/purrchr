@@ -46,7 +46,9 @@ angular.module('users')
             ];
             $scope.updateSortOptions = function () {
                 console.log($scope.selectedIndex);
-                console.log($scope.sortOptionSelected);
+                console.sortOptionSelected;
+                $scope.temprecent = ($scope.temprecent !== $scope.recentPeeps) ? $scope.recentPeeps : $scope.temprecent;
+
             switch ($scope.selectedIndex) {
                 case 0:
                     $scope.sortOptions = [
@@ -61,10 +63,19 @@ angular.module('users')
                     break;
                 case 1:
                     $scope.sortOptions = [
-                        {name: "Retweets", value: "values.retweets"},
-                        {name: "Favorites", value: "values.faves"},
-                        {name: "Recent", value: ""}
+                        {name: "Retweets +", value: "-userObj[0].values.retweets"},
+                        {name: "Retweets -", value: "userObj[0].values.retweets"},
+                        {name: "Favorites +", value: "-userObj[0].values.faves"},
+                        {name: "Favorites -", value: "userObj[0].values.faves"},
+                        {name: "Recent", value: ""},
+                        {name: "Old", value: "-"}
                     ];
+                    var linkusers = [];
+                    //$scope.currentLinks.slice().forEach(user, function(user){
+                    //    linkusers.push[user.userObj[0].user];
+                    //});
+                    //
+                    //$scope.recentPeeps =  linkusers;
                     break;
                 case 2:
                     $scope.sortOptions = [
@@ -301,6 +312,10 @@ angular.module('users')
             $scope.usersHidden = true;
             $scope.showHideUsers = function () {
                 $scope.usersHidden = !$scope.usersHidden;
+                if ($scope.selectedIndex == 1) {
+                    $scope.usersHidden = true;
+                }
+
                 console.log($scope.usersHidden);
             };
             $scope.lists = [
