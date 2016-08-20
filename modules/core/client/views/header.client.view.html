@@ -26,7 +26,7 @@
     </ul>
     <ul class="nav navbar-nav navbar-right" ng-hide="authentication.user">
       <li ui-sref-active="active">
-        <a style="right: 25px" ui-sref="authentication.signup">Sign Up</a>
+        <a ui-sref="authentication.signup">Sign Up</a>
       </li>
       <!--<li class="divider-vertical"></li>-->
       <!--<li ui-sref-active="active">-->
@@ -59,10 +59,10 @@
           </li>
         </ul>
       </li>
-      <li ui-sref-active="active">
+      <li ng-class="{active: $state.includes('main-feed')}">
         <a ui-sref="main-feed">Feed</a>
       </li>
-      <li ui-sref-active="active">
+      <li ng-class="{active: $state.includes('hashtags')}">
         <a ui-sref="hashtags">Hashtags</a>
       </li>
     </ul>
