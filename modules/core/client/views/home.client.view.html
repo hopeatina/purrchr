@@ -1,6 +1,6 @@
 <section ng-controller="HomeController">
 
-  <div id="top" layout="column" layout-align="center center">
+  <div id="top" layout="column" class="headerbubbles" layout-align="center center">
     <div>
       <img alt="PURRCHR" src="https://vectr.com/theonlyhope/designs/untitled-j5OwItprW.svg"
            style="width: 250px;height: 250px">
@@ -9,7 +9,7 @@
     <!---->
     <div layout="column" layout-align="center center" style=" color: white; margin-top: -60px;">
 
-      <h3 style="text-align: center">Explore your feed for the best tweets</h3>
+      <h1 style="text-align: center">Explore your feed for the best tweets</h1>
 
       <div class="signindiv">
         <md-button class="signinbutton" ng-click="callOauthProvider('/api/auth/twitter')">Sign in with Twitter
@@ -26,33 +26,53 @@
     </div>
     <div id="features" layout="column" layout-align="space-around center" style="text-align: center">
       <div layout="row" layout-align="center center">
-        <h3>Browse your timeline by user and view their activity.</h3>
+        <h2>Browse your timeline by user and view their activity.</h2>
+
       </div>
       <div layout="row" layout-align="center center">
-        <h3>Follow hashtags and topics you're interested in and join engaging conversations.</h3>
+        <img src="/modules/core/client/img/brand/scroll%20example%201.gif"></img>
+
       </div>
-      <div style="padding: 50px" layout="row" layout-align="center center">
-        <img flex="90" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
-             src="/modules/users/client/img/other/hashtags.png">
-      </div>
+      <!--<div layout="row" layout-align="center center">-->
+        <!--<h2>Follow hashtags and topics you're interested in and join engaging conversations.</h2>-->
+      <!--</div>-->
+      <!--<div style="padding: 50px" layout="row" layout-align="center center">-->
+        <!--<img flex="90" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"-->
+             <!--src="/modules/users/client/img/other/hashtags.png">-->
+      <!--</div>-->
       <div layout="row" layout-align="center center">
-        <h3>Control your feed. Filter based on a Time Period, Frequency, Virality and many others.</h3>
+        <h2>Control your feed.</h2>
       </div>
-      <div style="padding: 50px"  layout="row" layout-align="space-around center">
-        <div>
+      <div class="controls" layout="row" layout-align="space-around center" layout-wrap="">
+        <div flex-gt-md="33" flex-sm="100">
           <img style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
                src="/modules/users/client/img/other/times.png">
+          <h4>Compress your feed into a selected time period</h4>
         </div>
-        <div><img style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+        <div flex-gt-md="33" flex-sm="100">
+          <img src="/modules/core/client/img/brand/Who's%20Here.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-radius: 50%" ></img>
+          <h4>See who's online now</h4>
+        </div>
+        <div flex-gt-md="33" flex-sm="100"><img style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
                   src="/modules/users/client/img/other/Activity.png">
+          <h4>Sort tweets based on Activity, Retweets, Favorites, and Time</h4>
         </div>
       </div>
     </div>
   </div>
 
 </section>
-
+<div id="ctasignup" layout="column" class="headerbubbles" layout-align="center center" style=" color: white;">
+  <h1 class="bottomctatext"> Explore your feed now!</h1>
+  <div class="signindiv-thin">
+    <md-button class="signinbutton" ng-click="callOauthProvider('/api/auth/twitter')">Sign in with Twitter
+    </md-button>
+    <!--<script type="text/javascript-lazy" data-maitre src='https://maitreapp.co/widget.js' async>-->
+    <!--console.log("It works!");-->
+    <!--</script>-->
+  </div>
+</div>
 <md-toolbar id="footer" style="background-color: rgba(211,101,13,1); text-align: center" layout="column"
             layout-align="center center">
-  Copyright 2016 Purrchr. Email us at purrchr@gmail.com
+  <p>Made by Hope. Email me at hopeatina[at]gmail.com </p>
 </md-toolbar>
