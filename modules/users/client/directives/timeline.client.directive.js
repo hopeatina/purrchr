@@ -112,7 +112,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                     .attr("preserveAspectRatio", "xMinYMin meet")
                     .classed("svg-content-responsive", true);
                 var tip = d3.select(element[0])
-                    .append('div')
+                    .append('div');
                     //.style("opacity", 0)
                     //.style("position", "absolute")
                     //.style("font-family", "Helvetica Neue")
@@ -160,7 +160,7 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
 
 
                     if (options.horizontalLayout)
-                    options.width = $window.innerWidth * .7;
+                    options.width = $window.innerWidth * .6;
 
                     if (scope.specials =="inline") {
                         //options.width = options.width * .6;
