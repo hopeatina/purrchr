@@ -88,13 +88,14 @@ function getHomies(url, options, res, client, source) {
                 console.log("ERROR", error, url);
             }
             else {
-                var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses);
+                var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses, client);
 
                 res.json({
                     stream: tweet,
                     overview: parsedTweets.Userray,
                     linkers: parsedTweets.Linksray,
-                    tweets: parsedTweets.Tweets
+                    tweets: parsedTweets.Tweets,
+                    tweetstorms: parsedTweets.Tweetstorms
                 });
                 //console.log("TWEET: ", parsedTweets.length, tweet.length);  // Tweet body.
                 //console.log("RESPONSE: ", response);  // Raw response object.
@@ -111,7 +112,7 @@ function getHomies(url, options, res, client, source) {
                 console.log("EXAMINING TWEET CONSTRUCT", url);
 
                 if (tweet != undefined) {
-                    var parsedTweets = checkTweets(tweet);
+                    var parsedTweets = checkTweets(tweet, client);
 
                     //var parsedTweets = checkTweets(JSON.parse(tweet.body).statuses);
                     var tempresponse = response;
@@ -179,7 +180,7 @@ function getHomies(url, options, res, client, source) {
                 console.log(error);
             }
             else {
-            tempparsedTweets = checkTweets(tweet);
+            tempparsedTweets = checkTweets(tweet, client);
             callback(setParams(tempparsedTweets, parsedTweets, tempparsedTweets.maxid, response),x);
             console.log("PARAMS BACK", maxid);
             }
@@ -195,12 +196,17 @@ function linkUp(tweet) {
 }
 
 
-function checkTweets(tweets) {
+function checkTweets(tweets, client) {
+    client = client || null;
     var Userray = [];
+    var Userhash = {};
     var Linksray = [];
+    var Tweetstorms = ["Poop"];
+    var Stormray = [];
     var keyword = [];
     var maxid;
     tweets.forEach(function (tweet, key, tweets) {
+        // console.log(key, tweet);
         if (tweet.entities.urls != undefined) {
             tweet.entities.urls.forEach(function (url, urlkey, urls) {
 
@@ -216,30 +222,73 @@ function checkTweets(tweets) {
                     //}
                 } else {
                     Linksray.push({url: url.expanded_url, userObj: [{values: {retweets: tweet.retweet_count, faves: tweet.favorite_count }, user: tweet.user}] });
-                    console.log('NEW TWEET IN ARRAY', urlkey, Linksray.length, tweet);
+                    // console.log('NEW TWEET IN ARRAY', urlkey, Linksray.length, tweet);
                 }
             });
         }
         var inArray = false;
-        for (var i = 0; i < Userray.length; i++) {
-            if (tweet.user.id === Userray[i].user.id || Userray === []) {
-                inArray = true;
-                //var mentions = twittertxt.extractMentions(tweet.text);
-                //
-                //console.log(mentions);
-                Userray[i].tweets.push({name: linkUp(tweet), date: tweet.created_at, tweetid: tweet.id_str, tweetuser: tweet.screen_name});
+        var inStormray = false;
+        if (Userhash[tweet.user.id]) {
+            Userhash[tweet.user.id].tweets.push({name: linkUp(tweet), date: tweet.created_at, tweetid: tweet.id_str, tweetuser: tweet.screen_name});
+            if (tweet.user.id == tweet.in_reply_to_user_id) {
+                var recentsequence = checkSequence(tweet,client);
+                Userhash[tweet.user.id].storms.push[recentsequence];
             }
+        } else {
+            Userhash[tweet.user.id] = {tweets: [{name: linkUp(tweet), date: tweet.created_at, tweetid: tweet.id_str, tweetuser: tweet.screen_name}],
+                storms: [], user: tweet.user
+            };
         }
-        if (!inArray) {
-            Userray.push({user: tweet.user, tweets: [{name: linkUp(tweet), date: tweet.created_at}]});
-            //console.log(tweet);
+
+        console.log(tweet.user.id, Userhash[tweet.user.id].storms.length);
+
+        function checkSequence(tweet, client) {
+            var url = 'statuses/user_timeline';
+            var options = {max_id: tweet.id};
+            var tweets;
+            client.get(url,options, function (error, replies, response) {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    console.log(replies.length);
+                    var chain = [];
+                    var currentweetid = replies.id;
+                    chain.push(currentweetid);
+                    replies.forEach(function(reply){
+                        if (reply.id != currentweetid) {
+                            if(reply.in_reply_to_status_id == currentweetid) {
+                                currentweetid = reply.in_reply_to_status_id;
+                                chain.push(currentweetid);
+                            }
+                        }
+
+                    });
+                    return chain
+                }
+            });
         }
+        // for (var i = 0; i < Userray.length; i++) {
+        //     // console.log(tweet.user.id, Userray[i].user.id);
+        //     if (tweet.user.id === Userray[i].user.id || Userray === []) {
+        //         inArray = true;
+        //         //var mentions = twittertxt.extractMentions(tweet.text);
+        //         //
+        //         //console.log(mentions);
+        //         Userray[i].tweets.push({name: linkUp(tweet), date: tweet.created_at, tweetid: tweet.id_str, tweetuser: tweet.screen_name});
+        //         break;
+        //     }
+        // }
+        // if (!inArray) {
+        //     Userray.push({user: tweet.user, tweets: [{name: linkUp(tweet), date: tweet.created_at}]});
+        //     //console.log(tweet);
+        // }
         if (tweets.length - 1 == key) {
             maxid = tweet.id;
             //console.log(key, tweet.id);
         }
     });
-    return {Userray: Userray, maxid: maxid, Linksray: Linksray, Tweets: tweets};
+    return {Userray: Userray, maxid: maxid, Linksray: Linksray, Tweets: tweets, Tweetstorms: Userhash};
 }
 
 exports.getHomeTweetByCount = function (req, res) {

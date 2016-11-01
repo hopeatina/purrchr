@@ -52,6 +52,7 @@
         <!---->
         <!--| 'orderBy : '-tweets.length"-->
         <md-card id="{{person.user.name}}" class=" usercard">
+
           <md-card-content class="">
             <div class="" layout="row" layout-align="space-around center">
               <div flex="33" layout="column" layout-align="center center" class="">
@@ -132,7 +133,26 @@
         </md-card>
       </div>
     </md-tab>
-    <!--<md-tab label="Media" md-on-select="updateSortOptions()">-->
-    <!--</md-tab>-->
+    <md-tab label="PEEPS" md-on-select="updateSortOptions()">
+      {{ tweetstorms}}
+      <md-content layout-padding style="background: inherit;">
+        <md-grid-list
+          md-cols-gt-md="12" md-cols="3" md-cols-md="8"
+          md-row-height-gt-md="1:1" md-row-height="4:3"
+          md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px" >
+          <md-grid-tile
+            ng-repeat="(key, tile) in colorTiles"
+            ng-style="{
+            'background': tile.color
+          }" ng-click="expand(tile, key)"
+            md-colspan-gt-sm="{{tile.colspan}}"
+            md-rowspan-gt-sm="{{tile.rowspan}}">
+            <img style="width: 48px; height: 48px; "
+                 class="md-avatar-icon"
+                 src="{{tile.img}}">
+          </md-grid-tile>
+        </md-grid-list>
+      </md-content>
+    </md-tab>
   </md-tabs>
 </div>
