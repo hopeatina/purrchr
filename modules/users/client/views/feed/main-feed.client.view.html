@@ -31,7 +31,7 @@
     </div>
   </md-toolbar>
   <div ng-hide="usersHidden" layout="row" class="topusers">
-    <img ng-click="gotoAnchor(person.user.name)" ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; "
+    <img ng-click="gotoAnchor(person.user.name)" ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; border-radius: 50%; "
          class="md-avatar-icon" ng-if="person"
          src="{{person.user.profile_image_url}}">
   </div>
@@ -141,15 +141,19 @@
           md-row-height-gt-md="1:1" md-row-height="4:3"
           md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px" >
           <md-grid-tile
-            ng-repeat="(key, tile) in colorTiles"
+            ng-repeat="(key, tile) in colorTiles | orderBy : sortOptionSelected"
             ng-style="{
             'background': tile.color
-          }" ng-click="expand(tile, key)"
-            md-colspan-gt-sm="{{tile.colspan}}"
-            md-rowspan-gt-sm="{{tile.rowspan}}">
-            <img style="width: 48px; height: 48px; "
-                 class="md-avatar-icon"
-                 src="{{tile.img}}">
+          }"  ng-click="size = !size"
+            md-colspan-gt-sm="{{size ? tile.colspan : 4}}"
+            md-rowspan-gt-sm="{{size ? tile.rowspan : 4}}">
+            <span class="tiletitle">{{tile.user.screen_name}}</span>
+            <img class="md-avatar-icon peepsicon"
+                 src="{{tile.user.profile_image_url}}">
+            <img class="retweetcount" src="/modules/users/client/img/other/retweet.png">
+            <div class="retweetnum">{{tile.retweets}}</div>
+            <div class="tweetcount"> {{tile.numtweets}}</div>
+
           </md-grid-tile>
         </md-grid-list>
       </md-content>

@@ -12,6 +12,8 @@ angular.module('users')
                 y: 0
             };
 
+            $scope.size=true;
+
             $scope.usersHidden = true;
             $scope.showHideUsers = function () {
                 $scope.usersHidden = !$scope.usersHidden;
@@ -210,16 +212,24 @@ angular.module('users')
                         $scope.currentTweets = $scope.recentPeeps;
                         //$scope.currentTweets = $scope.recentPeeps.slice(0, 30);
                     }
+                    $scope.randomint = function getRandomInt(min, max) {
+                        min = Math.ceil(min);
+                        max = Math.floor(max);
+                        return Math.floor(Math.random() * (max - min)) + min;
+                    }
                     $scope.colorTiles = (function () {
                         var tiles = [];
-                        console.log($scope.recentPeeps);
+                        console.log($scope.currentTweets);
                         if ($scope.recentPeeps != undefined) {
                             for (var i = 0; i < $scope.recentPeeps.length; i++) {
                                 tiles.push({
                                     color: randomColor(),
                                     colspan: randomSpan(),
                                     rowspan: randomSpan(),
-                                    img: $scope.recentPeeps[i].user.profile_image_url
+                                    user: $scope.recentPeeps[i].user,
+                                    numtweets: $scope.recentPeeps[i].tweets.length,
+                                    retweets: $scope.randomint(0,200),
+                                    likes: $scope.randomint(0,200)
                                 });
                             }
                         }
@@ -299,7 +309,7 @@ angular.module('users')
             function randomSpan() {
                 var r = Math.random();
                 if (r < 0.5) {
-                    return 1;
+                    return 2;
                 } else  {
                     return 2;
                 }
