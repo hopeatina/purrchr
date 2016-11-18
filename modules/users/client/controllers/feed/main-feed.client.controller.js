@@ -216,7 +216,7 @@ angular.module('users')
                         min = Math.ceil(min);
                         max = Math.floor(max);
                         return Math.floor(Math.random() * (max - min)) + min;
-                    }
+                    };
                     $scope.colorTiles = (function () {
                         var tiles = [];
                         console.log($scope.currentTweets);

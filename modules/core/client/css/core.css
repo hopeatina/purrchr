@@ -507,21 +507,23 @@ md-select.md-default-theme:not([disabled]):focus .md-select-label {
     text-align: center;
     padding: 5px;
     border-radius: 50%;
-    position: relative;
-    top: 30%;
-    left: 25%;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
     box-shadow: 0px 2px 2px #363232;
 }
 
 .retweetcount {
+    background: #2dcb70;
     color: white;
     width: 30px;
     height: 30px;
     text-align: center;
+    padding: 5px;
     border-radius: 50%;
-    position: relative;
-    top: 30%;
-    left: 35%;
+    position: absolute;
+    bottom: 5%;
+    right: 20%;
     box-shadow: 0px 2px 2px #363232;
 }
 
@@ -534,9 +536,9 @@ md-select.md-default-theme:not([disabled]):focus .md-select-label {
 .retweetnum {
     color: black;
     position: relative;
-    top: 30%;
-    left: 20%;
-    background-color: rgba(255, 255, 255, 0.1);
+    text-align: center;
+    /* left: 0; */
+    /* background-color: rgba(255, 255, 255, 0.1); */
 }
 
 .peepsicon {
@@ -544,4 +546,11 @@ md-select.md-default-theme:not([disabled]):focus .md-select-label {
     width: 48px;
     height: 48px;
     border-radius: 50%;
+}
+
+.retweetobj {
+    position: absolute;
+    right: 27%;
+    bottom: 0%;
+    color: white;
 }

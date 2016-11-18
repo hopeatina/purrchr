@@ -31,13 +31,14 @@
     </div>
   </md-toolbar>
   <div ng-hide="usersHidden" layout="row" class="topusers">
-    <img ng-click="gotoAnchor(person.user.name)" ng-repeat="person in recentPeeps" style="width: 48px; height: 48px; border-radius: 50%; "
+    <img ng-click="gotoAnchor(person.user.name)" ng-repeat="person in recentPeeps"
+         style="width: 48px; height: 48px; border-radius: 50%; "
          class="md-avatar-icon" ng-if="person"
          src="{{person.user.profile_image_url}}">
   </div>
 
   <md-tabs md-selected="selectedIndex" class="md-shadow-animated" md-dynamic-height md-swipe-content
-           md-stretch-tabs="auto" md-center-tabs >
+           md-stretch-tabs="auto" md-center-tabs>
     <md-tab label="Feed" md-on-select="updateSortOptions()">
       <div layout="row" layout-align="center" class="signindiv">
         <md-button class="signinbutton" ng-if="QueueCount > 0" ng-click="updateFeed()">{{QueueCount}} New Tweets
@@ -60,13 +61,13 @@
                      src="{{person.user.profile_image_url}}">
               </div>
               <div flex="45" layout="row" layout-align="center center" class="">
-                <div layout = "column">
-                <span class="md-title">{{person.user.name}}</span>
-                <span class="md-subhead">@{{person.user.screen_name}}</span>
-                  </div>
+                <div layout="column">
+                  <span class="md-title">{{person.user.name}}</span>
+                  <span class="md-subhead">@{{person.user.screen_name}}</span>
+                </div>
 
-                  <!--<md-button class="signinbutton" ng-click="follow()">{{followed}}-->
-                  <!--</md-button>-->
+                <!--<md-button class="signinbutton" ng-click="follow()">{{followed}}-->
+                <!--</md-button>-->
 
               </div>
 
@@ -79,7 +80,8 @@
               <div layout="column" layout-align="center center" flex="timeflex" ng-hide="tweetsCollapsed" timeline
                    data="person.tweets" options="timelineConfig"></div>
               <div flex="80" ng-if="person.tweets.length == 1">
-                <md-card style="position: relative;margin-top: 10px;background: whitesmoke; font-size: large" layout="row"
+                <md-card style="position: relative;margin-top: 10px;background: whitesmoke; font-size: large"
+                         layout="row"
                          ng-repeat="ptweet in person.tweets">
                   <div ng-bind-html="getHtml(ptweet.name + ptweet.date)"></div>
                 </md-card>
@@ -137,21 +139,26 @@
       {{ tweetstorms}}
       <md-content layout-padding style="background: inherit;">
         <md-grid-list
-          md-cols-gt-md="12" md-cols="3" md-cols-md="8"
+          md-cols-gt-md="12" md-cols="3" md-cols-md="8" md-cols-sm="2"
           md-row-height-gt-md="1:1" md-row-height="4:3"
-          md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px" >
+          md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
           <md-grid-tile
             ng-repeat="(key, tile) in colorTiles | orderBy : sortOptionSelected"
             ng-style="{
             'background': tile.color
-          }"  ng-click="size = !size"
+          }" ng-click="size = !size"
             md-colspan-gt-sm="{{size ? tile.colspan : 4}}"
             md-rowspan-gt-sm="{{size ? tile.rowspan : 4}}">
+
             <span class="tiletitle">{{tile.user.screen_name}}</span>
             <img class="md-avatar-icon peepsicon"
                  src="{{tile.user.profile_image_url}}">
-            <img class="retweetcount" src="/modules/users/client/img/other/retweet.png">
-            <div class="retweetnum">{{tile.retweets}}</div>
+            <div class="retweetcount">
+              <!--<img class="retweetcount" src="/modules/users/client/img/other/retweet.png">-->
+              {{tile.retweets}}
+              <!--<div class="retweetnum">-->
+                <!--</div>-->
+            </div>
             <div class="tweetcount"> {{tile.numtweets}}</div>
 
           </md-grid-tile>
