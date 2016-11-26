@@ -13,6 +13,8 @@ angular.module('users')
             };
 
             $scope.size=true;
+            $scope.mdcols = 3;
+            $scope.topics = ["TOPIC1","TOPIC2"];
 
             $scope.usersHidden = true;
             $scope.showHideUsers = function () {
@@ -180,8 +182,10 @@ angular.module('users')
 
 
             function checkTweets(tweets) {
+                var tweettext = "";
                 tweets.forEach(function (tweet, key, tweets) {
                     var inArray = false;
+                    tweettext = tweettext + " <> " + tweet.text;
                     //console.log(tweet.user.screen_name,tweet.text);
                     if (tweet.user) {
                         for (var i = 0; i < $scope.recentPeeps.length; i++) {
@@ -198,9 +202,17 @@ angular.module('users')
                             //console.log(tweet);
                         }
                     }
-                })
+                });
+                return tweettext;
             }
+            $scope.updateTile = function(tile) {
 
+                tile.colspan = tile.colspan == 2 ? 4 : 2;
+                tile.rowspan = tile.rowspan == 2 ? 4 : 2;
+                console.log("we in tis");
+                $scope.mdcols = $scope.mdcols == 3 ? 4: 3;
+                // $scope.$apply();
+            };
             function parseReturnedTweets(data) {
                 if (data.data.stream != undefined) {
                     var obj = data.data.overview.Tweetstorms;
@@ -226,6 +238,7 @@ angular.module('users')
                                     color: randomColor(),
                                     colspan: randomSpan(),
                                     rowspan: randomSpan(),
+                                    size: false,
                                     user: $scope.recentPeeps[i].user,
                                     numtweets: $scope.recentPeeps[i].tweets.length,
                                     retweets: $scope.randomint(0,200),

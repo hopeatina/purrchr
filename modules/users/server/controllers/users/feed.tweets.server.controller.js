@@ -11,6 +11,9 @@ var Twitter = require('twitter'),
     config = require(path.resolve('./config/config'));
 var twittertxt = require('twitter-text');
 //console.log(twittertxt);
+var nlp = require('nlp-toolkit');
+
+
 
 var R = require("request");
 
@@ -205,8 +208,12 @@ function checkTweets(tweets, client) {
     var Stormray = [];
     var keyword = [];
     var maxid;
+    var tweettext = "";
+    console.log(tweets.length);
     tweets.forEach(function (tweet, key, tweets) {
         // console.log(key, tweet);
+        tweettext = tweettext + " <" + key + "> " + tweet.text;
+
         if (tweet.entities.urls != undefined) {
             tweet.entities.urls.forEach(function (url, urlkey, urls) {
 
@@ -283,12 +290,29 @@ function checkTweets(tweets, client) {
         //     Userray.push({user: tweet.user, tweets: [{name: linkUp(tweet), date: tweet.created_at}]});
         //     //console.log(tweet);
         // }
+
+
+
         if (tweets.length - 1 == key) {
             maxid = tweet.id;
             //console.log(key, tweet.id);
         }
     });
-    return {Userray: Userray, maxid: maxid, Linksray: Linksray, Tweets: tweets, Tweetstorms: Userhash};
+    // fs.createReadStream('./pride_prejudice.txt')
+    //     .pipe(es.split())
+    //     .pipe(nlp.tokenizer())
+    //     .pipe(nlp.stopwords())
+    //     .pipe(nlp.stemmer())
+    //     .pipe(nlp.frequency())
+    //     .on('data', function (freqDist) {
+    //         console.log(freqDist.slice(0, 10));
+    //     })
+    //     .on('error', function (err) {
+    //         console.error(err);
+    //     });
+    console.log("frequencydist");
+    console.log(nlp.frequency(tweettext));
+    return {Userray: Userray, maxid: maxid, Linksray: Linksray, Tweets: tweets, Tweetstorms: Userhash, text: tweettext};
 }
 
 exports.getHomeTweetByCount = function (req, res) {

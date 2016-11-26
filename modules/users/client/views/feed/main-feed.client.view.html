@@ -139,18 +139,19 @@
       {{ tweetstorms}}
       <md-content layout-padding style="background: inherit;">
         <md-grid-list
-          md-cols-gt-md="12" md-cols="3" md-cols-md="8" md-cols-sm="2"
+          md-cols-gt-md="12" md-cols="{{mdcols}}" md-cols-md="8" md-cols-sm="4"
           md-row-height-gt-md="1:1" md-row-height="4:3"
           md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
           <md-grid-tile
             ng-repeat="(key, tile) in colorTiles | orderBy : sortOptionSelected"
             ng-style="{
             'background': tile.color
-          }" ng-click="size = !size"
-            md-colspan-gt-sm="{{size ? tile.colspan : 4}}"
-            md-rowspan-gt-sm="{{size ? tile.rowspan : 4}}">
+          }" ng-click="updateTile(tile)"
+            md-colspan="2" md-rowspan="2"
+            md-colspan-gt-sm="{{tile.colspan}}"
+            md-rowspan-gt-sm="{{tile.rowspan}}">
 
-            <span class="tiletitle">{{tile.user.screen_name}}</span>
+            <span class="tiletitle">{{tile.user.screen_name}} {{tile.colspan}}</span>
             <img class="md-avatar-icon peepsicon"
                  src="{{tile.user.profile_image_url}}">
             <div class="retweetcount">
@@ -165,5 +166,14 @@
         </md-grid-list>
       </md-content>
     </md-tab>
+    <md-tab label="TOPICS" md-on-select="updateSortOptions()">
+      <md-grid-list
+      md-cols-gt-md="12" md-cols="{{mdcols}}" md-cols-md="8" md-cols-sm="4"
+      md-row-height-gt-md="1:1" md-row-height="4:3"
+      md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
+      <md-grid-tile ng-repeat="tile in topics">{{tile}}</md-grid-tile>
+        </md-grid-list>
+
+      </md-tab>
   </md-tabs>
 </div>
