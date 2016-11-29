@@ -11,7 +11,7 @@ var Twitter = require('twitter'),
     config = require(path.resolve('./config/config'));
 var twittertxt = require('twitter-text');
 //console.log(twittertxt);
-var nlp = require('nlp-toolkit');
+// var nlp = require('nlp-toolkit');
 
 
 
