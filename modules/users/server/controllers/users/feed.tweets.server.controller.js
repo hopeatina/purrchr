@@ -311,7 +311,31 @@ function checkTweets(tweets, client) {
     //         console.error(err);
     //     });
     console.log("frequencydist");
-    console.log(nlp.frequency(tweettext));
+    function getFrequency2(string, cutOff) {
+        var cleanString = string.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,""),
+            words = cleanString.split(' '),
+            frequencies = {},
+            word, frequency, i;
+
+        for( i=0; i<words.length; i++ ) {
+            word = words[i];
+            frequencies[word] = frequencies[word] || 0;
+            frequencies[word]++;
+        }
+
+        words = Object.keys( frequencies );
+
+        console.log();
+        var top = words.sort(function (a,b) { return frequencies[b] -frequencies[a];}).slice(0,cutOff);
+        var topobj = {};
+        top.forEach(function(word){
+            topobj[word] = frequencies[word];
+        });
+        // words.sort(function (a,b) { return frequencies[b] -frequencies[a];}).slice(0,cutOff).toString()
+
+        return topobj;
+    }
+    console.log(getFrequency2(tweettext, 50));
     return {Userray: Userray, maxid: maxid, Linksray: Linksray, Tweets: tweets, Tweetstorms: Userhash, text: tweettext};
 }
 
