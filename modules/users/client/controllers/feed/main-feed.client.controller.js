@@ -220,6 +220,7 @@ angular.module('users')
                         return obj[key];
                     });
                     $scope.recentPeeps = arr;
+                    $scope.justTweets = data.data.stream;
                     if ($scope.recentPeeps != undefined) {
                         $scope.currentTweets = $scope.recentPeeps;
                         //$scope.currentTweets = $scope.recentPeeps.slice(0, 30);

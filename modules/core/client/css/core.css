@@ -88,6 +88,8 @@ a:hover .header-profile-image {
     position: relative;
     margin-top: 10px;
     background: whitesmoke;
+    max-width: 300px;
+    height: 150px;
 }
 
 .hashtags.ng-enter {
@@ -166,6 +168,7 @@ a:hover .header-profile-image {
     background-color: rgba(211, 101, 13, 1) !important;
     color: white;
 }
+
 
 .controls {
     width: 100%;
