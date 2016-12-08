@@ -260,6 +260,10 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                         y2: null
                     };
 
+                    var circlePrevious = {
+                        cx: null
+                    };
+
                     svg.selectAll("line")
                         .data(events).enter().append("line")
                         .attr("class", "timeline-line")
@@ -379,9 +383,15 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                             .attr("cx", function (d, i) {
                                 if (cfg.horizontalLayout) {
                                     var datum = (cfg.dateDimension) ? new Date(d.date).getTime() : d.value;
+                                    var result =Math.floor(step * (datum - minValue) + margin);
+                                    if (circlePrevious.cx != null && (cfg.width - 2 * margin)/events.length < result - circlePrevious.cx && i < events.length-1){
+                                        result = circlePrevious.cx + 28;
+                                    }
+                                    circlePrevious.cx = result;
+                                    console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                    console.log(step * (datum - minValue), margin);
                                     //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
-                                    //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
-                                    return Math.floor(step * (datum - minValue) + margin);
+                                    return result;
                                 }
                                 return Math.floor(cfg.width / 2);
                             })

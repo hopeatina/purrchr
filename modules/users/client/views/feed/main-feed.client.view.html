@@ -44,15 +44,17 @@
         <div flex="30">
 
         </div>
-        <div flex="30">
+        <div layout="row" layout-align="center" flex="30">
           <md-button class="signinbutton" ng-if="QueueCount > 0" ng-click="updateFeed()">{{QueueCount}} New
             Tweets
           </md-button>
         </div>
-        <div flex="30" layout-align="center center" layout="row">
-          View Tweets/Users
-        <md-switch flex="30" layout-align="end" ng-model="feedview" aria-label="Switch 1">
+        <div flex="30" layout-align="space-between center" layout="row">
+         <div layout-align="end" layout="row"> Users</div>
+        <md-switch  layout-align="end" ng-model="feedview" aria-label="Switch 1">
+
         </md-switch>
+          <div layout-align="start" layout="row">Tweets</div>
 
         </div>
 
