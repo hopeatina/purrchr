@@ -65,58 +65,55 @@ angular.module('users')
             ];
             $scope.updateSortOptions = function () {
                 console.log($scope.selectedIndex);
-                console.sortOptionSelected;
+
                 $scope.temprecent = ($scope.temprecent !== $scope.recentPeeps) ? $scope.recentPeeps : $scope.temprecent;
 
-                switch ($scope.selectedIndex) {
-                    case 0:
+                if ($scope.selectedIndex === 0) {
+                    if (!$scope.feedview) {
                         $scope.sortOptions = [
                             {name: "Activity", value: "-tweets.length"},
                             {name: "Inactivity", value: "tweets.length"},
-                            {name: "Recent", value: ""}
-                            //{name: "Dopeness", value: ""},
-                            //{name: "Virality", value: ""},
-                            //{name: "Tweet Count", value: ""},
-                            //{name: "Fire", value: ""}
-                        ];
-                        break;
-                    case 1:
+                            {name: "Recent", value: ""}];
+                    } else {
                         $scope.sortOptions = [
-                            {name: "Retweets +", value: "-userObj[0].values.retweets"},
-                            {name: "Retweets -", value: "userObj[0].values.retweets"},
-                            {name: "Favorites +", value: "-userObj[0].values.faves"},
-                            {name: "Favorites -", value: "userObj[0].values.faves"},
+                            {name: "Retweets +", value: "-retweet_count"},
+                            {name: "Retweets -", value: "retweet_count"},
+                            {name: "Favorites +", value: "-favorite_count"},
+                            {name: "Favorites -", value: "favorite_count"},
                             {name: "Recent", value: ""},
                             {name: "Old", value: "-"}
                         ];
-                        var linkusers = [];
-                        //$scope.currentLinks.slice().forEach(user, function(user){
-                        //    linkusers.push[user.userObj[0].user];
-                        //});
-                        //
-                        //$scope.recentPeeps =  linkusers;
-                        break;
-                    case 2:
-                        $scope.sortOptions = [
-                            {name: "Activity", value: "-tweets.length"},
-                            {name: "Inactivity", value: "tweets.length"},
-                            {name: "Recent", value: ""}
-                            //{name: "Dopeness", value: ""},
-                            //{name: "Virality", value: ""},
-                            //{name: "Tweet Count", value: ""},
-                            //{name: "Fire", value: ""}
-                        ];
-                        break;
-                    default:
-                        $scope.sortOptions = [
-                            {name: "Activity", value: "-tweets.length"},
-                            {name: "Inactivity", value: "tweets.length"},
-                            {name: "Recent", value: ""}
-                            //{name: "Dopeness", value: ""},
-                            //{name: "Virality", value: ""},
-                            //{name: "Tweet Count", value: ""},
-                            //{name: "Fire", value: ""}
-                        ];
+                    }
+                    ;
+                } else if ($scope.selectedIndex === 1) {
+                    $scope.sortOptions = [
+                        {name: "Retweets +", value: "-userObj[0].values.retweets"},
+                        {name: "Retweets -", value: "userObj[0].values.retweets"},
+                        {name: "Favorites +", value: "-userObj[0].values.faves"},
+                        {name: "Favorites -", value: "userObj[0].values.faves"},
+                        {name: "Recent", value: ""},
+                        {name: "Old", value: "-"}
+                    ];
+                } else if ($scope.selectedIndex === 2) {
+                    $scope.sortOptions = [
+                        {name: "Activity", value: "-tweets.length"},
+                        {name: "Inactivity", value: "tweets.length"},
+                        {name: "Recent", value: ""}
+                        //{name: "Dopeness", value: ""},
+                        //{name: "Virality", value: ""},
+                        //{name: "Tweet Count", value: ""},
+                        //{name: "Fire", value: ""}
+                    ];
+                } else {
+                    $scope.sortOptions = [
+                        {name: "Activity", value: "-tweets.length"},
+                        {name: "Inactivity", value: "tweets.length"},
+                        {name: "Recent", value: ""}
+                        //{name: "Dopeness", value: ""},
+                        //{name: "Virality", value: ""},
+                        //{name: "Tweet Count", value: ""},
+                        //{name: "Fire", value: ""}
+                    ];
                 }
             };
 
@@ -221,6 +218,7 @@ angular.module('users')
                     });
                     $scope.recentPeeps = arr;
                     $scope.justTweets = data.data.stream;
+                    console.log("justTweets: ", $scope.justTweets);
                     if ($scope.recentPeeps != undefined) {
                         $scope.currentTweets = $scope.recentPeeps;
                         //$scope.currentTweets = $scope.recentPeeps.slice(0, 30);
@@ -250,6 +248,7 @@ angular.module('users')
                         return tiles;
                     })();
                     $scope.currentLinks = data.data.linkers;
+                    console.log("currentlinks", $scope.currentLinks);
                     if (data.data.stream != undefined) {
                         $scope.stream = data.data.stream;
                         //console.log(data.data.stream.length);

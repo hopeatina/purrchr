@@ -384,13 +384,13 @@ angular.module('users').directive('timeline', ['d3Service', 'moment', '$window',
                                 if (cfg.horizontalLayout) {
                                     var datum = (cfg.dateDimension) ? new Date(d.date).getTime() : d.value;
                                     var result =Math.floor(step * (datum - minValue) + margin);
-                                    if (circlePrevious.cx != null && (cfg.width - 2 * margin)/events.length < result - circlePrevious.cx && i < events.length-1){
+                                    if (circlePrevious.cx != null && result - circlePrevious.cx < (cfg.width - 2 * margin)/events.length  && i < events.length-1){
                                         result = circlePrevious.cx + 28;
                                     }
                                     circlePrevious.cx = result;
-                                    console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
-                                    console.log(step * (datum - minValue), margin);
-                                    //console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                    // console.log("cx: ",Math.floor(step * (datum - minValue) + margin));
+                                    // console.log(step * (datum - minValue), margin);
+
                                     return result;
                                 }
                                 return Math.floor(cfg.width / 2);
