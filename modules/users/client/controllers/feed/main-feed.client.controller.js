@@ -4,6 +4,10 @@ angular.module('users')
     .run(['$anchorScroll', function ($anchorScroll) {
         $anchorScroll.yOffset = 500;   // always scroll by 50 extra pixels
     }])
+    .config(function($mdThemingProvider) {
+        $mdThemingProvider.theme('default')
+            .accentPalette('orange');
+    })
     .controller('MainFeedController', ['$scope', '$http', 'moment', '$state', 'Authentication',
         'Menus', 'MainFeed', '$interval', 'Socket', '$sce', '$location', '$anchorScroll',
         function ($scope, $http, moment, $state, Authentication, Menus, MainFeed, $interval, Socket, $sce, $location, $anchorScroll) {
