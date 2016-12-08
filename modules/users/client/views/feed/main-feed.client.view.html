@@ -44,12 +44,17 @@
         <div flex="30">
 
         </div>
-        <md-button flex="30" class="signinbutton" ng-if="QueueCount > 0" ng-click="updateFeed()">{{QueueCount}} New
-          Tweets
-        </md-button>
-        <md-switch flex="30" layout-align="end" ng-model="feedview" aria-label="Switch 1">
+        <div flex="30">
+          <md-button class="signinbutton" ng-if="QueueCount > 0" ng-click="updateFeed()">{{QueueCount}} New
+            Tweets
+          </md-button>
+        </div>
+        <div flex="30" layout-align="center center" layout="row">
           View Tweets/Users
+        <md-switch flex="30" layout-align="end" ng-model="feedview" aria-label="Switch 1">
         </md-switch>
+
+        </div>
 
         <!--&lt;!&ndash;&ndash;&gt;<md-button ng-click="goPerUser()">Update</md-button>-->
       </div>
@@ -58,7 +63,7 @@
       <!--<div layout="row" layout-align="center">-->
       <!--<md-progress-circular md-mode="{{modes[4]}}" md-diameter="20"></md-progress-circular>-->
       <!--</div>-->
-      <div ng-hide="!feedview" ng-if="recentPeeps" ng-repeat="person in currentTweets | orderBy : sortOptionSelected"
+      <div ng-hide="feedview" ng-if="recentPeeps" ng-repeat="person in currentTweets | orderBy : sortOptionSelected"
            class="container" ng-controller="SingleTweetCtrl">
         <!---->
         <!--| 'orderBy : '-tweets.length"-->
@@ -115,7 +120,7 @@
           </md-card-content>
         </md-card>
       </div>
-      <div ng-show="!feedview" ng-if="justTweets" layout-align="center" layout-wrap="" layout="row">
+      <div ng-show="feedview" ng-if="justTweets" layout-align="center" layout-wrap="" layout="row">
         <md-card ng-repeat="item in justTweets" layout="center center" class="tweetcard">
           <div layout="row">
             <img   style="width: 48px; height: 48px;" class="md-avatar-icon circular" ng-if="item"
