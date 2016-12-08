@@ -88,10 +88,21 @@ a:hover .header-profile-image {
     position: relative;
     margin-top: 10px;
     background: whitesmoke;
-    max-width: 300px;
-    height: 150px;
+    width: 300px;
+    height: 170px;
+}
+.circular {
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    border-radius: 50%;
 }
 
+.action-icon {
+    margin-left: 3px;
+    margin-right: 3px;
+    height: 30px;
+    fill: grey;
+}
 .hashtags.ng-enter {
     transition: 0.5s linear all;
     opacity: 0;
@@ -503,7 +514,7 @@ md-select.md-default-theme:not([disabled]):focus .md-select-label {
 }
 
 .tweetcount {
-    background: red;
+    background: #4099FF;
     color: white;
     width: 30px;
     height: 30px;
@@ -526,7 +537,7 @@ md-select.md-default-theme:not([disabled]):focus .md-select-label {
     border-radius: 50%;
     position: absolute;
     bottom: 5%;
-    right: 20%;
+    right: 25%;
     box-shadow: 0px 2px 2px #363232;
 }
 
